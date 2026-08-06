@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard · LearnSync Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --primary-light: #A78BFA;
+            --secondary: #F59E0B;
+            --accent: #10B981;
+            --danger: #EF4444;
+            --dark: #1F2937;
+            --light: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            --gradient-accent: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            --gradient-gold: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            --gradient-danger: linear-gradient(135deg, #EF4444 0%, #F87171 100%);
+            --gradient-blue: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-full: 9999px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-theme {
+            --light: #0F172A;
+            --dark: #F1F5F9;
+            --gray-50: #0F172A;
+            --gray-100: #1E293B;
+            --gray-200: #334155;
+            --gray-300: #475569;
+            --gray-400: #64748B;
+            --gray-500: #94A3B8;
+            --gray-600: #CBD5E1;
+            --gray-700: #E2E8F0;
+            --gray-800: #F1F5F9;
+            --gray-900: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--gray-100);
+            color: var(--dark);
+            min-height: 100vh;
+            transition: all var(--transition);
+        }
+
+        .dark-theme body {
+            background: #0F172A;
+        }
+
+        /* ===== TOP HEADER ===== */
+        #top-header {
+            background: var(--light);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .brand i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .brand span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-500);
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: var(--transition);
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+        }
+
+        .back-link:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--gray-200);
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .user-avatar-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        #page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 32px 40px;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .page-title span {
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--gray-500);
+            margin-left: 8px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--gray-200);
+            background: var(--light);
+            color: var(--gray-600);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .filter-tab.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: all var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-card .number.gold {
+            color: var(--secondary);
+        }
+        .stat-card .number.green {
+            color: var(--accent);
+        }
+        .stat-card .number.blue {
+            color: var(--primary);
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        /* Leaderboard */
+        .leaderboard-container {
+            background: var(--light);
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px 80px;
+            padding: 14px 24px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .leaderboard-item {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px 80px;
+            padding: 14px 24px;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .leaderboard-item:hover {
+            background: var(--gray-50);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-item.you {
+            background: rgba(139, 92, 246, 0.06);
+            border-left: 4px solid var(--primary);
+        }
+
+        .leaderboard-item .rank {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .leaderboard-item .rank.gold {
+            color: #F59E0B;
+        }
+        .leaderboard-item .rank.silver {
+            color: #94A3B8;
+        }
+        .leaderboard-item .rank.bronze {
+            color: #D97706;
+        }
+
+        .leaderboard-item .rank .medal {
+            font-size: 1.3rem;
+        }
+
+        .leaderboard-item .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .leaderboard-item .user .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .leaderboard-item .user .info .name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+        }
+
+        .leaderboard-item .user .info .detail {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+        }
+
+        .leaderboard-item .user .info .badge-you {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            background: var(--gradient-primary);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .leaderboard-item .points {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .leaderboard-item .streak {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            text-align: center;
+        }
+
+        .leaderboard-item .streak .fire {
+            color: #EF4444;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            #top-header {
+                padding: 10px 20px;
+            }
+            #page-content {
+                padding: 16px 20px 32px;
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .leaderboard-header {
+                display: none;
+            }
+            .leaderboard-item {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding: 16px 20px;
+            }
+            .leaderboard-item .rank {
+                font-size: 0.9rem;
+            }
+            .leaderboard-item .points {
+                text-align: left;
+            }
+            .leaderboard-item .streak {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #top-header {
+                padding: 10px 16px;
+            }
+            .page-title {
+                font-size: 1.5rem;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .filter-tabs {
+                gap: 6px;
+            }
+            .filter-tab {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #top-header {
+                padding: 8px 12px;
+            }
+            .brand {
+                font-size: 1rem;
+            }
+            .back-link span {
+                display: none;
+            }
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP HEADER ===== -->
+    <header id="top-header">
+        <div class="header-left">
+            <a href="#" class="brand">
+                <i class="fas fa-brain"></i>
+                <span>LearnSync Pro</span>
+            </a>
+            <a href="#" class="back-link" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn" id="themeToggle" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="icon-btn" title="Notifications">
+                <i class="fas fa-bell"></i>
+            </button>
+            <div class="user-avatar-sm">AK</div>
+        </div>
+    </header>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <div id="page-content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">🏆 Leaderboard <span>Top performers this month</span></h1>
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All Time</button>
+                <button class="filter-tab" data-filter="month">This Month</button>
+                <button class="filter-tab" data-filter="week">This Week</button>
+                <button class="filter-tab" data-filter="course">By Course</button>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="number gold">12,450</div>
+                <div class="label">🏆 Your Total XP</div>
+            </div>
+            <div class="stat-card">
+                <div class="number green">#4</div>
+                <div class="label">📊 Your Rank</div>
+            </div>
+            <div class="stat-card">
+                <div class="number blue">2,340</div>
+                <div class="label">👥 Active Learners</div>
+            </div>
+            <div class="stat-card">
+                <div class="number gold">42</div>
+                <div class="label">🔥 Day Streak</div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
+                <span>Rank</span>
+                <span>Learner</span>
+                <span style="text-align:center;">XP</span>
+                <span style="text-align:center;">Streak</span>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank gold"><span class="medal">🥇</span> 1</div>
+                <div class="user">
+                    <div class="avatar" style="background:var(--gradient-primary);">RM</div>
+                    <div class="info">
+                        <div class="name">Rohan Mehta</div>
+                        <div class="detail">Data Science · 12 courses</div>
+                    </div>
+                </div>
+                <div class="points">14,230</div>
+                <div class="streak"><span class="fire">🔥</span> 56 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank silver"><span class="medal">🥈</span> 2</div>
+                <div class="user">
+                    <div class="avatar" style="background:var(--gradient-gold);">AG</div>
+                    <div class="info">
+                        <div class="name">Ankit Gupta</div>
+                        <div class="detail">Web Dev · 8 courses</div>
+                    </div>
+                </div>
+                <div class="points">13,890</div>
+                <div class="streak"><span class="fire">🔥</span> 48 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank bronze"><span class="medal">🥉</span> 3</div>
+                <div class="user">
+                    <div class="avatar" style="background:var(--gradient-accent);">SP</div>
+                    <div class="info">
+                        <div class="name">Sneha Patel</div>
+                        <div class="detail">AI & ML · 10 courses</div>
+                    </div>
+                </div>
+                <div class="points">12,760</div>
+                <div class="streak"><span class="fire">🔥</span> 42 days</div>
+            </div>
+
+            <div class="leaderboard-item you">
+                <div class="rank">4</div>
+                <div class="user">
+                    <div class="avatar" style="background:var(--gradient-primary);">AK</div>
+                    <div class="info">
+                        <div class="name">Alex Johnson <span class="badge-you">You</span></div>
+                        <div class="detail">Full Stack · 14 courses</div>
+                    </div>
+                </div>
+                <div class="points" style="color:var(--primary);">12,450</div>
+                <div class="streak"><span class="fire">🔥</span> 42 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank">5</div>
+                <div class="user">
+                    <div class="avatar" style="background:var(--gradient-blue);">PW</div>
+                    <div class="info">
+                        <div class="name">Priya Williams</div>
+                        <div class="detail">Data Science · 9 courses</div>
+                    </div>
+                </div>
+                <div class="points">11,890</div>
+                <div class="streak"><span class="fire">🔥</span> 38 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank">6</div>
+                <div class="user">
+                    <div class="avatar" style="background:var(--gradient-danger);">MS</div>
+                    <div class="info">
+                        <div class="name">Michael Scott</div>
+                        <div class="detail">Web Dev · 7 courses</div>
+                    </div>
+                </div>
+                <div class="points">10,760</div>
+                <div class="streak"><span class="fire">🔥</span> 35 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank">7</div>
+                <div class="user">
+                    <div class="avatar" style="background:linear-gradient(135deg,#EC4899,#DB2777);">EC</div>
+                    <div class="info">
+                        <div class="name">Emily Chen</div>
+                        <div class="detail">Mobile Dev · 6 courses</div>
+                    </div>
+                </div>
+                <div class="points">10,230</div>
+                <div class="streak"><span class="fire">🔥</span> 31 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank">8</div>
+                <div class="user">
+                    <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706);">DK</div>
+                    <div class="info">
+                        <div class="name">David Kim</div>
+                        <div class="detail">AI & ML · 8 courses</div>
+                    </div>
+                </div>
+                <div class="points">9,870</div>
+                <div class="streak"><span class="fire">🔥</span> 28 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank">9</div>
+                <div class="user">
+                    <div class="avatar" style="background:linear-gradient(135deg,#3B82F6,#2563EB);">AL</div>
+                    <div class="info">
+                        <div class="name">Anna Lee</div>
+                        <div class="detail">UI/UX · 5 courses</div>
+                    </div>
+                </div>
+                <div class="points">9,120</div>
+                <div class="streak"><span class="fire">🔥</span> 25 days</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank">10</div>
+                <div class="user">
+                    <div class="avatar" style="background:linear-gradient(135deg,#10B981,#059669);">RT</div>
+                    <div class="info">
+                        <div class="name">Rachel Tan</div>
+                        <div class="detail">Data Science · 7 courses</div>
+                    </div>
+                </div>
+                <div class="points">8,650</div>
+                <div class="streak"><span class="fire">🔥</span> 22 days</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // ===== THEME TOGGLE =====
+        const themeBtn = document.getElementById('themeToggle');
+        const themeIcon = themeBtn.querySelector('i');
+        let darkMode = localStorage.getItem('theme') === 'dark';
+
+        if (darkMode) {
+            document.body.classList.add('dark-theme');
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-theme');
+            themeIcon.className = darkMode ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+        });
+
+        // ===== FILTER TABS =====
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Simulate filtering
+                const filter = tab.dataset.filter;
+                const items = document.querySelectorAll('.leaderboard-item:not(.you)');
+                if (filter === 'week') {
+                    // Show only top 5 for week
+                    items.forEach((item, index) => {
+                        item.style.display = index < 4 ? 'grid' : 'none';
+                    });
+                } else if (filter === 'month') {
+                    items.forEach((item, index) => {
+                        item.style.display = index < 8 ? 'grid' : 'none';
+                    });
+                } else {
+                    items.forEach(item => {
+                        item.style.display = 'grid';
+                    });
+                }
+                // Always show "you"
+                document.querySelector('.leaderboard-item.you').style.display = 'grid';
+            });
+        });
+
+        console.log('🏆 Leaderboard page loaded!');
+    </script>
+</body>
+</html>

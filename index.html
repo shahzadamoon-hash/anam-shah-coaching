@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anam Shah Coaching · Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Caveat:wght@600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: radial-gradient(circle at 20% 30%, #101b33, #060b17);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+        .book-wrapper {
+            perspective: 2000px;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .book-3d {
+            width: 100%;
+            height: 720px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+            box-shadow: 0 50px 70px -30px rgba(0, 0, 0, 0.85);
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        /* CUSTOM 3D METALLIC SPIRAL BINDER AT TOP */
+        .spiral-binding {
+            position: absolute;
+            top: -24px;
+            left: 4%;
+            right: 4%;
+            height: 48px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            pointer-events: none;
+        }
+        .spiral-loop {
+            width: 16px;
+            height: 44px;
+            background: linear-gradient(135deg, 
+                #ffffff 0%, 
+                #e2e8f0 20%, 
+                #cbd5e1 40%, 
+                #94a3b8 55%, 
+                #d4af37 80%, 
+                #785813 100%);
+            border-radius: 8px;
+            box-shadow: 
+                0 10px 12px rgba(0, 0, 0, 0.5), 
+                inset 0 2px 3px rgba(255, 255, 255, 0.9),
+                inset 0 -3px 4px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform: translateZ(10px);
+        }
+        .spiral-loop::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 2px;
+            width: 3px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            filter: blur(0.5px);
+        }
+        .spiral-loop::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 8px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+        }
+
+        /* Single page view - full width */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: center top;
+            transform-style: preserve-3d;
+            transition: transform 1.0s cubic-bezier(0.645, 0.045, 0.355, 1);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 2.8rem 3rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            backface-visibility: hidden;
+            overflow-y: auto;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+        .page::-webkit-scrollbar { width: 5px; }
+        .page::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 20px; }
+        .page.flipped { transform: rotateX(180deg); }
+
+        /* HIDE PAGE INNER CONTENT ONLY WHEN STICKY NOTE IS ACTIVE */
+        .book-3d.sticky-active .page:not(.page-cover) .page-content,
+        .book-3d.sticky-active .page:not(.page-cover) .page-header,
+        .book-3d.sticky-active .page:not(.page-cover) .page-footer {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .page:not(.page-cover) .page-content,
+        .page:not(.page-cover) .page-header,
+        .page:not(.page-cover) .page-footer {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease;
+        }
+
+        /* INDIVIDUAL PASTEL PAGE BACKGROUNDS */
+        #page-0 { background: linear-gradient(145deg, #0f1a30, #1a2744); color: white; }
+        #page-1 { background: #fdfbf7; } /* Warm Cream */
+        #page-2 { background: #f0fdf4; } /* Soft Mint */
+        #page-3 { background: #f0f9ff; } /* Ice Blue */
+        #page-4 { background: #faf5ff; } /* Soft Lavender */
+        #page-5 { background: #f0fdfa; } /* Muted Teal */
+
+        /* Cover page */
+        .page-cover {
+            z-index: 10;
+            border: 2px solid #c9a84c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.7);
+        }
+        .cover-content { padding: 0.5rem; max-width: 90%; }
+        .cover-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f7e9b0, #d4af37, #b88a2b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.25rem;
+        }
+        .cover-content h3 {
+            font-weight: 500;
+            color: #b9c7e0;
+            letter-spacing: 3px;
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding-top: 1rem;
+        }
+        .avatar-frame {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid #c9a84c;
+            margin: 0 auto 1rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+        .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 2.5rem;
+            background: linear-gradient(135deg, #f7e9b0, #d4af37);
+            color: #0f1a30;
+            font-weight: 800;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            transition: 0.3s;
+            box-shadow: 0 8px 28px rgba(212, 175, 55, 0.3);
+            margin-top: 0.5rem;
+        }
+        .btn-gold:hover { transform: scale(1.03); box-shadow: 0 12px 36px rgba(212, 175, 55, 0.5); }
+
+        /* Page headers */
+        .page-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.7rem;
+            color: #0f172a;
+            border-bottom: 2px solid rgba(15, 23, 42, 0.12);
+            padding-bottom: 0.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+        .page-header i { color: #b88a2b; font-size: 1.6rem; }
+
+        .page-content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* TALL & SLIM 3D CARD LAYOUTS */
+        .cards-grid-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.1rem;
+            margin-bottom: 0.8rem;
+            perspective: 1000px;
+        }
+
+        .tall-card-3d {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 1.3rem 1.1rem;
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 380px;
+            position: relative;
+        }
+
+        .tall-card-3d:hover {
+            transform: translateY(-6px) translateZ(15px) rotateX(2deg);
+            box-shadow: 0 22px 35px -8px rgba(0, 0, 0, 0.14), 0 8px 12px -4px rgba(0, 0, 0, 0.06);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .card-icon-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 0.9rem;
+            background: rgba(15, 23, 42, 0.04);
+            flex-shrink: 0;
+        }
+
+        .tall-card-3d h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            color: #0f172a;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            line-height: 1.35;
+        }
+
+        .tall-card-3d p {
+            font-family: 'Merriweather', serif;
+            font-size: 0.85rem;
+            line-height: 1.65;
+            color: #475569;
+            margin-bottom: 0.8rem;
+        }
+
+        .tall-card-3d ul {
+            padding-left: 1.1rem;
+            margin-top: auto;
+        }
+
+        .tall-card-3d ul li {
+            font-family: 'Merriweather', serif;
+            font-size: 0.8rem;
+            line-height: 1.55;
+            color: #64748b;
+            margin-bottom: 0.35rem;
+        }
+
+        .card-footer-badge {
+            margin-top: 1rem;
+            padding-top: 0.6rem;
+            border-top: 1px dashed rgba(0, 0, 0, 0.1);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .page-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding-top: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            margin-top: 0.5rem;
+        }
+
+        /* -------------------------------------------------------------
+           LARGER 3D STICKY NOTES DISPLAYED ON BOOK PAGES (MAX 15° ANGLE)
+        ------------------------------------------------------------- */
+        .page-sticky-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 400;
+            overflow: hidden;
+        }
+
+        .sticky-note {
+            display: none; /* Hidden by default */
+            position: absolute;
+            width: 340px; /* Larger Size */
+            padding: 2rem 1.6rem 1.6rem;
+            border-radius: 4px 4px 28px 4px;
+            box-shadow: 
+                -16px 24px 45px rgba(0, 0, 0, 0.45),
+                inset 0 -12px 25px rgba(0,0,0,0.05);
+            pointer-events: auto;
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 5px solid rgba(212, 175, 55, 0.7);
+        }
+
+        /* Sign In Sticky Note: Top Right at +12 Degree Angle */
+        #sticky-signin {
+            top: 15%;
+            right: 14%;
+            background: linear-gradient(135deg, #fff9c4, #fff59d);
+            transform: rotate(12deg) translateZ(30px);
+        }
+
+        /* Register Sticky Note: Top Left at -14 Degree Angle */
+        #sticky-register {
+            top: 16%;
+            left: 14%;
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            transform: rotate(-14deg) translateZ(30px);
+        }
+
+        /* Rating Sticky Note: Center Right at +10 Degree Angle */
+        #sticky-rating {
+            bottom: 16%;
+            right: 18%;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            transform: rotate(10deg) translateZ(30px);
+        }
+
+        .sticky-note.active-note {
+            display: block !important;
+            animation: stickyOnBook 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes stickyOnBook {
+            0% { opacity: 0; scale: 0.7; }
+            100% { opacity: 1; scale: 1; }
+        }
+
+        .sticky-note:hover {
+            scale: 1.04;
+            box-shadow: -22px 30px 55px rgba(0, 0, 0, 0.55);
+            z-index: 500;
+        }
+
+        .close-sticky {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: transparent;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #444;
+            font-weight: 800;
+        }
+        .close-sticky:hover { color: #000; }
+
+        /* Transparent Tape Header */
+        .sticky-tape {
+            position: absolute;
+            top: -14px;
+            left: 35%;
+            width: 90px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.65);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transform: rotate(-2deg);
+            backdrop-filter: blur(2px);
+            border: 1px dashed rgba(0,0,0,0.2);
+        }
+
+        .sticky-note h4 {
+            font-family: 'Caveat', cursive;
+            font-size: 2.1rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 2px dashed rgba(0,0,0,0.15);
+            padding-bottom: 0.5rem;
+        }
+
+        .sticky-note input, .sticky-note textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-bottom: 0.75rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .sticky-note input:focus, .sticky-note textarea:focus {
+            background: #ffffff;
+            border-color: #d4af37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+        }
+
+        .sticky-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #0f1a30, #1a2744);
+            color: #f7e9b0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        .sticky-btn:hover {
+            background: #d4af37;
+            color: #0f1a30;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        }
+
+        .sticky-stars {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 0.6rem 0 0.8rem;
+        }
+
+        .sticky-stars i {
+            font-size: 1.8rem;
+            color: #b0bec5;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sticky-stars i.active {
+            color: #ffb300;
+        }
+
+        /* -------------------------------------------------------------
+           3D MULTI-BUTTERFLY ANIMATION (FLYING ALL OVER THE BOOK)
+        ------------------------------------------------------------- */
+        .butterfly {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            z-index: 300;
+            pointer-events: none;
+            perspective: 500px;
+        }
+
+        .bf-1 {
+            top: 20%;
+            left: -40px;
+            animation: flyAround1 14s ease-in-out infinite;
+        }
+
+        .bf-2 {
+            top: 60%;
+            right: -60px;
+            animation: flyAround2 16s ease-in-out infinite 2s;
+        }
+
+        .bf-3 {
+            top: 10%;
+            right: 15%;
+            animation: flyAround3 12s ease-in-out infinite 4s;
+        }
+
+        .bf-body-3d {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .wing {
+            position: absolute;
+            top: 5px;
+            width: 24px;
+            height: 36px;
+            border-radius: 80% 20% 50% 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .bf-1 .wing { background: radial-gradient(ellipse at center, #ff80ab, #ff4081 60%, #7c4dff); }
+        .bf-2 .wing { background: radial-gradient(ellipse at center, #80d8ff, #40c4ff 60%, #00e5ff); }
+        .bf-3 .wing { background: radial-gradient(ellipse at center, #ffd180, #ffab40 60%, #ff6d00); }
+
+        .wing-left {
+            left: 2px;
+            transform-origin: right center;
+            animation: flapL 0.28s ease-in-out infinite alternate;
+        }
+
+        .wing-right {
+            right: 2px;
+            transform-origin: left center;
+            border-radius: 20% 80% 50% 50%;
+            animation: flapR 0.28s ease-in-out infinite alternate;
+        }
+
+        .b-core {
+            position: absolute;
+            left: 23px;
+            top: 10px;
+            width: 4px;
+            height: 26px;
+            background: #111;
+            border-radius: 10px;
+        }
+
+        @keyframes flapL {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(-70deg); }
+        }
+
+        @keyframes flapR {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(70deg); }
+        }
+
+        @keyframes flyAround1 {
+            0% { transform: translate(0, 0) rotate(10deg) scale(0.8); }
+            25% { transform: translate(350px, -80px) rotate(-15deg) scale(1.1); }
+            50% { transform: translate(800px, 150px) rotate(25deg) scale(0.9); }
+            75% { transform: translate(450px, 450px) rotate(-30deg) scale(1); }
+            100% { transform: translate(0, 0) rotate(10deg) scale(0.8); }
+        }
+
+        @keyframes flyAround2 {
+            0% { transform: translate(0, 0) rotate(-20deg) scale(0.9); }
+            30% { transform: translate(-500px, -200px) rotate(15deg) scale(1.15); }
+            60% { transform: translate(-850px, 100px) rotate(-10deg) scale(0.85); }
+            80% { transform: translate(-300px, -350px) rotate(35deg) scale(1); }
+            100% { transform: translate(0, 0) rotate(-20deg) scale(0.9); }
+        }
+
+        @keyframes flyAround3 {
+            0% { transform: translate(0, 0) rotate(5deg) scale(1); }
+            33% { transform: translate(-300px, 380px) rotate(-25deg) scale(0.85); }
+            66% { transform: translate(150px, 500px) rotate(40deg) scale(1.1); }
+            100% { transform: translate(0, 0) rotate(5deg) scale(1); }
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            background: rgba(10, 18, 36, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 0.6rem 1.6rem;
+            border-radius: 60px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+        .controls button {
+            background: linear-gradient(135deg, #f7e9b0, #d4af37);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            color: #0f1a30;
+            cursor: pointer;
+            transition: 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .controls button:hover:not(:disabled) { transform: scale(1.1); box-shadow: 0 0 20px #d4af37aa; }
+        .controls button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+        .controls span {
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            padding: 0 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 500;
+            background: rgba(6, 11, 22, 0.75);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .navbar .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .navbar .logo i { color: #d4af37; margin-right: 0.4rem; }
+        .nav-actions { display: flex; gap: 0.8rem; }
+        .nav-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #e8e6e3;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .nav-btn:hover {
+            background: #d4af37;
+            color: #0f1a30;
+            border-color: #d4af37;
+            box-shadow: 0 0 20px #d4af3744;
+        }
+
+        /* Drawer */
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -380px;
+            width: 340px;
+            height: 100vh;
+            background: rgba(8, 15, 32, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 3000;
+            padding: 2.5rem 2rem;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .drawer.open { right: 0; }
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.8rem;
+        }
+        .drawer-header h3 { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.3rem; }
+        .drawer-link {
+            color: #cbd5e1;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .drawer-link:hover {
+            background: rgba(212, 175, 55, 0.12);
+            color: #f7e9b0;
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 980px) {
+            .book-3d { height: 750px; }
+            .cover-content h1 { font-size: 2.4rem; }
+            .navbar { padding: 0.6rem 1.2rem; }
+            .spiral-binding { display: none; }
+            .butterfly { display: none; }
+            .sticky-note { width: 280px; left: 50% !important; right: auto !important; transform: translateX(-50%) rotate(0deg) !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- navbar -->
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-book-open"></i> Anam Shah Coaching</div>
+        <div class="nav-actions">
+            <button class="nav-btn" onclick="toggleDrawer(true)"><i class="fas fa-bars"></i> <span>Menu</span></button>
+        </div>
+    </nav>
+
+    <!-- side navigation drawer -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <h3>Navigation</h3>
+            <button class="nav-btn" onclick="toggleDrawer(false)" style="padding:0.2rem 0.6rem;"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- Book Chapters -->
+        <a class="drawer-link" onclick="goToPage(0); toggleDrawer(false);"><i class="fas fa-book"></i> Cover</a>
+        <a class="drawer-link" onclick="goToPage(1); toggleDrawer(false);"><i class="fas fa-bullseye"></i> Our Purpose</a>
+        <a class="drawer-link" onclick="goToPage(2); toggleDrawer(false);"><i class="fas fa-info-circle"></i> About App</a>
+        <a class="drawer-link" onclick="goToPage(3); toggleDrawer(false);"><i class="fas fa-user-graduate"></i> Ecosystem</a>
+        <a class="drawer-link" onclick="goToPage(4); toggleDrawer(false);"><i class="fas fa-cubes"></i> Core Features</a>
+        <a class="drawer-link" onclick="goToPage(5); toggleDrawer(false);"><i class="fas fa-envelope"></i> Contact Us</a>
+        
+        <hr style="border-color: rgba(255,255,255,0.08); margin: 0.8rem 0;">
+        
+        <!-- Sticky Note Toggle Links -->
+        <a class="drawer-link" onclick="toggleStickyNote('sticky-signin'); toggleDrawer(false);"><i class="fas fa-key"></i> Sign In Note</a>
+        <a class="drawer-link" onclick="toggleStickyNote('sticky-register'); toggleDrawer(false);"><i class="fas fa-user-plus"></i> Register Note</a>
+        <a class="drawer-link" onclick="toggleStickyNote('sticky-rating'); toggleDrawer(false);"><i class="fas fa-star"></i> Rate Us Note</a>
+    </div>
+
+    <!-- book wrapper -->
+    <div class="book-wrapper">
+
+        <!-- 3 FLYING BUTTERFLIES FLYING ALL OVER THE BOOK -->
+        <div class="butterfly bf-1">
+            <div class="bf-body-3d">
+                <div class="wing wing-left"></div>
+                <div class="wing wing-right"></div>
+                <div class="b-core"></div>
+            </div>
+        </div>
+
+        <div class="butterfly bf-2">
+            <div class="bf-body-3d">
+                <div class="wing wing-left"></div>
+                <div class="wing wing-right"></div>
+                <div class="b-core"></div>
+            </div>
+        </div>
+
+        <div class="butterfly bf-3">
+            <div class="bf-body-3d">
+                <div class="wing wing-left"></div>
+                <div class="wing wing-right"></div>
+                <div class="b-core"></div>
+            </div>
+        </div>
+
+        <div class="book-3d" id="book3d">
+
+            <!-- OVERLAY FOR STICKY NOTES DISPLAYED ON BOOK PAGES -->
+            <div class="page-sticky-overlay">
+
+                <!-- Sticky Note 1: Sign In (Rotated 12 Degrees) -->
+                <div class="sticky-note" id="sticky-signin">
+                    <button class="close-sticky" onclick="closeStickyNote('sticky-signin')">&times;</button>
+                    <div class="sticky-tape"></div>
+                    <h4><i class="fas fa-sign-in-alt"></i> Sign In</h4>
+                    <input type="email" id="sticky-email" placeholder="Email Address" />
+                    <input type="password" id="sticky-pass" placeholder="Password" />
+                    <button class="sticky-btn" onclick="stickySignIn()"><i class="fas fa-key"></i> Log In</button>
+                </div>
+
+                <!-- Sticky Note 2: Register (Rotated -14 Degrees) -->
+                <div class="sticky-note" id="sticky-register">
+                    <button class="close-sticky" onclick="closeStickyNote('sticky-register')">&times;</button>
+                    <div class="sticky-tape"></div>
+                    <h4><i class="fas fa-user-plus"></i> Join Us</h4>
+                    <input type="text" id="reg-name" placeholder="Full Name" />
+                    <input type="email" id="reg-email" placeholder="Email Address" />
+                    <input type="password" id="reg-pass" placeholder="Create Password" />
+                    <button class="sticky-btn" onclick="stickyRegister()"><i class="fas fa-paper-plane"></i> Register</button>
+                </div>
+
+                <!-- Sticky Note 3: Rate Us (Rotated 10 Degrees) -->
+                <div class="sticky-note" id="sticky-rating">
+                    <button class="close-sticky" onclick="closeStickyNote('sticky-rating')">&times;</button>
+                    <div class="sticky-tape"></div>
+                    <h4><i class="fas fa-star"></i> Rate Us</h4>
+                    <div class="sticky-stars">
+                        <i class="fas fa-star" id="sstar-1" onclick="setStickyRate(1)"></i>
+                        <i class="fas fa-star" id="sstar-2" onclick="setStickyRate(2)"></i>
+                        <i class="fas fa-star" id="sstar-3" onclick="setStickyRate(3)"></i>
+                        <i class="fas fa-star" id="sstar-4" onclick="setStickyRate(4)"></i>
+                        <i class="fas fa-star" id="sstar-5" onclick="setStickyRate(5)"></i>
+                    </div>
+                    <textarea id="sticky-review" rows="3" placeholder="Write your review here..."></textarea>
+                    <button class="sticky-btn" onclick="submitStickyReview()"><i class="fas fa-heart"></i> Submit Review</button>
+                </div>
+
+            </div>
+
+            <!-- Custom 3D Metallic Spiral Binding -->
+            <div class="spiral-binding" id="spiralBinding">
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+                <div class="spiral-loop"></div><div class="spiral-loop"></div><div class="spiral-loop"></div>
+            </div>
+
+            <!-- PAGE 0: COVER -->
+            <div class="page page-cover" id="page-0" style="z-index:10;">
+                <div class="cover-content">
+                    <div class="avatar-frame">
+                        <img src="sister-photo.jpg" alt="Anam Shah">
+                    </div>
+                    <h1>ANAM SHAH</h1>
+                    <h3>COACHING · NET JRF</h3>
+                    <p style="color:#b9c7e0; max-width:80%; margin:0 auto 1.2rem; line-height:1.7; font-size:1rem; font-family:'Merriweather', serif;">Structured learning · conceptual clarity · exam mastery</p>
+                    <button class="btn-gold" onclick="nextPage()"><i class="fas fa-book-open"></i> Open Book</button>
+                </div>
+            </div>
+
+            <!-- PAGE 1: Our Purpose (Warm Cream Page) -->
+            <div class="page" id="page-1" style="z-index:9;">
+                <div class="page-header"><i class="fas fa-bullseye"></i> Our Purpose</div>
+                <div class="page-content">
+                    <div class="cards-grid-3col">
+                        <div class="tall-card-3d" style="border-top: 4px solid #10b981;">
+                            <div class="card-icon-badge" style="color: #047857; background: #ecfdf5;"><i class="fas fa-graduation-cap"></i></div>
+                            <h4>High-Quality Content</h4>
+                            <p>Curated learning materials developed to address syllabus objectives directly and eliminate unnecessary fluff.</p>
+                            <ul>
+                                <li>Strict alignment with latest NTA syllabus patterns</li>
+                                <li>Conceptual unit summaries and mind maps</li>
+                                <li>High-yield point breakdowns for fast retrieval</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-shield-alt"></i> Standardized Quality</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #d4af37;">
+                            <div class="card-icon-badge" style="color: #b45309; background: #fffbeb;"><i class="fas fa-bullseye"></i></div>
+                            <h4>Exam-Oriented Strategy</h4>
+                            <p>Targeted frameworks designed to systematically refine speed, accuracy, and question interpretation under timed pressure.</p>
+                            <ul>
+                                <li>Pattern identification for recurring questions</li>
+                                <li>Time-budgeting methods per section</li>
+                                <li>Elimination tactics for high-complexity MCQs</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-chart-line"></i> Performance Focus</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #3b82f6;">
+                            <div class="card-icon-badge" style="color: #1d4ed8; background: #eff6ff;"><i class="fas fa-user-tie"></i></div>
+                            <h4>End-to-End Mentorship</h4>
+                            <p>Continuous guidance designed to answer student queries, provide structure, and sustain high study motivation.</p>
+                            <ul>
+                                <li>Direct academic clarification channels</li>
+                                <li>Structured weekly study goals</li>
+                                <li>Strategy calls and revision tracking</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-hands-helping"></i> Personalized Support</div>
+                        </div>
+                    </div>
+                    <div class="page-footer"><span>Chapter I</span><span>Page 1</span></div>
+                </div>
+            </div>
+
+            <!-- PAGE 2: About Application (Soft Mint Page) -->
+            <div class="page" id="page-2" style="z-index:8;">
+                <div class="page-header"><i class="fas fa-info-circle"></i> About Application</div>
+                <div class="page-content">
+                    <div class="cards-grid-3col">
+                        <div class="tall-card-3d" style="border-top: 4px solid #d4af37;">
+                            <div class="card-icon-badge" style="color: #b45309; background: #fffbeb;"><i class="fas fa-award"></i></div>
+                            <h4>Expert Mentor Support</h4>
+                            <p>Supervised directly by Anam Shah (NET & GATE Qualified), incorporating verified test-taking routines.</p>
+                            <ul>
+                                <li>First-hand competitive exam insights</li>
+                                <li>Tried-and-tested memory retention methods</li>
+                                <li>Structured subject prioritization guides</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-star"></i> Verified Expertise</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #10b981;">
+                            <div class="card-icon-badge" style="color: #047857; background: #ecfdf5;"><i class="fas fa-mobile-alt"></i></div>
+                            <h4>Modern Learning Portal</h4>
+                            <p>Engineered to deliver a zero-distraction, highly focused digital classroom directly on your mobile screen.</p>
+                            <ul>
+                                <li>Instant access to recorded topic modules</li>
+                                <li>Clean, clutter-free reading interfaces</li>
+                                <li>Offline download modes for seamless study</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-bolt"></i> Fast & Distraction-Free</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #8b5cf6;">
+                            <div class="card-icon-badge" style="color: #6d28d9; background: #f5f3ff;"><i class="fas fa-layer-group"></i></div>
+                            <h4>Systematic Organization</h4>
+                            <p>All core modules, revision cheat sheets, and practice sets neatly categorized under intuitive headings.</p>
+                            <ul>
+                                <li>Unit-wise organized digital libraries</li>
+                                <li>Quick filter for topic revision sheets</li>
+                                <li>Automated bookmarking for priority review</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-folder-open"></i> Structured Content</div>
+                        </div>
+                    </div>
+                    <div class="page-footer"><span>Chapter II</span><span>Page 2</span></div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Preparation Ecosystem (Ice Blue Page) -->
+            <div class="page" id="page-3" style="z-index:7;">
+                <div class="page-header"><i class="fas fa-compass"></i> Preparation Ecosystem</div>
+                <div class="page-content">
+                    <div class="cards-grid-3col">
+                        <div class="tall-card-3d" style="border-top: 4px solid #0284c7;">
+                            <div class="card-icon-badge" style="color: #0369a1; background: #e0f2fe;"><i class="fas fa-book-reader"></i></div>
+                            <h4>1. Concept Foundation</h4>
+                            <p>Establish fundamental clarity across core units with detailed breakdowns designed to simplify complex theories.</p>
+                            <ul>
+                                <li>Step-by-step concept explanations</li>
+                                <li>Topic-wise core lecture notes</li>
+                                <li>Essential definition & formula banks</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-cubes"></i> Phase 1 · Mastery</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #d97706;">
+                            <div class="card-icon-badge" style="color: #b45309; background: #fef3c7;"><i class="fas fa-tasks"></i></div>
+                            <h4>2. Guided Practice</h4>
+                            <p>Solidify theoretical concepts through structured problem-solving drills and extensive PYQ analysis.</p>
+                            <ul>
+                                <li>Topic-wise practice question banks</li>
+                                <li>Detailed solutions with explanations</li>
+                                <li>Previous 10-year paper breakdowns</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-sync"></i> Phase 2 · Application</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #7c3aed;">
+                            <div class="card-icon-badge" style="color: #6d28d9; background: #ede9fe;"><i class="fas fa-stopwatch"></i></div>
+                            <h4>3. Exam Simulation</h4>
+                            <p>Build exam stamina and fine-tune time management with full-length timed mock examinations.</p>
+                            <ul>
+                                <li>Real exam interface replication</li>
+                                <li>Strict timing and scoring metrics</li>
+                                <li>Instant weakness analysis reports</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-flag-checkered"></i> Phase 3 · Readiness</div>
+                        </div>
+                    </div>
+                    <div class="page-footer"><span>Chapter II</span><span>Page 3</span></div>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Application Core Features (Soft Lavender Page) -->
+            <div class="page" id="page-4" style="z-index:6;">
+                <div class="page-header"><i class="fas fa-cubes"></i> Application Features</div>
+                <div class="page-content">
+                    <div class="cards-grid-3col">
+                        <div class="tall-card-3d" style="border-top: 4px solid #0284c7;">
+                            <div class="card-icon-badge" style="color: #0369a1; background: #e0f2fe;"><i class="fas fa-book"></i></div>
+                            <h4>Structured Study Notes</h4>
+                            <p>In-depth, professionally curated reading modules engineered for quick conceptual comprehension.</p>
+                            <ul>
+                                <li>Clear visual diagrams & summaries</li>
+                                <li>High-yield revision bullet lists</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-file-alt"></i> Core Module</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #ea580c;">
+                            <div class="card-icon-badge" style="color: #c2410c; background: #ffedd5;"><i class="fas fa-pencil-alt"></i></div>
+                            <h4>Updated Syllabi Tracker</h4>
+                            <p>Continuously updated course content aligned with NTA and state eligibility exam guidelines.</p>
+                            <ul>
+                                <li>Automatic syllabus update alerts</li>
+                                <li>Topic completion status bars</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-sync-alt"></i> Always Updated</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #d97706;">
+                            <div class="card-icon-badge" style="color: #b45309; background: #fef3c7;"><i class="fas fa-brain"></i></div>
+                            <h4>Adaptive Mock Tests</h4>
+                            <p>Smart practice test engines configured to sharpen accuracy and increase question-solving speed.</p>
+                            <ul>
+                                <li>Topic-wise mini diagnostic tests</li>
+                                <li>Comprehensive mock papers</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-vial"></i> Smart Testing</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #059669;">
+                            <div class="card-icon-badge" style="color: #047857; background: #d1fae5;"><i class="fas fa-chart-line"></i></div>
+                            <h4>Performance Analytics</h4>
+                            <p>Detailed performance reporting showing strengths, error distribution, and time per question.</p>
+                            <ul>
+                                <li>Unit-by-unit accuracy ratings</li>
+                                <li>Personalized improvement feedback</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-microscope"></i> In-depth Insights</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #16a34a;">
+                            <div class="card-icon-badge" style="color: #15803d; background: #dcfce7;"><i class="fas fa-clock"></i></div>
+                            <h4>Self-Paced Access</h4>
+                            <p>Study on your schedule with 24/7 unlimited access to all lecture archives and study assets.</p>
+                            <ul>
+                                <li>No mandatory live attendance</li>
+                                <li>Flexible re-watch capability</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-user-clock"></i> Total Flexibility</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #db2777;">
+                            <div class="card-icon-badge" style="color: #be185d; background: #fce7f3;"><i class="fas fa-desktop"></i></div>
+                            <h4>Cross-Platform Support</h4>
+                            <p>Fully optimized interface providing a seamless transition between desktop browsers, tablets, and mobile devices.</p>
+                            <ul>
+                                <li>Responsive layout structure</li>
+                                <li>Multi-device progress sync</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-laptop-house"></i> Multi-Device</div>
+                        </div>
+                    </div>
+                    <div class="page-footer"><span>Chapter III</span><span>Page 4</span></div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Contact Us (Muted Teal Page) -->
+            <div class="page" id="page-5" style="z-index:5;">
+                <div class="page-header"><i class="fas fa-envelope"></i> Contact & Support</div>
+                <div class="page-content">
+                    <div class="cards-grid-3col">
+                        <div class="tall-card-3d" style="border-top: 4px solid #ea580c;">
+                            <div class="card-icon-badge" style="color: #c2410c; background: #ffedd5;"><i class="fas fa-envelope-open-text"></i></div>
+                            <h4>Direct Email Inquiry</h4>
+                            <p>Send your queries regarding course enrollment, study material access, or academic assistance.</p>
+                            <ul>
+                                <li><a href="mailto:anamshah113@gmail.com" style="color:#1d4ed8; font-weight:700; text-decoration:none;">anamshah113@gmail.com</a></li>
+                                <li>Guaranteed response within 24 business hours</li>
+                                <li>Direct academic query escalation</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-paper-plane"></i> Email Support</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #0d9488;">
+                            <div class="card-icon-badge" style="color: #0f766e; background: #ccfbf1;"><i class="fas fa-phone-alt"></i></div>
+                            <h4>Phone & WhatsApp</h4>
+                            <p>Speak directly with our support desk or send quick message inquiries on WhatsApp.</p>
+                            <ul>
+                                <li><a href="tel:+917455844809" style="color:#b45309; font-weight:700; text-decoration:none;">+91 7455844809</a></li>
+                                <li>Instant WhatsApp query response</li>
+                                <li>Technical assistance for portal login</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fab fa-whatsapp"></i> Direct Connect</div>
+                        </div>
+
+                        <div class="tall-card-3d" style="border-top: 4px solid #e11d48;">
+                            <div class="card-icon-badge" style="color: #be123c; background: #ffe4e6;"><i class="fas fa-clock"></i></div>
+                            <h4>Support Hours</h4>
+                            <p>Our academic support team is available during dedicated operational hours to help you.</p>
+                            <ul>
+                                <li>Monday – Saturday: 10:00 AM – 7:00 PM IST</li>
+                                <li>Sunday: Closed for maintenance</li>
+                                <li>Emergency ticket support available</li>
+                            </ul>
+                            <div class="card-footer-badge"><i class="fas fa-calendar-alt"></i> Operating Desk</div>
+                        </div>
+                    </div>
+                    <div class="page-footer"><span>Chapter IV</span><span>Page 5</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- controls -->
+    <div class="controls">
+        <button id="prevBtn" onclick="prevPage()" disabled><i class="fas fa-chevron-up"></i></button>
+        <span id="pageIndicator">Cover</span>
+        <button id="nextBtn" onclick="nextPage()"><i class="fas fa-chevron-down"></i></button>
+    </div>
+
+    <script>
+        // BOOK FLIP (vertical top-to-bottom) - Single page view
+        let currentPage = 0;
+        const totalPages = 6;
+
+        function updateBook() {
+            for (let i = 0; i < totalPages; i++) {
+                const page = document.getElementById(`page-${i}`);
+                if (i < currentPage) {
+                    page.classList.add('flipped');
+                } else {
+                    page.classList.remove('flipped');
+                }
+            }
+            document.getElementById('prevBtn').disabled = (currentPage === 0);
+            document.getElementById('nextBtn').disabled = (currentPage === totalPages - 1);
+            const indicator = document.getElementById('pageIndicator');
+            const names = ['Cover', 'Purpose', 'About', 'Ecosystem', 'Features', 'Contact'];
+            indicator.innerText = names[currentPage] || `Page ${currentPage}`;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages - 1) { currentPage++; updateBook(); }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) { currentPage--; updateBook(); }
+        }
+
+        function goToPage(idx) {
+            if (idx >= 0 && idx < totalPages) { currentPage = idx; updateBook(); }
+        }
+
+        // Mouse scroll
+        let scrollLock = false;
+        window.addEventListener('wheel', (e) => {
+            if (scrollLock) return;
+            if (e.deltaY > 30) { nextPage(); scrollLock = true; setTimeout(() => scrollLock = false, 700); } 
+            else if (e.deltaY < -30) { prevPage(); scrollLock = true; setTimeout(() => scrollLock = false, 700); }
+        });
+
+        // Drawer
+        function toggleDrawer(open) {
+            document.getElementById('drawer').classList.toggle('open', open);
+        }
+
+        // TOGGLE DYNAMIC STICKY NOTES & CONTROL PAGE CONTENT VISIBILITY
+        function toggleStickyNote(id) {
+            const targetNote = document.getElementById(id);
+            if (!targetNote) return;
+
+            const isAlreadyActive = targetNote.classList.contains('active-note');
+
+            // Hide all sticky notes first
+            document.querySelectorAll('.sticky-note').forEach(note => {
+                note.classList.remove('active-note');
+            });
+
+            const book3d = document.getElementById('book3d');
+
+            if (!isAlreadyActive) {
+                targetNote.classList.add('active-note');
+                book3d.classList.add('sticky-active'); // Hides book content beneath
+                setTimeout(() => {
+                    const firstInput = targetNote.querySelector('input, textarea');
+                    if (firstInput) firstInput.focus();
+                }, 100);
+            } else {
+                book3d.classList.remove('sticky-active'); // Restores book content
+            }
+        }
+
+        function closeStickyNote(id) {
+            const targetNote = document.getElementById(id);
+            if (targetNote) {
+                targetNote.classList.remove('active-note');
+            }
+            // Check if any sticky notes are still active
+            const activeNotes = document.querySelectorAll('.sticky-note.active-note');
+            if (activeNotes.length === 0) {
+                document.getElementById('book3d').classList.remove('sticky-active');
+            }
+        }
+
+        // STICKY NOTE LOGIC
+        function stickySignIn() {
+            const email = document.getElementById('sticky-email').value;
+            const pass = document.getElementById('sticky-pass').value;
+            if(email && pass) {
+                alert('Logged in via Sticky Note!');
+                closeStickyNote('sticky-signin');
+            } else {
+                alert('Please fill in your credentials.');
+            }
+        }
+
+        function stickyRegister() {
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            if(name && email) {
+                alert('Registration submitted via Sticky Note!');
+                closeStickyNote('sticky-register');
+            } else {
+                alert('Please enter your details.');
+            }
+        }
+
+        let stickyRatingVal = 0;
+        function setStickyRate(n) {
+            stickyRatingVal = n;
+            for(let i=1; i<=5; i++) {
+                document.getElementById(`sstar-${i}`).classList.toggle('active', i <= n);
+            }
+        }
+
+        function submitStickyReview() {
+            if(stickyRatingVal > 0) {
+                alert(`Thank you for giving us a ${stickyRatingVal}-star rating!`);
+                closeStickyNote('sticky-rating');
+            } else {
+                alert('Please tap on a star to rate us first!');
+            }
+        }
+
+        updateBook();
+    </script>
+</body>
+</html>

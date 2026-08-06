@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice Assignment · LearnSync Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --primary-light: #A78BFA;
+            --secondary: #F59E0B;
+            --accent: #10B981;
+            --danger: #EF4444;
+            --dark: #1F2937;
+            --light: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            --gradient-accent: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            --gradient-danger: linear-gradient(135deg, #EF4444 0%, #F87171 100%);
+            --gradient-gold: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-full: 9999px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-theme {
+            --light: #0F172A;
+            --dark: #F1F5F9;
+            --gray-50: #0F172A;
+            --gray-100: #1E293B;
+            --gray-200: #334155;
+            --gray-300: #475569;
+            --gray-400: #64748B;
+            --gray-500: #94A3B8;
+            --gray-600: #CBD5E1;
+            --gray-700: #E2E8F0;
+            --gray-800: #F1F5F9;
+            --gray-900: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--gray-100);
+            color: var(--dark);
+            min-height: 100vh;
+            transition: all var(--transition);
+        }
+
+        .dark-theme body {
+            background: #0F172A;
+        }
+
+        #top-header {
+            background: var(--light);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .brand i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .brand span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-500);
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: var(--transition);
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+        }
+
+        .back-link:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--gray-200);
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .user-avatar-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .exam-container {
+            display: flex;
+            gap: 24px;
+            max-width: 1440px;
+            margin: 24px auto;
+            padding: 0 32px 40px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .question-panel {
+            flex: 1;
+            background: var(--light);
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all var(--transition);
+        }
+
+        .exam-topbar {
+            background: var(--gray-50);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            transition: all var(--transition);
+        }
+
+        .exam-topbar .exam-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+
+        .exam-topbar .exam-title i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+        .exam-topbar .exam-timer {
+            font-family: 'Poppins', monospace;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 1px;
+            background: var(--gray-100);
+            padding: 4px 16px;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition);
+        }
+
+        .question-area {
+            padding: 28px 32px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .question-number-display {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .question-text .code-block {
+            display: block;
+            background: var(--gray-900);
+            color: #e2e8f0;
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .dark-theme .question-text .code-block {
+            background: #0F172A;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 14px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            background: var(--gray-50);
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
+            transition: all var(--transition);
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark);
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary-light);
+            background: rgba(139, 92, 246, 0.04);
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: rgba(139, 92, 246, 0.08);
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .option-btn.wrong {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-400);
+            transition: all var(--transition);
+        }
+
+        .option-btn.selected .option-radio {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct .option-radio {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+        }
+
+        .option-btn.correct .option-radio::after {
+            content: '✓';
+            font-size: 12px;
+        }
+
+        .option-btn.wrong .option-radio {
+            border-color: var(--danger);
+            background: var(--danger);
+            color: white;
+        }
+
+        .option-btn.wrong .option-radio::after {
+            content: '✗';
+            font-size: 12px;
+        }
+
+        .exam-actions {
+            display: flex;
+            gap: 12px;
+            padding: 16px 24px;
+            border-top: 1px solid var(--gray-200);
+            background: var(--gray-50);
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            transition: all var(--transition);
+        }
+
+        .exam-btn {
+            padding: 10px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exam-btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        .exam-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .exam-btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray-200);
+            color: var(--gray-600);
+        }
+        .exam-btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .exam-btn-review {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        .exam-btn-review:hover {
+            background: rgba(245, 158, 11, 0.2);
+        }
+        .exam-btn-review.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .palette-panel {
+            width: 260px;
+            flex-shrink: 0;
+            background: var(--light);
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all var(--transition);
+            max-height: calc(100vh - 140px);
+        }
+
+        .palette-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--gray-200);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gray-50);
+            flex-shrink: 0;
+            transition: all var(--transition);
+        }
+
+        .palette-header i {
+            color: var(--primary);
+        }
+
+        .palette-stats {
+            padding: 12px 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            border-bottom: 1px solid var(--gray-200);
+            flex-shrink: 0;
+        }
+
+        .palette-stat {
+            text-align: center;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            transition: all var(--transition);
+        }
+
+        .palette-stat .count {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .palette-stat.answered {
+            background: rgba(16, 185, 129, 0.12);
+            color: #065F46;
+        }
+        .dark-theme .palette-stat.answered {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34D399;
+        }
+        .palette-stat.not-answered {
+            background: rgba(239, 68, 68, 0.12);
+            color: #991B1B;
+        }
+        .dark-theme .palette-stat.not-answered {
+            background: rgba(239, 68, 68, 0.2);
+            color: #F87171;
+        }
+        .palette-stat.review {
+            background: rgba(245, 158, 11, 0.12);
+            color: #92400E;
+        }
+        .dark-theme .palette-stat.review {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FBBF24;
+        }
+        .palette-stat.not-visited {
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            padding: 12px 16px;
+            overflow-y: auto;
+            flex: 1;
+            align-content: flex-start;
+        }
+
+        .q-dot {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 2px solid transparent;
+            height: 32px;
+            width: 100%;
+            max-width: 32px;
+            margin: 0 auto;
+        }
+
+        .q-dot.answered {
+            background: var(--accent);
+            color: white;
+            border-color: #059669;
+        }
+        .q-dot.not-answered {
+            background: var(--danger);
+            color: white;
+            border-color: #DC2626;
+        }
+        .q-dot.review {
+            background: var(--secondary);
+            color: white;
+            border-color: #D97706;
+        }
+        .q-dot.not-visited {
+            background: var(--gray-200);
+            color: var(--gray-400);
+            border-color: var(--gray-300);
+        }
+        .q-dot.current {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+            transform: scale(1.08);
+        }
+
+        .q-dot:hover {
+            transform: scale(1.08);
+            box-shadow: var(--shadow-md);
+        }
+
+        .palette-footer {
+            padding: 14px 18px;
+            border-top: 1px solid var(--gray-200);
+            flex-shrink: 0;
+            background: var(--gray-50);
+            transition: all var(--transition);
+        }
+
+        .submit-exam-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .submit-exam-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .submit-exam-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .results-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .results-overlay.show {
+            display: flex;
+        }
+
+        .results-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            transition: all var(--transition);
+        }
+
+        .results-card .emoji {
+            font-size: 4rem;
+            margin-bottom: 12px;
+        }
+        .results-card h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .results-card .subtitle {
+            color: var(--gray-500);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .result-stat {
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .result-stat .number {
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+        .result-stat .label {
+            font-size: 0.75rem;
+        }
+
+        .result-stat.pass {
+            background: rgba(16, 185, 129, 0.12);
+            color: #065F46;
+        }
+        .dark-theme .result-stat.pass {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34D399;
+        }
+        .result-stat.fail {
+            background: rgba(239, 68, 68, 0.12);
+            color: #991B1B;
+        }
+        .dark-theme .result-stat.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #F87171;
+        }
+        .result-stat.time {
+            background: rgba(245, 158, 11, 0.12);
+            color: #92400E;
+        }
+        .dark-theme .result-stat.time {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FBBF24;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .result-actions .exam-btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        @media (max-width: 1200px) {
+            .exam-container {
+                flex-direction: column;
+                padding: 0 20px 32px;
+            }
+            .palette-panel {
+                width: 100%;
+                max-height: none;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .palette-panel .palette-header {
+                width: 100%;
+            }
+            .palette-panel .palette-stats {
+                flex: 1;
+                min-width: 200px;
+                border-bottom: none;
+                border-right: 1px solid var(--gray-200);
+            }
+            .palette-panel .question-grid {
+                flex: 2;
+                min-width: 200px;
+                grid-template-columns: repeat(10, 1fr);
+                align-content: flex-start;
+            }
+            .palette-panel .question-grid .q-dot {
+                height: 28px;
+                max-width: 28px;
+            }
+            .palette-panel .palette-footer {
+                width: 100%;
+                border-top: 1px solid var(--gray-200);
+            }
+        }
+
+        @media (max-width: 992px) {
+            #top-header {
+                padding: 10px 20px;
+            }
+            .exam-container {
+                padding: 0 16px 24px;
+            }
+            .question-area {
+                padding: 20px 24px;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #top-header {
+                padding: 8px 14px;
+            }
+            .brand {
+                font-size: 1rem;
+            }
+            .back-link span {
+                display: none;
+            }
+            .exam-topbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .exam-topbar .exam-timer {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+            .question-area {
+                padding: 16px;
+            }
+            .question-text {
+                font-size: 0.95rem;
+            }
+            .option-btn {
+                padding: 12px 14px;
+                font-size: 0.9rem;
+            }
+            .exam-actions {
+                padding: 12px 16px;
+                justify-content: center;
+            }
+            .exam-actions .exam-btn {
+                flex: 1;
+                justify-content: center;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .palette-panel .palette-stats {
+                grid-template-columns: 1fr 1fr;
+                min-width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--gray-200);
+            }
+            .palette-panel .question-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+            .palette-panel .question-grid .q-dot {
+                height: 24px;
+                max-width: 24px;
+                font-size: 0.6rem;
+            }
+            .results-card {
+                padding: 24px;
+            }
+            .result-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .result-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .exam-container {
+                padding: 0 8px 16px;
+            }
+            .question-area {
+                padding: 12px;
+            }
+            .option-btn {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+            .option-radio {
+                width: 18px;
+                height: 18px;
+                font-size: 9px;
+            }
+            .palette-panel .question-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            .palette-panel .question-grid .q-dot {
+                height: 20px;
+                max-width: 20px;
+                font-size: 0.5rem;
+            }
+            .exam-actions {
+                gap: 6px;
+            }
+            .exam-actions .exam-btn {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="top-header">
+        <div class="header-left">
+            <a href="#" class="brand">
+                <i class="fas fa-brain"></i>
+                <span>LearnSync Pro</span>
+            </a>
+            <a href="#" class="back-link" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn" id="themeToggle" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="icon-btn" title="Notifications">
+                <i class="fas fa-bell"></i>
+            </button>
+            <div class="user-avatar-sm">AK</div>
+        </div>
+    </header>
+
+    <div class="exam-container" id="examContainer">
+
+        <div class="question-panel">
+            <div class="exam-topbar">
+                <span class="exam-title"><i class="fas fa-pencil-alt"></i> Linear Regression — Practice</span>
+                <span class="exam-timer running" id="examTimer">00:00</span>
+            </div>
+            <div class="question-area">
+                <div class="question-number-display">Question <span id="currentQ">1</span> of <span id="totalQ">8</span></div>
+                <div class="question-text" id="qText">Loading question...</div>
+                <div class="options-grid" id="optionsGrid"></div>
+                <div id="explanationArea" style="display:none;margin-top:16px;padding:16px;background:rgba(139,92,246,0.08);border-radius:var(--radius-sm);border-left:4px solid var(--primary);">
+                    <div style="font-weight:700;color:var(--primary);font-size:0.85rem;">💡 Explanation</div>
+                    <div id="explanationText" style="font-size:0.9rem;color:var(--gray-600);margin-top:4px;line-height:1.6;"></div>
+                </div>
+            </div>
+            <div class="exam-actions">
+                <button class="exam-btn exam-btn-review" id="reviewBtn" onclick="toggleReview()">🚩 Mark for Review</button>
+                <div style="flex:1;"></div>
+                <button class="exam-btn exam-btn-outline" id="prevBtn" onclick="prevQuestion()">← Previous</button>
+                <button class="exam-btn exam-btn-primary" id="nextBtn" onclick="nextQuestion()">Save & Next →</button>
+            </div>
+        </div>
+
+        <div class="palette-panel">
+            <div class="palette-header"><i class="fas fa-th-list"></i> Question Palette</div>
+            <div class="palette-stats">
+                <div class="palette-stat answered"><div class="count" id="answeredCount">0</div><div>Answered</div></div>
+                <div class="palette-stat not-answered"><div class="count" id="notAnsweredCount">0</div><div>Not Answered</div></div>
+                <div class="palette-stat review"><div class="count" id="reviewCount">0</div><div>For Review</div></div>
+                <div class="palette-stat not-visited"><div class="count" id="notVisitedCount">8</div><div>Not Visited</div></div>
+            </div>
+            <div class="question-grid" id="questionGrid"></div>
+            <div class="palette-footer">
+                <button class="submit-exam-btn" id="submitBtn" onclick="submitExam()">📤 Submit Assignment</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="results-overlay" id="resultsOverlay">
+        <div class="results-card">
+            <div class="emoji" id="resultEmoji">🎉</div>
+            <h2 id="resultTitle">Assignment Complete!</h2>
+            <p class="subtitle" id="resultSubtitle">Great job practicing Linear Regression concepts.</p>
+            <div class="result-stats">
+                <div class="result-stat pass"><div class="number" id="correctCount">0</div><div class="label">✅ Correct</div></div>
+                <div class="result-stat fail"><div class="number" id="wrongCount">0</div><div class="label">❌ Wrong</div></div>
+                <div class="result-stat time"><div class="number" id="timeTaken">00:00</div><div class="label">⏱️ Time Taken</div></div>
+            </div>
+            <div class="result-actions">
+                <button class="exam-btn exam-btn-outline" onclick="clearTimerAndReload()">🔄 Retry</button>
+                <button class="exam-btn exam-btn-primary" onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== THEME TOGGLE =====
+        const themeBtn = document.getElementById('themeToggle');
+        const themeIcon = themeBtn.querySelector('i');
+        let darkMode = localStorage.getItem('theme') === 'dark';
+
+        if (darkMode) {
+            document.body.classList.add('dark-theme');
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-theme');
+            themeIcon.className = darkMode ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+        });
+
+        // ===== TIMER STORAGE KEY =====
+        const PRACTICE_TIMER_KEY = 'practiceTimer_8q';
+
+        // ===== QUESTION DATA =====
+        const questions = [{
+            id: 1,
+            text: 'What is the primary goal of Linear Regression?',
+            options: [
+                'To find the best-fitting line that minimizes the sum of squared errors',
+                'To maximize the accuracy of classification',
+                'To find the median of the data points',
+                'To cluster similar data points together'
+            ],
+            correct: 0,
+            explanation: 'Linear Regression aims to find the best-fitting straight line through the data points by minimizing the sum of squared errors (SSE).'
+        }, {
+            id: 2,
+            text: 'What is the purpose of the learning rate in Gradient Descent?\n\nweights = weights - learning_rate * gradient',
+            options: [
+                'It determines the step size at each iteration',
+                'It stops the algorithm from running',
+                'It increases the number of epochs',
+                'It normalizes the input data'
+            ],
+            correct: 0,
+            explanation: 'The learning rate controls how much we adjust the weights with each update.'
+        }, {
+            id: 3,
+            text: 'Which metric is commonly used to evaluate Linear Regression?',
+            options: ['R-squared (R²)', 'Accuracy', 'Precision', 'F1 Score'],
+            correct: 0,
+            explanation: 'R-squared (R²) measures the proportion of variance in the dependent variable that is predictable.'
+        }, {
+            id: 4,
+            text: 'What does this code do?\n\nfrom sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\npredictions = model.predict(X_test)',
+            options: [
+                'Trains a Linear Regression model and makes predictions',
+                'Imports the dataset and splits it',
+                'Evaluates the model using cross-validation',
+                'Performs feature scaling on the data'
+            ],
+            correct: 0,
+            explanation: 'This code imports LinearRegression, creates an instance, trains it, and makes predictions.'
+        }, {
+            id: 5,
+            text: 'What is overfitting in Linear Regression?',
+            options: [
+                'The model performs well on training data but poorly on new data',
+                'The model performs poorly on all data',
+                'The model has too few features',
+                'The model is too simple to capture patterns'
+            ],
+            correct: 0,
+            explanation: 'Overfitting occurs when a model learns the training data too well, including noise.'
+        }, {
+            id: 6,
+            text: 'What is the hypothesis function in Linear Regression with one feature?',
+            options: ['h(x) = θ₀ + θ₁x', 'h(x) = θ₀x + θ₁', 'h(x) = θ₀ + θ₁x + θ₂x²', 'h(x) = θ₀θ₁x'],
+            correct: 0,
+            explanation: 'The hypothesis function is h(x) = θ₀ + θ₁x, where θ₀ is the intercept and θ₁ is the slope.'
+        }, {
+            id: 7,
+            text: 'What is the purpose of feature scaling in Linear Regression?',
+            options: [
+                'To ensure all features contribute equally to the cost function',
+                'To increase the number of features',
+                'To convert categorical variables to numerical',
+                'To remove outliers'
+            ],
+            correct: 0,
+            explanation: 'Feature scaling ensures all features are on a similar scale, preventing larger magnitudes from dominating.'
+        }, {
+            id: 8,
+            text: 'How to split data into training and testing sets in sklearn?',
+            options: [
+                'from sklearn.model_selection import train_test_split',
+                'from sklearn.split import train_test',
+                'from sklearn.data import split_data',
+                'from sklearn.preprocessing import train_test'
+            ],
+            correct: 0,
+            explanation: 'The correct import is: from sklearn.model_selection import train_test_split.'
+        }];
+
+        // ===== STATE =====
+        let state = {
+            currentQuestion: 0,
+            totalQuestions: questions.length,
+            answers: {},
+            reviewMarked: {},
+            visited: {},
+            seconds: 0,
+            timerInterval: null,
+            isRunning: false,
+            isSubmitted: false
+        };
+
+        // ===== LOAD SAVED STATE =====
+        function loadPracticeState() {
+            const saved = sessionStorage.getItem(PRACTICE_TIMER_KEY);
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    // Calculate elapsed time since last save
+                    const elapsed = Math.floor((Date.now() - data.timestamp) / 1000);
+                    state.seconds = data.seconds + elapsed;
+                    state.answers = data.answers || {};
+                    state.reviewMarked = data.reviewMarked || {};
+                    state.visited = data.visited || {};
+                    state.isSubmitted = data.isSubmitted || false;
+
+                    if (state.isSubmitted) {
+                        document.getElementById('submitBtn').disabled = true;
+                        document.getElementById('submitBtn').textContent = '✓ Submitted';
+                        return true;
+                    }
+
+                    state.isRunning = true;
+                    startTimer();
+                    return true;
+                } catch (e) { return false; }
+            }
+            return false;
+        }
+
+        function savePracticeState() {
+            const data = {
+                seconds: state.seconds,
+                answers: state.answers,
+                reviewMarked: state.reviewMarked,
+                visited: state.visited,
+                isSubmitted: state.isSubmitted,
+                timestamp: Date.now()
+            };
+            sessionStorage.setItem(PRACTICE_TIMER_KEY, JSON.stringify(data));
+        }
+
+        function clearPracticeState() {
+            sessionStorage.removeItem(PRACTICE_TIMER_KEY);
+        }
+
+        function clearTimerAndReload() {
+            clearPracticeState();
+            location.reload();
+        }
+
+        // ===== RENDER FUNCTIONS =====
+        function renderQuestion() {
+            const q = questions[state.currentQuestion];
+            document.getElementById('currentQ').textContent = state.currentQuestion + 1;
+            document.getElementById('totalQ').textContent = state.totalQuestions;
+
+            let text = q.text;
+            if (text.includes('\n\n')) {
+                const parts = text.split('\n\n');
+                text = parts[0] + `<span class="code-block">${parts[1]}</span>`;
+            }
+            document.getElementById('qText').innerHTML = text;
+
+            const letters = ['A', 'B', 'C', 'D'];
+            const selected = state.answers[state.currentQuestion];
+
+            document.getElementById('optionsGrid').innerHTML = q.options.map((opt, i) => `
+                        <button class="option-btn ${selected === i ? 'selected' : ''}" onclick="selectOption(${i})">
+                            <span class="option-radio">${letters[i]}</span>
+                            <span>${opt}</span>
+                        </button>
+                    `).join('');
+
+            document.getElementById('explanationArea').style.display = 'none';
+            updateNavButtons();
+            renderQuestionGrid();
+            updateTimerDisplay();
+        }
+
+        function selectOption(index) {
+            if (state.isSubmitted) return;
+            state.answers[state.currentQuestion] = index;
+            renderQuestion();
+            savePracticeState();
+        }
+
+        function nextQuestion() {
+            if (state.currentQuestion < state.totalQuestions - 1) {
+                state.currentQuestion++;
+                state.visited[state.currentQuestion] = true;
+                renderQuestion();
+                savePracticeState();
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQuestion > 0) {
+                state.currentQuestion--;
+                state.visited[state.currentQuestion] = true;
+                renderQuestion();
+                savePracticeState();
+            }
+        }
+
+        function toggleReview() {
+            if (state.isSubmitted) return;
+            state.reviewMarked[state.currentQuestion] = !state.reviewMarked[state.currentQuestion];
+            document.getElementById('reviewBtn').classList.toggle('active');
+            renderQuestionGrid();
+            savePracticeState();
+        }
+
+        function goToQuestion(index) {
+            state.currentQuestion = index;
+            state.visited[index] = true;
+            renderQuestion();
+            savePracticeState();
+        }
+
+        function updateNavButtons() {
+            document.getElementById('prevBtn').style.display = state.currentQuestion === 0 ? 'none' : 'inline-flex';
+            document.getElementById('nextBtn').textContent =
+                state.currentQuestion === state.totalQuestions - 1 ? 'Review & Finish ✓' : 'Save & Next →';
+        }
+
+        function renderQuestionGrid() {
+            const grid = document.getElementById('questionGrid');
+            let html = '';
+            let answered = 0,
+                notAnswered = 0,
+                review = 0,
+                notVisited = 0;
+
+            for (let i = 0; i < state.totalQuestions; i++) {
+                let cls = 'not-visited';
+                if (state.reviewMarked[i]) { cls = 'review';
+                    review++; } else if (state.answers[i] !== undefined) { cls = 'answered';
+                    answered++; } else if (state.visited[i]) { cls = 'not-answered';
+                    notAnswered++; } else { notVisited++; }
+
+                if (i === state.currentQuestion) cls += ' current';
+
+                html += `<div class="q-dot ${cls}" onclick="goToQuestion(${i})">${i+1}</div>`;
+            }
+            grid.innerHTML = html;
+
+            document.getElementById('answeredCount').textContent = answered;
+            document.getElementById('notAnsweredCount').textContent = notAnswered;
+            document.getElementById('reviewCount').textContent = review;
+            document.getElementById('notVisitedCount').textContent = notVisited;
+        }
+
+        // ===== TIMER =====
+        function startTimer() {
+            if (state.timerInterval) return;
+            state.isRunning = true;
+            state.timerInterval = setInterval(() => {
+                state.seconds++;
+                updateTimerDisplay();
+                savePracticeState();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            state.isRunning = false;
+            if (state.timerInterval) {
+                clearInterval(state.timerInterval);
+                state.timerInterval = null;
+            }
+            savePracticeState();
+        }
+
+        function updateTimerDisplay() {
+            const mins = String(Math.floor(state.seconds / 60)).padStart(2, '0');
+            const secs = String(state.seconds % 60).padStart(2, '0');
+            document.getElementById('examTimer').textContent = `${mins}:${secs}`;
+        }
+
+        function formatTime(secs) {
+            const mins = String(Math.floor(secs / 60)).padStart(2, '0');
+            const secsStr = String(secs % 60).padStart(2, '0');
+            return `${mins}:${secsStr}`;
+        }
+
+        // ===== SUBMIT =====
+        function submitExam() {
+            if (state.isSubmitted) return;
+
+            const answeredCount = Object.keys(state.answers).length;
+            if (answeredCount < state.totalQuestions) {
+                const confirmSubmit = confirm(
+                    `⚠️ You have answered ${answeredCount}/${state.totalQuestions} questions.\n\n` +
+                    `Unanswered questions will be marked as incorrect.\n\n` +
+                    `Are you sure you want to submit?`
+                );
+                if (!confirmSubmit) return;
+            }
+
+            state.isSubmitted = true;
+            stopTimer();
+            savePracticeState();
+
+            let correct = 0;
+            let wrong = 0;
+
+            questions.forEach((q, i) => {
+                const selected = state.answers[i];
+                if (selected === undefined) {
+                    wrong++;
+                } else if (selected === q.correct) {
+                    correct++;
+                } else {
+                    wrong++;
+                }
+            });
+
+            const total = state.totalQuestions;
+            const percentage = Math.round((correct / total) * 100);
+
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('wrongCount').textContent = wrong;
+            document.getElementById('timeTaken').textContent = formatTime(state.seconds);
+
+            const emoji = document.getElementById('resultEmoji');
+            const title = document.getElementById('resultTitle');
+            const subtitle = document.getElementById('resultSubtitle');
+
+            if (percentage >= 60) {
+                emoji.textContent = '🎉';
+                title.textContent = 'Great Job!';
+                subtitle.textContent = `You scored ${percentage}% and passed the practice assignment!`;
+            } else {
+                emoji.textContent = '💪';
+                title.textContent = 'Keep Practicing!';
+                subtitle.textContent = `You scored ${percentage}%. Review the concepts and try again.`;
+            }
+
+            document.getElementById('resultsOverlay').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = '✓ Submitted';
+        }
+
+        // ===== INIT - Timer Auto-Starts =====
+        const hasSavedState = loadPracticeState();
+
+        if (!hasSavedState) {
+            // Fresh start - auto-start timer
+            state.visited[0] = true;
+            state.isRunning = true;
+            startTimer();
+            savePracticeState();
+        }
+
+        renderQuestion();
+
+        console.log('📝 Practice Assignment loaded!');
+        console.log('⏱️ Timer: ' + formatTime(state.seconds));
+        console.log('🔒 Timer persists on reload (anti-cheat)');
+    </script>
+</body>
+</html>

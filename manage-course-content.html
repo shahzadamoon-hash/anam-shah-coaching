@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Course · LearnSync Pro Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --primary-light: #A78BFA;
+            --secondary: #F59E0B;
+            --accent: #10B981;
+            --danger: #EF4444;
+            --dark: #1F2937;
+            --light: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            --gradient-accent: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            --gradient-danger: linear-gradient(135deg, #EF4444 0%, #F87171 100%);
+            --gradient-gold: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            --gradient-blue: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            --gradient-pink: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-full: 9999px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-theme {
+            --light: #0F172A;
+            --dark: #F1F5F9;
+            --gray-50: #0F172A;
+            --gray-100: #1E293B;
+            --gray-200: #334155;
+            --gray-300: #475569;
+            --gray-400: #64748B;
+            --gray-500: #94A3B8;
+            --gray-600: #CBD5E1;
+            --gray-700: #E2E8F0;
+            --gray-800: #F1F5F9;
+            --gray-900: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--gray-100);
+            color: var(--dark);
+            min-height: 100vh;
+            transition: all var(--transition);
+        }
+
+        .dark-theme body {
+            background: #0F172A;
+        }
+
+        #top-header {
+            background: var(--light);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .brand i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .brand span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-badge {
+            font-size: 0.55rem;
+            font-weight: 700;
+            background: var(--gradient-gold);
+            color: white;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            letter-spacing: 0.5px;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-500);
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: var(--transition);
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+        }
+
+        .back-link:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--gray-200);
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--light);
+        }
+
+        .user-avatar-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        #page-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 24px 32px 40px;
+        }
+
+        /* Course Header */
+        .course-header {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+        }
+
+        .course-header .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .course-header .info h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .course-header .info .meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        .course-header .info .meta i {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+
+        .course-header .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary-sm {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        .btn-primary-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline-sm {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-600);
+        }
+        .btn-outline-sm:hover {
+            background: var(--gray-100);
+        }
+
+        .btn-gold-sm {
+            background: var(--gradient-gold);
+            color: white;
+        }
+        .btn-gold-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger-sm {
+            background: var(--gradient-danger);
+            color: white;
+        }
+        .btn-danger-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-success-sm {
+            background: var(--gradient-accent);
+            color: white;
+        }
+        .btn-success-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: all var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .stat-card .number.purple {
+            color: var(--primary);
+        }
+        .stat-card .number.green {
+            color: var(--accent);
+        }
+        .stat-card .number.gold {
+            color: var(--secondary);
+        }
+        .stat-card .number.blue {
+            color: #3B82F6;
+        }
+        .stat-card .number.red {
+            color: var(--danger);
+        }
+        .stat-card .number.pink {
+            color: #EC4899;
+        }
+
+        .stat-card .label {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        /* Tabs */
+        .content-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 6px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--gray-500);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background: var(--gray-100);
+            color: var(--dark);
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .tab-btn .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .tab-btn.active .badge {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Content List */
+        .content-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .content-item {
+            background: var(--light);
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            padding: 16px 20px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all var(--transition);
+        }
+
+        .content-item:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .content-item .icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .content-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .content-item .info h4 {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--dark);
+        }
+
+        .content-item .info .desc {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .content-item .info .meta-tags {
+            display: flex;
+            gap: 12px;
+            margin-top: 4px;
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            flex-wrap: wrap;
+        }
+
+        .content-item .info .meta-tags i {
+            margin-right: 4px;
+        }
+
+        .content-item .item-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .content-item .item-actions .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Add Content Form */
+        .add-content-form {
+            background: var(--light);
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+        }
+
+        .add-content-form .form-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-content-form .form-title i {
+            color: var(--primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            background: var(--gray-50);
+            color: var(--dark);
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            background: var(--light);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .form-actions .btn-sm {
+            padding: 10px 24px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            #top-header {
+                padding: 10px 20px;
+            }
+            #page-content {
+                padding: 16px 20px 32px;
+            }
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #top-header {
+                padding: 8px 14px;
+            }
+            .brand {
+                font-size: 1rem;
+            }
+            .back-link span {
+                display: none;
+            }
+            .course-header .top {
+                flex-direction: column;
+            }
+            .course-header .actions {
+                width: 100%;
+            }
+            .course-header .actions .btn-sm {
+                flex: 1;
+                justify-content: center;
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .content-item {
+                flex-wrap: wrap;
+            }
+            .content-item .item-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .content-tabs {
+                gap: 2px;
+                padding: 4px;
+            }
+            .tab-btn {
+                padding: 8px 14px;
+                font-size: 0.75rem;
+            }
+            .tab-btn span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #top-header {
+                padding: 8px 12px;
+            }
+            .header-left {
+                gap: 10px;
+            }
+            .course-header .info h1 {
+                font-size: 1.2rem;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat-card .number {
+                font-size: 1.4rem;
+            }
+            .add-content-form {
+                padding: 16px;
+            }
+            .form-actions {
+                flex-direction: column;
+            }
+            .form-actions .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="top-header">
+        <div class="header-left">
+            <a href="#" class="brand">
+                <i class="fas fa-brain"></i>
+                <span>LearnSync Pro</span>
+                <span class="admin-badge">Admin</span>
+            </a>
+            <a href="#" class="back-link" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </a>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn" id="themeToggle" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="icon-btn" title="Notifications" onclick="window.location.href='notifications.html'">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">23</span>
+            </button>
+            <div class="user-avatar-sm">AS</div>
+        </div>
+    </header>
+
+    <div id="page-content">
+
+        <!-- Course Header -->
+        <div class="course-header">
+            <div class="top">
+                <div class="info">
+                    <h1>📚 Machine Learning with Python</h1>
+                    <div class="meta">
+                        <span><i class="fas fa-user"></i> Dr. James Wilson</span>
+                        <span><i class="fas fa-users"></i> 1,248 students</span>
+                        <span><i class="fas fa-star" style="color:var(--secondary);"></i> 4.8 (342 reviews)</span>
+                        <span><i class="fas fa-calendar"></i> Updated: Aug 5, 2026</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn-sm btn-outline-sm" onclick="alert('📊 Opening course analytics...')"><i class="fas fa-chart-bar"></i> Analytics</button>
+                    <button class="btn-sm btn-gold-sm" onclick="alert('✏️ Editing course details...')"><i class="fas fa-edit"></i> Edit Course</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="number purple">24</div>
+                <div class="label">📹 Videos</div>
+            </div>
+            <div class="stat-card">
+                <div class="number gold">12</div>
+                <div class="label">📝 Notes</div>
+            </div>
+            <div class="stat-card">
+                <div class="number blue">6</div>
+                <div class="label">🃏 Flashcards</div>
+            </div>
+            <div class="stat-card">
+                <div class="number green">8</div>
+                <div class="label">📋 Quizzes</div>
+            </div>
+            <div class="stat-card">
+                <div class="number pink">4</div>
+                <div class="label">📊 Assignments</div>
+            </div>
+        </div>
+
+        <!-- Add Content Form -->
+        <div class="add-content-form" id="addContentForm">
+            <div class="form-title"><i class="fas fa-plus-circle"></i> Add New Content</div>
+            <form id="contentForm" onsubmit="return addContentItem(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="contentType">Content Type</label>
+                        <select id="contentType" required>
+                            <option value="video">📹 Video</option>
+                            <option value="note">📝 Note / PDF</option>
+                            <option value="flashcard">🃏 Flashcard</option>
+                            <option value="quiz">📋 Quiz</option>
+                            <option value="assignment">📊 Assignment</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contentTitle">Title</label>
+                        <input type="text" id="contentTitle" placeholder="e.g., Introduction to Neural Networks" required />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="contentDesc">Description</label>
+                        <textarea id="contentDesc" placeholder="Brief description of the content..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contentDuration">Duration (minutes)</label>
+                        <input type="number" id="contentDuration" placeholder="e.g., 25" />
+                    </div>
+                    <div class="form-group">
+                        <label for="contentOrder">Order / Sequence</label>
+                        <input type="number" id="contentOrder" placeholder="e.g., 1" value="1" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-sm btn-success-sm"><i class="fas fa-plus"></i> Add Content</button>
+                    <button type="reset" class="btn-sm btn-outline-sm"><i class="fas fa-undo"></i> Clear</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tabs -->
+        <div class="content-tabs">
+            <button class="tab-btn active" data-tab="all"><i class="fas fa-th-list"></i> <span>All</span> <span class="badge">54</span></button>
+            <button class="tab-btn" data-tab="video"><i class="fas fa-video"></i> <span>Videos</span> <span class="badge">24</span></button>
+            <button class="tab-btn" data-tab="note"><i class="fas fa-file-alt"></i> <span>Notes</span> <span class="badge">12</span></button>
+            <button class="tab-btn" data-tab="flashcard"><i class="fas fa-cards"></i> <span>Flashcards</span> <span class="badge">6</span></button>
+            <button class="tab-btn" data-tab="quiz"><i class="fas fa-tasks"></i> <span>Quizzes</span> <span class="badge">8</span></button>
+            <button class="tab-btn" data-tab="assignment"><i class="fas fa-clipboard-check"></i> <span>Assignments</span> <span class="badge">4</span></button>
+        </div>
+
+        <!-- Content List -->
+        <div class="content-list" id="contentList">
+
+            <!-- Video 1 -->
+            <div class="content-item" data-type="video">
+                <div class="icon-box" style="background:var(--gradient-primary);"><i class="fas fa-video"></i></div>
+                <div class="info">
+                    <h4>1. Introduction to Machine Learning</h4>
+                    <div class="desc">What is ML? Types, applications, and the ML pipeline</div>
+                    <div class="meta-tags">
+                        <span><i class="fas fa-clock"></i> 12:34</span>
+                        <span><i class="fas fa-eye"></i> 2.4K views</span>
+                        <span><i class="fas fa-calendar"></i> Added: Aug 1, 2026</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="content-item" data-type="video">
+                <div class="icon-box" style="background:var(--gradient-primary);"><i class="fas fa-video"></i></div>
+                <div class="info">
+                    <h4>2. Python for Data Science</h4>
+                    <div class="desc">NumPy, Pandas, Matplotlib essentials for ML</div>
+                    <div class="meta-tags">
+                        <span><i class="fas fa-clock"></i> 18:22</span>
+                        <span><i class="fas fa-eye"></i> 1.8K views</span>
+                        <span><i class="fas fa-calendar"></i> Added: Aug 2, 2026</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- Note 1 -->
+            <div class="content-item" data-type="note">
+                <div class="icon-box" style="background:var(--gradient-gold);"><i class="fas fa-file-pdf"></i></div>
+                <div class="info">
+                    <h4>ML Fundamentals - Complete Notes</h4>
+                    <div class="desc">Comprehensive notes covering all ML concepts with diagrams</div>
+                    <div class="meta-tags">
+                        <span><i class="fas fa-file-alt"></i> PDF, 12 pages</span>
+                        <span><i class="fas fa-download"></i> 3.2K downloads</span>
+                        <span><i class="fas fa-calendar"></i> Added: Aug 3, 2026</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- Flashcard 1 -->
+            <div class="content-item" data-type="flashcard">
+                <div class="icon-box" style="background:var(--gradient-blue);"><i class="fas fa-cards"></i></div>
+                <div class="info">
+                    <h4>ML Key Terms - Set 1</h4>
+                    <div class="desc">20 flashcards covering supervised learning, unsupervised learning, and more</div>
+                    <div class="meta-tags">
+                        <span><i class="fas fa-layer-group"></i> 20 cards</span>
+                        <span><i class="fas fa-calendar"></i> Added: Aug 4, 2026</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- Quiz 1 -->
+            <div class="content-item" data-type="quiz">
+                <div class="icon-box" style="background:var(--gradient-accent);"><i class="fas fa-tasks"></i></div>
+                <div class="info">
+                    <h4>ML Fundamentals Quiz</h4>
+                    <div class="desc">Test your understanding of ML concepts, types, and applications</div>
+                    <div class="meta-tags">
+                        <span><i class="fas fa-question-circle"></i> 20 questions</span>
+                        <span><i class="fas fa-clock"></i> 30 min</span>
+                        <span><i class="fas fa-calendar"></i> Added: Aug 5, 2026</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- Assignment 1 -->
+            <div class="content-item" data-type="assignment">
+                <div class="icon-box" style="background:var(--gradient-pink);"><i class="fas fa-clipboard-check"></i></div>
+                <div class="info">
+                    <h4>Linear Regression Lab</h4>
+                    <div class="desc">Implement gradient descent and evaluate model performance</div>
+                    <div class="meta-tags">
+                        <span><i class="fas fa-code"></i> 8 exercises</span>
+                        <span><i class="fas fa-clock"></i> 30 min</span>
+                        <span><i class="fas fa-calendar"></i> Added: Aug 6, 2026</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="content-item" data-type="video">
+                <div class="icon-box" style="background:var(--gradient-primary);"><i class="fas fa-video"></i></div>
+                <div class="info">
+                    <h4>3. Linear Regression & Gradient Descent</h4>
+                    <div class="desc">Supervised learning basics, cost functions, optimization</div>
+                    <div class="meta-tags">
+                        <span><i class="fas fa-clock"></i> 22:10</span>
+                        <span><i class="fas fa-eye"></i> 1.5K views</span>
+                        <span><i class="fas fa-calendar"></i> Added: Aug 7, 2026</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // ===== THEME TOGGLE =====
+        const themeBtn = document.getElementById('themeToggle');
+        const themeIcon = themeBtn.querySelector('i');
+        let darkMode = localStorage.getItem('theme') === 'dark';
+
+        if (darkMode) {
+            document.body.classList.add('dark-theme');
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-theme');
+            themeIcon.className = darkMode ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+        });
+
+        // ===== TABS =====
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const contentItems = document.querySelectorAll('.content-item');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tab = btn.dataset.tab;
+
+                contentItems.forEach(item => {
+                    if (tab === 'all') {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = item.dataset.type === tab ? 'flex' : 'none';
+                    }
+                });
+            });
+        });
+
+        // ===== ADD CONTENT =====
+        function addContentItem(e) {
+            e.preventDefault();
+
+            const type = document.getElementById('contentType').value;
+            const title = document.getElementById('contentTitle').value.trim();
+            const desc = document.getElementById('contentDesc').value.trim();
+            const duration = document.getElementById('contentDuration').value;
+            const order = document.getElementById('contentOrder').value;
+
+            if (!title) {
+                alert('⚠️ Please enter a title for the content.');
+                return false;
+            }
+
+            // Get icon and color based on type
+            const typeMap = {
+                video: { icon: 'fa-video', color: 'var(--gradient-primary)', label: 'Video' },
+                note: { icon: 'fa-file-pdf', color: 'var(--gradient-gold)', label: 'Note' },
+                flashcard: { icon: 'fa-cards', color: 'var(--gradient-blue)', label: 'Flashcard' },
+                quiz: { icon: 'fa-tasks', color: 'var(--gradient-accent)', label: 'Quiz' },
+                assignment: { icon: 'fa-clipboard-check', color: 'var(--gradient-pink)', label: 'Assignment' }
+            };
+
+            const info = typeMap[type] || typeMap.video;
+
+            // Create new content item
+            const list = document.getElementById('contentList');
+            const newItem = document.createElement('div');
+            newItem.className = 'content-item';
+            newItem.dataset.type = type;
+            newItem.style.animation = 'fadeIn 0.4s ease';
+
+            const durationText = duration ? `<span><i class="fas fa-clock"></i> ${duration} min</span>` : '';
+            const orderText = order ? `<span><i class="fas fa-sort-numeric"></i> Order: ${order}</span>` : '';
+
+            newItem.innerHTML = `
+                        <div class="icon-box" style="background:${info.color};"><i class="fas ${info.icon}"></i></div>
+                        <div class="info">
+                            <h4>${title}</h4>
+                            <div class="desc">${desc || 'No description provided'}</div>
+                            <div class="meta-tags">
+                                <span><i class="fas fa-tag"></i> ${info.label}</span>
+                                ${durationText}
+                                ${orderText}
+                                <span><i class="fas fa-calendar"></i> Added: Just now</span>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-sm btn-outline-sm" onclick="editContent(this)"><i class="fas fa-edit"></i></button>
+                            <button class="btn-sm btn-danger-sm" onclick="deleteContent(this)"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+
+            list.insertBefore(newItem, list.firstChild);
+
+            // Update badges
+            updateBadges();
+
+            // Reset form
+            document.getElementById('contentForm').reset();
+            document.getElementById('contentOrder').value = '1';
+
+            alert(`✅ "${title}" has been added successfully!`);
+
+            // Show the "All" tab
+            document.querySelector('.tab-btn[data-tab="all"]').click();
+
+            return false;
+        }
+
+        // ===== EDIT CONTENT =====
+        function editContent(btn) {
+            const item = btn.closest('.content-item');
+            const title = item.querySelector('h4')?.textContent || 'Content';
+            const type = item.dataset.type;
+
+            const typeNames = {
+                video: 'Video',
+                note: 'Note/PDF',
+                flashcard: 'Flashcard',
+                quiz: 'Quiz',
+                assignment: 'Assignment'
+            };
+
+            const newTitle = prompt(`✏️ Edit "${title}"\nEnter new title:`, title);
+            if (newTitle && newTitle.trim()) {
+                item.querySelector('h4').textContent = newTitle.trim();
+                alert(`✅ Content updated to: "${newTitle.trim()}"`);
+            }
+        }
+
+        // ===== DELETE CONTENT =====
+        function deleteContent(btn) {
+            const item = btn.closest('.content-item');
+            const title = item.querySelector('h4')?.textContent || 'Content';
+
+            if (confirm(`⚠️ Are you sure you want to delete "${title}"?\n\nThis action cannot be undone.`)) {
+                item.style.transition = 'all 0.3s ease';
+                item.style.transform = 'translateX(100%)';
+                item.style.opacity = '0';
+                setTimeout(() => {
+                    item.remove();
+                    updateBadges();
+                    alert(`🗑️ "${title}" has been deleted.`);
+                }, 300);
+            }
+        }
+
+        // ===== UPDATE BADGES =====
+        function updateBadges() {
+            const items = document.querySelectorAll('.content-item');
+            const counts = {
+                all: items.length,
+                video: 0,
+                note: 0,
+                flashcard: 0,
+                quiz: 0,
+                assignment: 0
+            };
+
+            items.forEach(item => {
+                const type = item.dataset.type;
+                if (counts[type] !== undefined) counts[type]++;
+            });
+
+            tabBtns.forEach(btn => {
+                const tab = btn.dataset.tab;
+                const badge = btn.querySelector('.badge');
+                if (badge) {
+                    badge.textContent = counts[tab] || 0;
+                }
+            });
+        }
+
+        console.log('📚 Manage Course page loaded!');
+        console.log('📊 Total content items: ' + document.querySelectorAll('.content-item').length);
+    </script>
+</body>
+</html>
