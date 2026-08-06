@@ -19,6 +19,20 @@ class SheetModel:
     def create(self, data):
         if 'created_at' not in data:
             data['created_at'] = datetime.utcnow().isoformat()
+        
+        # ✅ Auto-generate ID if not provided or is 0/empty
+        if self.id_field not in data or not data.get(self.id_field) or data.get(self.id_field) == 0:
+            all_records = self.get_all()
+            max_id = 0
+            for record in all_records:
+                try:
+                    rid = int(record.get(self.id_field, 0))
+                    if rid > max_id:
+                        max_id = rid
+                except (ValueError, TypeError):
+                    pass
+            data[self.id_field] = max_id + 1
+        
         return sheet_service.insert_record(self.sheet_name, data)
     
     def update(self, id_value, data):
@@ -36,7 +50,7 @@ class SheetModel:
 
 class User(SheetModel):
     def __init__(self):
-        super().__init__('users', 'user_id')
+        super().__init__('users', 'user_id')  # ✅ user_id is the ID field
     
     def find_by_email(self, email):
         results = self.query(email=email)
@@ -51,7 +65,7 @@ class User(SheetModel):
             return None
         
         user_data = {
-            'user_id': int(data.get('user_id', 0)),
+            'user_id': int(data.get('user_id', 0)) if data.get('user_id') else 0,
             'username': data.get('username', ''),
             'full_name': data.get('full_name', ''),
             'phone': data.get('phone', ''),

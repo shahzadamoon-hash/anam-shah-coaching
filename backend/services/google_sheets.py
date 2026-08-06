@@ -74,12 +74,31 @@ class GoogleSheetsService:
             return []
 
     def insert_record(self, sheet_name, data):
-        """Insert a new record"""
+        """Insert a new record with auto-generated ID"""
         worksheet = self.get_worksheet(sheet_name)
         if not worksheet:
             return None
         
         headers = worksheet.row_values(1)
+        
+        # ✅ Auto-generate ID if 'user_id' or 'id' is missing
+        id_field = 'user_id' if 'user_id' in headers else 'id'
+        
+        if id_field in data and data.get(id_field):
+            # ID already provided
+            pass
+        else:
+            # Auto-generate ID
+            records = self.get_all_records(sheet_name)
+            max_id = 0
+            for record in records:
+                try:
+                    rid = int(record.get(id_field, 0))
+                    if rid > max_id:
+                        max_id = rid
+                except (ValueError, TypeError):
+                    pass
+            data[id_field] = max_id + 1
         
         # Prepare row data
         row_data = []
