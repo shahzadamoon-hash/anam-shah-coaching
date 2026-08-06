@@ -1,10 +1,9 @@
 # api/index.py
 import sys
 import os
-from pathlib import Path
 
-# Add parent directory to path
-sys.path.append(str(Path(__file__).parent.parent))
+# Add backend to path
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'backend'))
 
 from app import app
 
