@@ -21,7 +21,7 @@ jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
 
 # CORS
-CORS(app, origins=os.environ.get('CORS_ORIGINS', '*'))
+CORS(app, origins='*')
 
 # Import routes (with error handling)
 try:
