@@ -1,0 +1,29 @@
+anam-shah-coaching-backend/
+│
+├── app.py
+├── config.py
+├── requirements.txt
+├── .env                     # ⬅️ Your credentials here (gitignored)
+├── .gitignore               # ⬅️ Protect .env
+├── runtime.txt              # For Render
+│
+├── services/
+│   ├── __init__.py
+│   ├── google_sheets.py
+│   └── sheet_models.py
+│
+├── routes/
+│   ├── __init__.py
+│   ├── auth_routes.py
+│   ├── user_routes.py
+│   ├── course_routes.py
+│   ├── enrollment_routes.py
+│   ├── assignment_routes.py
+│   ├── quiz_routes.py
+│   ├── community_routes.py
+│   ├── notification_routes.py
+│   └── admin_routes.py
+│
+└── utils/
+    ├── __init__.py
+    └── auth.py

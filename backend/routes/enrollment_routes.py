@@ -1,0 +1,54 @@
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from services.sheet_models import Enrollment, Course, Notification
+
+enrollment_bp = Blueprint('enrollment', __name__)
+enrollment_model = Enrollment()
+course_model = Course()
+notification_model = Notification()
+
+@enrollment_bp.route('/', methods=['GET'])
+@jwt_required()
+def get_enrollments():
+    user_id = get_jwt_identity()
+    enrollments = enrollment_model.get_by_user(user_id)
+    
+    # Add course details
+    for enrollment in enrollments:
+        course = course_model.get_by_id(enrollment.get('course_id'))
+        if course:
+            enrollment['course_title'] = course.get('title')
+            enrollment['course_thumbnail'] = course.get('thumbnail')
+    
+    return jsonify({'enrollments': enrollments}), 200
+
+@enrollment_bp.route('/course/<int:course_id>', methods=['POST'])
+@jwt_required()
+def enroll(course_id):
+    user_id = get_jwt_identity()
+    
+    # Check if already enrolled
+    existing = enrollment_model.get_by_user_and_course(user_id, course_id)
+    if existing:
+        return jsonify({'error': 'Already enrolled'}), 400
+    
+    # Create enrollment
+    enrollment = enrollment_model.create({
+        'user_id': user_id,
+        'course_id': course_id,
+        'status': 'enrolled'
+    })
+    
+    # Create notification
+    notification_model.create({
+        'user_id': user_id,
+        'type': 'enrollment',
+        'title': 'Course Enrolled',
+        'message': f'You have enrolled in {course_model.get_by_id(course_id).get("title")}',
+        'is_read': 'false'
+    })
+    
+    return jsonify({
+        'message': 'Successfully enrolled',
+        'enrollment': enrollment
+    }), 201
