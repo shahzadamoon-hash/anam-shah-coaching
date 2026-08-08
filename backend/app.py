@@ -1,4 +1,5 @@
-# app.py
+# app.py - FIXED CORS CONFIGURATION
+
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -19,13 +20,14 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 86400  # 24 hours
 jwt = JWTManager(app)
 
 # ============================================================
-# ✅ FIX CORS - Allow all origins, methods, and headers
+# ✅ FIXED CORS - Simplified and Correct
 # ============================================================
-CORS(app, 
-     origins='*', 
+CORS(app,
+     resources={r"/api/*": {"origins": "*"}},
      allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
      methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-     supports_credentials=False)
+     supports_credentials=False,
+     expose_headers=['Content-Type', 'Authorization'])
 
 # ============================================================
 # Import Routes
@@ -101,7 +103,7 @@ except ImportError as e:
 @app.route('/')
 def index():
     return jsonify({
-        'name': 'LearnSync Pro API',
+        'name': 'Anam Shah Coaching API',
         'version': '1.0.0',
         'status': 'running',
         'database': 'Google Sheets'
@@ -116,12 +118,13 @@ def health():
         'sheets_connected': sheet_service.connected if hasattr(sheet_service, 'connected') else False
     })
 
-# ✅ Optional: Handle OPTIONS requests explicitly
+# ✅ FIXED: Handle OPTIONS requests and CORS headers
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials', 'false')
     return response
 
 # ============================================================
