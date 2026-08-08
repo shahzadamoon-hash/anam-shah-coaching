@@ -19,14 +19,24 @@ class SheetModel:
     def create(self, data):
         if 'created_at' not in data:
             data['created_at'] = datetime.utcnow().isoformat()
-        # ✅ Pass to GoogleSheetsService for auto-ID generation
         return sheet_service.insert_record(self.sheet_name, data)
+
+    def update(self, id_value, data):
+        if 'updated_at' not in data:
+            data['updated_at'] = datetime.utcnow().isoformat()
+        return sheet_service.update_record(self.sheet_name, self.id_field, id_value, data)
+
+    def delete(self, id_value):
+        return sheet_service.delete_record(self.sheet_name, self.id_field, id_value)
+
+    def query(self, **kwargs):
+        return sheet_service.query_by_fields(self.sheet_name, **kwargs)
 
 # ==================== USER MODELS ====================
 
 class User(SheetModel):
     def __init__(self):
-        super().__init__('users', 'user_id')  # ✅ user_id is the ID field
+        super().__init__('users', 'user_id')
 
     def find_by_email(self, email):
         results = self.query(email=email)
@@ -41,7 +51,7 @@ class User(SheetModel):
             return None
 
         user_data = {
-            'user_id': int(data.get('user_id', 0)) if data.get('user_id') else 0,
+            'user_id': int(data.get('user_id', 0)),
             'username': data.get('username', ''),
             'full_name': data.get('full_name', ''),
             'phone': data.get('phone', ''),
@@ -52,21 +62,21 @@ class User(SheetModel):
             'created_at': data.get('created_at'),
             'last_login': data.get('last_login')
         }
-        
+
         if include_sensitive:
             user_data['email'] = data.get('email', '')
             user_data['password_hash'] = data.get('password_hash', '')
-        
+
         return user_data
 
 class StudentProfile(SheetModel):
     def __init__(self):
         super().__init__('student_profiles', 'profile_id')
-    
+
     def find_by_user_id(self, user_id):
         results = self.query(user_id=str(user_id))
         return results[0] if results else None
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -91,11 +101,11 @@ class StudentProfile(SheetModel):
 class InstructorProfile(SheetModel):
     def __init__(self):
         super().__init__('instructor_profiles', 'instructor_id')
-    
+
     def find_by_user_id(self, user_id):
         results = self.query(user_id=str(user_id))
         return results[0] if results else None
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -119,7 +129,7 @@ class InstructorProfile(SheetModel):
 class Category(SheetModel):
     def __init__(self):
         super().__init__('categories', 'category_id')
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -135,15 +145,15 @@ class Category(SheetModel):
 class Course(SheetModel):
     def __init__(self):
         super().__init__('courses', 'course_id')
-    
+
     def get_published(self):
         all_courses = self.get_all()
         return [c for c in all_courses if c.get('is_published') == 'true']
-    
+
     def get_featured(self):
         all_courses = self.get_all()
         return [c for c in all_courses if c.get('is_featured') == 'true']
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -177,10 +187,10 @@ class Course(SheetModel):
 class Section(SheetModel):
     def __init__(self):
         super().__init__('sections', 'section_id')
-    
+
     def get_by_course(self, course_id):
         return self.query(course_id=str(course_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -195,10 +205,10 @@ class Section(SheetModel):
 class Lesson(SheetModel):
     def __init__(self):
         super().__init__('lessons', 'lesson_id')
-    
+
     def get_by_section(self, section_id):
         return self.query(section_id=str(section_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -224,10 +234,10 @@ class Lesson(SheetModel):
 class Flashcard(SheetModel):
     def __init__(self):
         super().__init__('flashcards', 'flashcard_id')
-    
+
     def get_by_lesson(self, lesson_id):
         return self.query(lesson_id=str(lesson_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -245,10 +255,10 @@ class Flashcard(SheetModel):
 class QuizQuestion(SheetModel):
     def __init__(self):
         super().__init__('quiz_questions', 'question_id')
-    
+
     def get_by_lesson(self, lesson_id):
         return self.query(lesson_id=str(lesson_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -275,10 +285,10 @@ class QuizQuestion(SheetModel):
 class Assignment(SheetModel):
     def __init__(self):
         super().__init__('assignments', 'assignment_id')
-    
+
     def get_by_lesson(self, lesson_id):
         return self.query(lesson_id=str(lesson_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -299,10 +309,10 @@ class Assignment(SheetModel):
 class AssignmentQuestion(SheetModel):
     def __init__(self):
         super().__init__('assignment_questions', 'question_id')
-    
+
     def get_by_assignment(self, assignment_id):
         return self.query(assignment_id=str(assignment_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -325,10 +335,10 @@ class AssignmentQuestion(SheetModel):
 class AssignmentSubmission(SheetModel):
     def __init__(self):
         super().__init__('assignment_submissions', 'submission_id')
-    
+
     def get_by_enrollment(self, enrollment_id):
         return self.query(enrollment_id=str(enrollment_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -353,17 +363,17 @@ class AssignmentSubmission(SheetModel):
 class Enrollment(SheetModel):
     def __init__(self):
         super().__init__('enrollments', 'enrollment_id')
-    
+
     def get_by_user(self, user_id):
         return self.query(user_id=str(user_id))
-    
+
     def get_by_course(self, course_id):
         return self.query(course_id=str(course_id))
-    
+
     def get_by_user_and_course(self, user_id, course_id):
         results = self.query(user_id=str(user_id), course_id=str(course_id))
         return results[0] if results else None
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -383,14 +393,14 @@ class Enrollment(SheetModel):
 class LessonProgress(SheetModel):
     def __init__(self):
         super().__init__('lesson_progress', 'progress_id')
-    
+
     def get_by_enrollment(self, enrollment_id):
         return self.query(enrollment_id=str(enrollment_id))
-    
+
     def get_by_enrollment_and_lesson(self, enrollment_id, lesson_id):
         results = self.query(enrollment_id=str(enrollment_id), lesson_id=str(lesson_id))
         return results[0] if results else None
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -411,10 +421,10 @@ class LessonProgress(SheetModel):
 class QuizAttempt(SheetModel):
     def __init__(self):
         super().__init__('quiz_attempts', 'attempt_id')
-    
+
     def get_by_enrollment(self, enrollment_id):
         return self.query(enrollment_id=str(enrollment_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -440,7 +450,7 @@ class QuizAttempt(SheetModel):
 class CommunityPost(SheetModel):
     def __init__(self):
         super().__init__('community_posts', 'post_id')
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -471,7 +481,7 @@ class CommunityPost(SheetModel):
 class CommunityComment(SheetModel):
     def __init__(self):
         super().__init__('community_comments', 'comment_id')
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -489,7 +499,7 @@ class CommunityComment(SheetModel):
 class Like(SheetModel):
     def __init__(self):
         super().__init__('likes', 'like_id')
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -506,13 +516,13 @@ class Like(SheetModel):
 class Notification(SheetModel):
     def __init__(self):
         super().__init__('notifications', 'notification_id')
-    
+
     def get_by_user(self, user_id):
         return self.query(user_id=str(user_id))
-    
+
     def get_unread_by_user(self, user_id):
         return self.query(user_id=str(user_id), is_read='false')
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -532,7 +542,7 @@ class Notification(SheetModel):
 class Achievement(SheetModel):
     def __init__(self):
         super().__init__('achievements', 'achievement_id')
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -548,10 +558,10 @@ class Achievement(SheetModel):
 class UserAchievement(SheetModel):
     def __init__(self):
         super().__init__('user_achievements', 'user_achievement_id')
-    
+
     def get_by_user(self, user_id):
         return self.query(user_id=str(user_id))
-    
+
     def to_dict(self, data):
         if not data:
             return None
@@ -567,11 +577,11 @@ class UserAchievement(SheetModel):
 class UserSetting(SheetModel):
     def __init__(self):
         super().__init__('user_settings', 'setting_id')
-    
+
     def get_by_user(self, user_id):
         results = self.query(user_id=str(user_id))
         return results[0] if results else None
-    
+
     def to_dict(self, data):
         if not data:
             return None

@@ -3,6 +3,7 @@ import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -17,20 +18,12 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 86400  # 24 hours
 
 # Initialize extensions
 jwt = JWTManager(app)
+bcrypt = Bcrypt(app)
 
-# ============================================================
-# ✅ FIX CORS - Allow all origins, methods, and headers
-# ============================================================
-CORS(app,
-     origins='*',
-     allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-     supports_credentials=False)
+# CORS
+CORS(app, origins=os.environ.get('CORS_ORIGINS', '*'))
 
-# ============================================================
-# Import Routes
-# ============================================================
-
+# Import routes (with error handling)
 try:
     from routes.auth_routes import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
@@ -94,10 +87,7 @@ try:
 except ImportError as e:
     print(f"⚠️ Admin routes not loaded: {e}")
 
-# ============================================================
-# Health Check Routes
-# ============================================================
-
+# Health check
 @app.route('/')
 def index():
     return jsonify({
@@ -116,18 +106,7 @@ def health():
         'sheets_connected': sheet_service.connected if hasattr(sheet_service, 'connected') else False
     })
 
-# ✅ Optional: Handle OPTIONS requests explicitly
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
-    return response
-
-# ============================================================
-# Run the app
-# ============================================================
-
+# For local development
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
