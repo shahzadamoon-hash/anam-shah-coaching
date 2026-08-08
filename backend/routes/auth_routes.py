@@ -1,15 +1,12 @@
 # routes/auth_routes.py
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from flask_bcrypt import Bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from services.sheet_models import User, StudentProfile
 
 auth_bp = Blueprint('auth', __name__)
 user_model = User()
-
-# ✅ Initialize bcrypt (or import from app)
-bcrypt = Bcrypt()
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -29,10 +26,10 @@ def register():
     if user_model.find_by_username(data['username']):
         return jsonify({'error': 'Username already taken'}), 400
 
-    # ✅ Hash password using Flask-Bcrypt
-    password_hash = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    # Hash password
+    password_hash = generate_password_hash(data['password'])
 
-    # Create user
+    # ✅ Create user WITHOUT user_id - it will be auto-generated
     user = user_model.create({
         'username': data['username'],
         'email': data['email'],
