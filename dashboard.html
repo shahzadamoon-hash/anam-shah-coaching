@@ -78,7 +78,7 @@
         #top-header {
             background: var(--light);
             border-bottom: 1px solid var(--gray-200);
-            padding: 12px 24px;
+            padding: 12px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -94,7 +94,7 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
@@ -102,7 +102,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'Cinzel', serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
             font-weight: 800;
             color: var(--dark);
@@ -110,21 +110,27 @@
         }
 
         .brand i {
-            color: #d4af37;
+            color: var(--primary);
             font-size: 1.4rem;
+        }
+
+        .brand span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .search-wrap {
             position: relative;
-            width: 280px;
+            width: 300px;
         }
 
         .search-wrap input {
             width: 100%;
-            padding: 8px 14px 8px 40px;
+            padding: 8px 16px 8px 42px;
             border: 2px solid var(--gray-200);
             border-radius: var(--radius-full);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             background: var(--gray-50);
             color: var(--dark);
             transition: all var(--transition);
@@ -140,7 +146,7 @@
 
         .search-wrap i {
             position: absolute;
-            left: 14px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray-400);
@@ -232,11 +238,11 @@
             display: none;
         }
 
-        /* ===== DASHBOARD CONTENT ===== */
+        /* ===== DASHBOARD CONTENT (FULL WIDTH) ===== */
         #dashboard-content {
-            max-width: 1200px;
+            max-width: 100%;
+            padding: 24px 32px 40px;
             margin: 0 auto;
-            padding: 24px 24px 40px;
         }
 
         /* Welcome Section */
@@ -260,14 +266,14 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 20px;
+            margin-bottom: 28px;
         }
 
         .stat-card {
             background: var(--light);
             border-radius: var(--radius);
-            padding: 16px 18px;
+            padding: 18px 20px;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
             transition: all var(--transition);
@@ -329,8 +335,8 @@
         .charts-row {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: 24px;
+            margin-bottom: 28px;
         }
 
         .chart-card {
@@ -362,19 +368,19 @@
 
         /* Courses Scroll */
         .courses-section {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .section-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 800;
             color: var(--dark);
         }
@@ -383,7 +389,7 @@
             color: var(--primary);
             font-weight: 600;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: var(--transition);
         }
 
@@ -393,9 +399,9 @@
 
         .courses-scroll {
             display: flex;
-            gap: 16px;
+            gap: 20px;
             overflow-x: auto;
-            padding: 8px 4px 12px;
+            padding: 8px 4px 16px;
             scrollbar-width: thin;
         }
 
@@ -412,8 +418,8 @@
         }
 
         .course-card {
-            min-width: 260px;
-            max-width: 300px;
+            min-width: 280px;
+            max-width: 320px;
             background: var(--light);
             border-radius: var(--radius);
             border: 1px solid var(--gray-200);
@@ -565,8 +571,8 @@
         .bottom-widgets {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            margin-top: 4px;
+            gap: 24px;
+            margin-top: 8px;
         }
 
         .widget-card {
@@ -778,9 +784,18 @@
             .search-wrap {
                 width: 200px;
             }
+            #dashboard-content {
+                padding: 16px 20px 32px;
+            }
         }
 
         @media (max-width: 768px) {
+            #top-header {
+                padding: 8px 14px;
+            }
+            #dashboard-content {
+                padding: 12px 14px 24px;
+            }
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 12px;
@@ -790,9 +805,6 @@
             }
             .charts-row {
                 grid-template-columns: 1fr;
-            }
-            #dashboard-content {
-                padding: 16px;
             }
             .search-wrap {
                 width: 100%;
@@ -807,17 +819,29 @@
             .timer-display {
                 font-size: 2rem;
             }
+            .welcome-section h1 {
+                font-size: 1.4rem;
+            }
         }
 
         @media (max-width: 480px) {
+            #top-header {
+                padding: 6px 10px;
+            }
+            #dashboard-content {
+                padding: 8px 10px 16px;
+            }
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-            #top-header {
-                padding: 8px 12px;
-            }
             .stat-value {
                 font-size: 1.4rem;
+            }
+            .welcome-section h1 {
+                font-size: 1.2rem;
+            }
+            .course-card {
+                min-width: 100%;
             }
         }
     </style>
@@ -828,8 +852,8 @@
     <header id="top-header">
         <div class="header-left">
             <a href="#" class="brand">
-                <i class="fas fa-book-open"></i>
-                <span>Anam Shah Coaching</span>
+                <i class="fas fa-brain"></i>
+                <span>LearnSync Pro</span>
             </a>
             <div class="search-wrap">
                 <i class="fas fa-search"></i>
@@ -837,11 +861,11 @@
             </div>
         </div>
         <div class="header-right">
-            <span id="userNameDisplay">User</span>
+            <span id="userNameDisplay" style="display:none;">User</span>
             <button class="icon-btn" id="themeToggle" title="Toggle theme">
                 <i class="fas fa-moon"></i>
             </button>
-            <button class="icon-btn" id="notifBtn" title="Notifications">
+            <button class="icon-btn" id="notifBtn" title="Notifications" onclick="window.location.href='notifications.html'">
                 <i class="fas fa-bell"></i>
                 <span class="notification-badge" id="notifBadge">0</span>
             </button>
@@ -988,7 +1012,7 @@
 
     <script>
         // ============================================================
-        // 1. API CONFIGURATION (Your Vercel Backend)
+        // 1. API CONFIGURATION
         // ============================================================
         
         const API_BASE_URL = 'https://anam-shah-coaching.vercel.app/api';
@@ -1069,22 +1093,18 @@
         // ============================================================
 
         function updateUserUI(user) {
-            // Update user name in header
             const nameDisplay = document.getElementById('userNameDisplay');
             nameDisplay.textContent = user.full_name || user.username;
             nameDisplay.style.display = 'inline';
 
-            // Update avatar with initials
             const initials = user.full_name ? 
                 user.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
                 user.username?.slice(0, 2).toUpperCase() || 'U';
             document.getElementById('userAvatar').textContent = initials;
 
-            // Update welcome message
             const greeting = getGreeting();
             document.getElementById('welcomeMessage').textContent = `${greeting}, ${user.full_name || user.username}! 👋`;
             
-            // Update subtitle with exam target if available
             const examTarget = user.exam_target || 'learning';
             document.getElementById('welcomeSubtitle').textContent = 
                 `Track your ${examTarget} journey and continue where you left off.`;
@@ -1103,20 +1123,17 @@
 
         async function loadDashboard() {
             try {
-                // Check authentication
                 if (!checkAuth()) return;
 
-                // Get user details
                 const user = getUser();
                 if (user) {
                     updateUserUI(user);
                 }
 
-                // Load user profile (for additional details)
+                // Load user profile
                 try {
                     const profileResult = await apiRequest('/users/profile');
                     if (profileResult && profileResult.user) {
-                        // Update user with profile data
                         const updatedUser = { ...user, ...profileResult.user };
                         localStorage.setItem('user', JSON.stringify(updatedUser));
                         currentUser = updatedUser;
@@ -1132,7 +1149,6 @@
                     const enrollments = enrollmentsResult.enrollments || [];
                     updateStats(enrollments);
                     
-                    // Load courses for display
                     const coursesResult = await apiRequest('/courses');
                     if (coursesResult) {
                         const courses = coursesResult.courses || [];
@@ -1153,10 +1169,7 @@
                     console.log('Notifications not available');
                 }
 
-                // Load tests
                 loadTests();
-
-                // Load leaderboard
                 loadLeaderboard();
 
             } catch (error) {
@@ -1175,11 +1188,10 @@
         function updateStats(enrollments) {
             const total = enrollments.length;
             const completed = enrollments.filter(e => e.status === 'completed').length;
-            const inProgress = enrollments.filter(e => e.status === 'in_progress' || e.status === 'enrolled').length;
             
             document.getElementById('enrolledCourses').textContent = total;
-            document.getElementById('streakValue').textContent = '7'; // Placeholder - fetch from API
-            document.getElementById('studyHours').textContent = '12'; // Placeholder - fetch from API
+            document.getElementById('streakValue').textContent = '7';
+            document.getElementById('studyHours').textContent = '12';
             document.getElementById('certificates').textContent = completed > 0 ? '1' : '0';
         }
 
@@ -1200,10 +1212,7 @@
                 return;
             }
             
-            // Get enrolled course IDs
             const enrolledIds = new Set(enrollments.map(e => String(e.course_id)));
-            
-            // Show enrolled courses first, then others
             const enrolledCourses = courses.filter(c => enrolledIds.has(String(c.course_id)));
             const otherCourses = courses.filter(c => !enrolledIds.has(String(c.course_id)));
             const displayCourses = [...enrolledCourses, ...otherCourses].slice(0, 6);
@@ -1273,13 +1282,11 @@
         }
 
         // ============================================================
-        // 8. LOAD TESTS
+        // 8. LOAD TESTS & LEADERBOARD
         // ============================================================
 
         function loadTests() {
             const container = document.getElementById('testsList');
-            
-            // In production, fetch from API
             const tests = [
                 { title: 'Machine Learning Midterm', details: 'Chapters 1-6', time: 'Tomorrow, 10:00 AM' },
                 { title: 'React.js Assessment', details: 'Hooks & Context', time: 'In 3 Days' },
@@ -1297,14 +1304,8 @@
             `).join('');
         }
 
-        // ============================================================
-        // 9. LOAD LEADERBOARD
-        // ============================================================
-
         function loadLeaderboard() {
             const container = document.getElementById('leaderboardList');
-            
-            // In production, fetch from API
             const leaders = [
                 { name: 'You', detail: '42 Day Streak', points: '12,450', isYou: true },
                 { name: 'Maria Garcia', detail: 'Data Science', points: '11,890', isYou: false },
@@ -1325,7 +1326,7 @@
         }
 
         // ============================================================
-        // 10. LOGOUT
+        // 9. LOGOUT
         // ============================================================
 
         function handleLogout() {
@@ -1337,7 +1338,7 @@
         }
 
         // ============================================================
-        // 11. THEME TOGGLE
+        // 10. THEME TOGGLE
         // ============================================================
 
         const themeBtn = document.getElementById('themeToggle');
@@ -1358,7 +1359,7 @@
         });
 
         // ============================================================
-        // 12. CHARTS
+        // 11. CHARTS
         // ============================================================
 
         const isDark = () => document.body.classList.contains('dark-theme');
@@ -1454,12 +1455,13 @@
         }
 
         // ============================================================
-        // 13. TIMER
+        // 12. TIMER
         // ============================================================
 
         let timerRunning = false;
         let timerInterval = null;
         let timerSeconds = 60 * 60;
+
         const timerDisplay = document.getElementById('timerDisplay');
         const startBtn = document.getElementById('startTimer');
         const stopBtn = document.getElementById('stopTimer');
@@ -1511,13 +1513,13 @@
                 p.classList.add('active');
                 timerSeconds = parseInt(p.dataset.minutes) * 60;
                 updateTimerDisplay();
-                document.getElementById('timerMode').textContent = p.dataset.minutes === '25' ? 'Pomodoro' : 'Focus';
+                document.getElementById('timerMode').textContent = p.dataset.minutes === '60' ? 'Focus' : 'Pomodoro';
                 stopTimer();
             });
         });
 
         // ============================================================
-        // 14. NOTIFICATIONS
+        // 13. NOTIFICATIONS
         // ============================================================
 
         document.getElementById('notifBtn').addEventListener('click', function() {
@@ -1525,7 +1527,7 @@
         });
 
         // ============================================================
-        // 15. FULLSCREEN
+        // 14. FULLSCREEN
         // ============================================================
 
         let fs = false;
@@ -1540,7 +1542,7 @@
         });
 
         // ============================================================
-        // 16. SEARCH
+        // 15. SEARCH
         // ============================================================
 
         document.getElementById('searchInput').addEventListener('keypress', (e) => {
@@ -1550,7 +1552,7 @@
         });
 
         // ============================================================
-        // 17. INITIALIZE
+        // 16. INITIALIZE
         // ============================================================
 
         document.addEventListener('DOMContentLoaded', loadDashboard);
