@@ -1,12 +1,15 @@
 # routes/auth_routes.py
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
 from datetime import datetime
 from services.sheet_models import User, StudentProfile
 
 auth_bp = Blueprint('auth', __name__)
 user_model = User()
+
+# ✅ Initialize bcrypt (or import from app)
+bcrypt = Bcrypt()
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -26,10 +29,10 @@ def register():
     if user_model.find_by_username(data['username']):
         return jsonify({'error': 'Username already taken'}), 400
 
-    # Hash password
-    password_hash = generate_password_hash(data['password'])
+    # ✅ Hash password using Flask-Bcrypt
+    password_hash = bcrypt.generate_password_hash(data['password']).decode('utf-8')
 
-    # ✅ Create user WITHOUT user_id - it will be auto-generated
+    # Create user
     user = user_model.create({
         'username': data['username'],
         'email': data['email'],
@@ -47,7 +50,7 @@ def register():
             'country': 'India',
             'preferred_language': 'English'
         })
-    
+
     return jsonify({
         'message': 'User registered successfully',
         'user': user_model.to_dict(user)
@@ -56,14 +59,15 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    
+
     if not data.get('email') or not data.get('password'):
         return jsonify({'error': 'Email and password required'}), 400
-    
+
     user = user_model.find_by_email(data['email'])
     if not user:
         return jsonify({'error': 'Invalid credentials'}), 401
-    
+
+    # ✅ Verify password using Flask-Bcrypt
     if not bcrypt.check_password_hash(user.get('password_hash', ''), data['password']):
         return jsonify({'error': 'Invalid credentials'}), 401
     
