@@ -1,5 +1,4 @@
-# routes/notification_routes.py
-from flask import Blueprint, jsonify
+from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.sheet_models import Notification
 
@@ -11,13 +10,15 @@ notification_model = Notification()
 def get_notifications():
     user_id = get_jwt_identity()
     notifications = notification_model.get_by_user(user_id)
+    # Sort by created_at descending
+    notifications.sort(key=lambda x: x.get('created_at', ''), reverse=True)
     return jsonify({'notifications': notifications}), 200
 
 @notification_bp.route('/unread', methods=['GET'])
 @jwt_required()
 def get_unread():
     user_id = get_jwt_identity()
-    notifications = notification_model.query(user_id=str(user_id), is_read='false')
+    notifications = notification_model.get_unread_by_user(user_id)
     return jsonify({'notifications': notifications}), 200
 
 @notification_bp.route('/<int:notification_id>/read', methods=['PUT'])
@@ -40,12 +41,3 @@ def mark_all_read():
 def delete_notification(notification_id):
     notification_model.delete(notification_id)
     return jsonify({'message': 'Notification deleted'}), 200
-
-@notification_bp.route('/clear', methods=['DELETE'])
-@jwt_required()
-def clear_notifications():
-    user_id = get_jwt_identity()
-    notifications = notification_model.get_by_user(user_id)
-    for notification in notifications:
-        notification_model.delete(notification.get('notification_id'))
-    return jsonify({'message': 'All notifications cleared'}), 200

@@ -159,17 +159,21 @@ class Course(SheetModel):
         all_courses = self.get_all()
         return [c for c in all_courses if c.get('is_featured') == 'true']
 
+    def get_by_category(self, category_id):
+        return self.query(category_id=str(category_id))
+
     def to_dict(self, data):
         if not data:
             return None
         return {
             'course_id': int(data.get('course_id', 0)),
-            'instructor_id': int(data.get('instructor_id', 0)),
+            'instructor_id': int(data.get('instructor_id', 0)) if data.get('instructor_id') else None,
             'category_id': int(data.get('category_id', 0)) if data.get('category_id') else None,
-            'title': data.get('title'),
+            'category_name': data.get('category_name'),
+            'title': data.get('title', ''),
             'slug': data.get('slug'),
-            'description': data.get('description'),
-            'short_description': data.get('short_description'),
+            'description': data.get('description', ''),
+            'short_description': data.get('short_description', ''),
             'level': data.get('level', 'beginner'),
             'language': data.get('language', 'English'),
             'thumbnail': data.get('thumbnail'),

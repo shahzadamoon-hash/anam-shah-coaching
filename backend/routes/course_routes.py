@@ -1,13 +1,26 @@
-# routes/course_routes.py
-from flask import Blueprint, jsonify
-from services.sheet_models import Course
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from services.sheet_models import Course, Enrollment
 
 course_bp = Blueprint('course', __name__)
 course_model = Course()
+enrollment_model = Enrollment()
 
 @course_bp.route('/', methods=['GET'])
+@jwt_required(optional=True)
 def get_courses():
+    # Get all published courses
     courses = course_model.get_published()
+
+    # If user is authenticated, add enrollment status
+    user_id = get_jwt_identity()
+    if user_id:
+        enrollments = enrollment_model.get_by_user(user_id)
+        enrolled_ids = [str(e.get('course_id')) for e in enrollments]
+
+        for course in courses:
+            course['is_enrolled'] = str(course.get('course_id')) in enrolled_ids
+
     return jsonify({'courses': courses}), 200
 
 @course_bp.route('/featured', methods=['GET'])
@@ -34,11 +47,11 @@ def search_courses():
     # Search in title, description, and category
     results = []
     for course in all_courses:
-        title = course.get('title', '').lower()
-        description = course.get('description', '').lower()
-        category = course.get('category_name', '').lower()
+        title = str(course.get('title', '')).lower()
+        description = str(course.get('description', '')).lower()
+        short_desc = str(course.get('short_description', '')).lower()
 
-        if query in title or query in description or query in category:
+        if query in title or query in description or query in short_desc:
             results.append(course)
 
-    return jsonify({'courses': results}), 200
+    return jsonify({'courses': results[:10]}), 200

@@ -26,14 +26,12 @@ def update_profile():
     user_id = get_jwt_identity()
     data = request.get_json()
 
-    # Update user
     user_model.update(user_id, {
         'full_name': data.get('full_name'),
         'phone': data.get('phone'),
         'bio': data.get('bio')
     })
 
-    # Update student profile
     profile = StudentProfile().find_by_user_id(user_id)
     if profile:
         StudentProfile().update(profile['profile_id'], {
@@ -52,38 +50,27 @@ def update_profile():
 
     return jsonify({'message': 'Profile updated successfully'}), 200
 
-# ✅ NEW: Get user statistics
 @user_bp.route('/stats', methods=['GET'])
 @jwt_required()
 def get_user_stats():
     user_id = get_jwt_identity()
 
-    # Get enrollments
     enrollment_model = Enrollment()
+    course_model = Course()
+
     enrollments = enrollment_model.get_by_user(user_id)
 
-    # Get courses
-    course_model = Course()
-    all_courses = course_model.get_all()
-
-    # Calculate stats
     total_courses = len(enrollments)
     completed_courses = len([e for e in enrollments if e.get('status') in ['completed', 'finished']])
 
-    # Calculate total study hours (if available)
+    # Calculate study hours from progress
     total_hours = 0
     for enrollment in enrollments:
         progress = int(enrollment.get('progress_percentage', 0))
-        # Estimate hours based on progress (assuming 20 hours per course)
-        total_hours += int((progress / 100) * 20)
+        total_hours += int((progress / 100) * 15)
 
-    # Weekly hours (estimate)
-    weekly_hours = min(total_hours // 4, 15) if total_hours > 0 else 0
-
-    # Streak days (simulate)
+    weekly_hours = min(total_hours // 2, 15) if total_hours > 0 else 0
     streak_days = 7 if total_courses > 0 else 0
-
-    # Certificates
     certificates = completed_courses
     new_certificates = min(completed_courses, 2)
 
@@ -94,6 +81,5 @@ def get_user_stats():
         'total_hours': total_hours,
         'weekly_hours': weekly_hours,
         'certificates': certificates,
-        'new_certificates': new_certificates,
-        'enrollments': enrollments
+        'new_certificates': new_certificates
     }), 200
