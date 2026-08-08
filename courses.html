@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Courses · LearnSync Pro</title>
+    <title>Courses · Anam Shah Coaching</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
     <style>
@@ -80,12 +80,12 @@
         #top-header {
             background: var(--light);
             border-bottom: 1px solid var(--gray-200);
-            padding: 14px 32px;
+            padding: 12px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 12px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -96,7 +96,8 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .brand {
@@ -104,7 +105,7 @@
             align-items: center;
             gap: 10px;
             font-family: 'Poppins', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--dark);
             text-decoration: none;
@@ -112,7 +113,7 @@
 
         .brand i {
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
 
         .brand span {
@@ -127,7 +128,7 @@
             gap: 6px;
             color: var(--gray-500);
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-decoration: none;
             transition: var(--transition);
             padding: 6px 12px;
@@ -141,12 +142,12 @@
 
         .search-wrap {
             position: relative;
-            width: 340px;
+            width: 300px;
         }
 
         .search-wrap input {
             width: 100%;
-            padding: 9px 16px 9px 42px;
+            padding: 8px 16px 8px 42px;
             border: 2px solid var(--gray-200);
             border-radius: var(--radius-full);
             font-size: 0.9rem;
@@ -178,8 +179,8 @@
         }
 
         .icon-btn {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             border: 1px solid var(--gray-200);
             background: transparent;
@@ -188,7 +189,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all var(--transition);
             position: relative;
         }
@@ -219,8 +220,8 @@
         }
 
         .user-avatar-sm {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: var(--gradient-primary);
             display: flex;
@@ -228,23 +229,47 @@
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             flex-shrink: 0;
         }
 
-        /* ===== PAGE CONTENT ===== */
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #EF4444;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .logout-btn:hover {
+            background: #EF4444;
+            color: white;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+
+        #userNameDisplay {
+            font-weight: 600;
+            color: var(--dark);
+            display: none;
+        }
+
+        /* ===== PAGE CONTENT (FULL WIDTH) ===== */
         #page-content {
-            max-width: 1440px;
+            max-width: 100%;
+            padding: 24px 32px 40px;
             margin: 0 auto;
-            padding: 28px 32px 40px;
         }
 
         /* Page Header */
         .page-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
             gap: 16px;
             margin-bottom: 24px;
@@ -252,27 +277,27 @@
 
         .page-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: var(--dark);
         }
 
         .page-title span {
             font-weight: 400;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--gray-500);
             margin-left: 8px;
         }
 
         .page-actions {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 10px 20px;
+            padding: 8px 18px;
             border: 2px solid var(--gray-200);
             border-radius: var(--radius-full);
             background: var(--light);
@@ -283,7 +308,7 @@
             transition: all var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-family: 'Inter', sans-serif;
         }
 
@@ -305,7 +330,7 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .category-pill {
@@ -315,7 +340,7 @@
             background: var(--light);
             color: var(--gray-600);
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all var(--transition);
             font-family: 'Inter', sans-serif;
@@ -332,10 +357,10 @@
             border-color: var(--primary);
         }
 
-        /* Courses Grid */
+        /* Courses Grid - Wider cards */
         .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 24px;
         }
 
@@ -488,6 +513,8 @@
             align-items: center;
             padding-top: 14px;
             border-top: 1px solid var(--gray-200);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .course-instructor {
@@ -563,11 +590,34 @@
             background: var(--gray-100);
         }
 
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: var(--gray-400);
+            grid-column: 1 / -1;
+        }
+
+        .loading .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray-200);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 0.8s ease infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: var(--gray-500);
+            grid-column: 1 / -1;
         }
 
         .empty-state i {
@@ -583,12 +633,21 @@
         }
 
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
         @media (max-width: 1024px) {
             #top-header {
-                padding: 12px 20px;
+                padding: 10px 20px;
+            }
+            #page-content {
+                padding: 16px 20px 32px;
             }
             .search-wrap {
-                width: 240px;
+                width: 220px;
             }
             .courses-grid {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -596,72 +655,55 @@
         }
 
         @media (max-width: 768px) {
-            #page-content {
-                padding: 16px;
-            }
-            .search-wrap {
-                width: 180px;
-            }
-            .search-wrap input {
-                font-size: 0.8rem;
-                padding: 8px 12px 8px 36px;
-            }
-            .brand {
-                font-size: 1.1rem;
-            }
-            .page-title {
-                font-size: 1.5rem;
-            }
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
-            .category-pills {
-                gap: 6px;
-            }
-            .category-pill {
-                padding: 6px 14px;
-                font-size: 0.75rem;
-            }
-            .header-left {
-                gap: 12px;
-                flex-wrap: wrap;
-            }
-            .back-link span {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
             #top-header {
-                padding: 10px 14px;
-                gap: 10px;
+                padding: 8px 14px;
+            }
+            #page-content {
+                padding: 12px 14px 24px;
             }
             .search-wrap {
                 width: 100%;
                 order: 3;
             }
+            .brand {
+                font-size: 1rem;
+            }
+            .back-link span {
+                display: none;
+            }
+            .page-title {
+                font-size: 1.4rem;
+            }
             .page-header {
                 flex-direction: column;
+                align-items: stretch;
             }
             .page-actions {
-                width: 100%;
+                justify-content: stretch;
             }
             .filter-btn {
                 flex: 1;
                 justify-content: center;
-                padding: 8px 14px;
-                font-size: 0.8rem;
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+            .courses-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
             }
             .course-banner {
-                height: 110px;
-                padding: 12px 16px;
+                height: 90px;
+                padding: 12px 14px;
             }
             .course-body {
-                padding: 14px 16px 16px;
+                padding: 14px 14px 16px;
+            }
+            .course-meta {
+                gap: 10px;
+                font-size: 0.7rem;
             }
             .course-footer {
                 flex-direction: column;
-                gap: 12px;
                 align-items: stretch;
             }
             .course-actions {
@@ -670,6 +712,36 @@
             .course-actions button {
                 flex: 1;
                 justify-content: center;
+            }
+            .category-pills {
+                gap: 6px;
+            }
+            .category-pill {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #top-header {
+                padding: 6px 10px;
+            }
+            #page-content {
+                padding: 8px 10px 16px;
+            }
+            .page-title {
+                font-size: 1.2rem;
+            }
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-btn {
+                font-size: 0.7rem;
+                padding: 4px 10px;
+            }
+            .category-pill {
+                font-size: 0.65rem;
+                padding: 4px 10px;
             }
         }
     </style>
@@ -693,14 +765,16 @@
             </div>
         </div>
         <div class="header-right">
+            <span id="userNameDisplay" style="display:none;">User</span>
             <button class="icon-btn" id="themeToggle" title="Toggle theme">
                 <i class="fas fa-moon"></i>
             </button>
-            <button class="icon-btn" title="Notifications">
+            <button class="icon-btn" title="Notifications" onclick="window.location.href='notifications.html'">
                 <i class="fas fa-bell"></i>
-                <span class="notification-badge">3</span>
+                <span class="notification-badge" id="notifBadge">0</span>
             </button>
-            <div class="user-avatar-sm">AK</div>
+            <div class="user-avatar-sm" id="userAvatar">U</div>
+            <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </header>
 
@@ -710,7 +784,7 @@
         <!-- Page Header -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">📚 All Courses <span>28 courses available</span></h1>
+                <h1 class="page-title">📚 All Courses <span id="courseCount">Loading...</span></h1>
             </div>
             <div class="page-actions">
                 <button class="filter-btn active" id="viewAllBtn">
@@ -738,380 +812,365 @@
 
         <!-- Courses Grid -->
         <div class="courses-grid" id="coursesGrid">
-
-            <!-- Course 1 -->
-            <div class="course-card" data-category="ai-ml" data-enrolled="true">
-                <div class="course-banner" style="background: var(--gradient-primary);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">AI & Machine Learning</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Advanced</span>
-                            <span class="course-progress-badge">82%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>Machine Learning with Python</h3>
-                    <p>Master neural networks, deep learning, and computer vision using TensorFlow and PyTorch.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 24 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 36 Hours</span>
-                        <span><i class="fas fa-users"></i> 1,248 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>82%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:82%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-accent);">JW</div>
-                            <div>
-                                <div class="instructor-name">Dr. James Wilson</div>
-                                <div class="instructor-title">AI Researcher</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-play"></i> Continue</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading courses...
             </div>
-
-            <!-- Course 2 -->
-            <div class="course-card" data-category="web-dev" data-enrolled="true">
-                <div class="course-banner" style="background: var(--gradient-gold);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">Web Development</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Intermediate</span>
-                            <span class="course-progress-badge">76%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>Full Stack Web Development</h3>
-                    <p>Build modern web applications with React, Node.js, and MongoDB from scratch.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 42 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 58 Hours</span>
-                        <span><i class="fas fa-users"></i> 2,341 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>76%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:76%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-pink);">SR</div>
-                            <div>
-                                <div class="instructor-name">Sarah Rodriguez</div>
-                                <div class="instructor-title">Senior Full Stack Dev</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-redo"></i> Review</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course 3 -->
-            <div class="course-card" data-category="data-science" data-enrolled="true">
-                <div class="course-banner" style="background: var(--gradient-accent);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">Data Science</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Intermediate</span>
-                            <span class="course-progress-badge">61%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>Data Science & Visualization</h3>
-                    <p>Learn data analysis, visualization, and machine learning with Python and R.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 32 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 45 Hours</span>
-                        <span><i class="fas fa-users"></i> 987 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>61%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:61%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-blue);">MS</div>
-                            <div>
-                                <div class="instructor-name">Michael Scott</div>
-                                <div class="instructor-title">Data Scientist</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-play"></i> Continue</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course 4 -->
-            <div class="course-card" data-category="mobile" data-enrolled="false">
-                <div class="course-banner" style="background: var(--gradient-danger);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">Mobile Development</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Beginner</span>
-                            <span class="course-progress-badge">New</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>Flutter Mobile Development</h3>
-                    <p>Build beautiful, natively compiled applications for mobile, web, and desktop.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 28 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 40 Hours</span>
-                        <span><i class="fas fa-users"></i> 654 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>Not started</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:0%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-gold);">AL</div>
-                            <div>
-                                <div class="instructor-name">Anna Lee</div>
-                                <div class="instructor-title">Mobile Developer</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-play"></i> Start</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course 5 -->
-            <div class="course-card" data-category="design" data-enrolled="false">
-                <div class="course-banner" style="background: var(--gradient-blue);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">Design</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Beginner</span>
-                            <span class="course-progress-badge">New</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>UI/UX Design Masterclass</h3>
-                    <p>Learn design principles, prototyping, and user research with Figma and Adobe XD.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 22 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 30 Hours</span>
-                        <span><i class="fas fa-users"></i> 432 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>Not started</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:0%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-pink);">EC</div>
-                            <div>
-                                <div class="instructor-name">Emily Chen</div>
-                                <div class="instructor-title">UX Designer</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-play"></i> Start</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course 6 -->
-            <div class="course-card" data-category="business" data-enrolled="false">
-                <div class="course-banner" style="background: var(--gradient-pink);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">Business</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Intermediate</span>
-                            <span class="course-progress-badge">Popular</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>Entrepreneurship & Startup</h3>
-                    <p>Learn how to build, launch, and scale a successful startup from scratch.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 20 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 28 Hours</span>
-                        <span><i class="fas fa-users"></i> 876 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>Not started</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:0%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-accent);">DK</div>
-                            <div>
-                                <div class="instructor-name">David Kim</div>
-                                <div class="instructor-title">Startup Mentor</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-play"></i> Start</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course 7 -->
-            <div class="course-card" data-category="ai-ml" data-enrolled="false">
-                <div class="course-banner" style="background: var(--gradient-primary);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">AI & Machine Learning</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Advanced</span>
-                            <span class="course-progress-badge">New</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>Natural Language Processing</h3>
-                    <p>Build chatbots, sentiment analysis, and language models with transformers.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 30 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 42 Hours</span>
-                        <span><i class="fas fa-users"></i> 523 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>Not started</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:0%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-danger);">RT</div>
-                            <div>
-                                <div class="instructor-name">Dr. Rachel Tan</div>
-                                <div class="instructor-title">NLP Specialist</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-play"></i> Start</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course 8 -->
-            <div class="course-card" data-category="web-dev" data-enrolled="false">
-                <div class="course-banner" style="background: var(--gradient-gold);">
-                    <div class="bg-pattern"></div>
-                    <div class="course-banner-content">
-                        <span class="course-category">Web Development</span>
-                        <div class="course-banner-bottom">
-                            <span class="course-level">Beginner</span>
-                            <span class="course-progress-badge">Popular</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-body">
-                    <h3>JavaScript Mastery</h3>
-                    <p>Deep dive into modern JavaScript, ES6+, async/await, and functional programming.</p>
-                    <div class="course-meta">
-                        <span><i class="fas fa-video"></i> 36 Lectures</span>
-                        <span><i class="fas fa-clock"></i> 48 Hours</span>
-                        <span><i class="fas fa-users"></i> 1,876 students</span>
-                    </div>
-                    <div class="course-progress-track">
-                        <div class="progress-label">
-                            <span>Progress</span>
-                            <span>Not started</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width:0%;"></div>
-                        </div>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-instructor">
-                            <div class="instructor-avatar" style="background:var(--gradient-blue);">JM</div>
-                            <div>
-                                <div class="instructor-name">James Miller</div>
-                                <div class="instructor-title">JavaScript Expert</div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary-sm"><i class="fas fa-play"></i> Start</button>
-                            <button class="btn-outline-sm"><i class="fas fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Empty State (hidden by default) -->
-        <div class="empty-state" id="emptyState" style="display:none;">
-            <i class="fas fa-search"></i>
-            <h3>No courses found</h3>
-            <p>Try adjusting your filters or search terms.</p>
         </div>
 
     </div>
 
     <script>
-        // ===== THEME TOGGLE =====
+        // ============================================================
+        // 1. API CONFIGURATION
+        // ============================================================
+        
+        const API_BASE_URL = 'https://anam-shah-coaching.vercel.app/api';
+
+        // ============================================================
+        // 2. API HELPER FUNCTIONS
+        // ============================================================
+
+        function getAuthHeaders() {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                window.location.href = 'index.html';
+                return null;
+            }
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+
+        function getUser() {
+            try {
+                return JSON.parse(localStorage.getItem('user') || 'null');
+            } catch {
+                return null;
+            }
+        }
+
+        async function apiRequest(endpoint, method = 'GET', data = null) {
+            const headers = getAuthHeaders();
+            if (!headers) return null;
+            
+            const url = `${API_BASE_URL}${endpoint}`;
+            const options = { method, headers };
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        localStorage.removeItem('access_token');
+                        localStorage.removeItem('user');
+                        window.location.href = 'index.html';
+                    }
+                    throw new Error(result.error || 'Something went wrong');
+                }
+                return result;
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        // ============================================================
+        // 3. AUTH CHECK
+        // ============================================================
+
+        function checkAuth() {
+            const user = getUser();
+            const token = localStorage.getItem('access_token');
+            
+            if (!user || !token) {
+                window.location.href = 'index.html';
+                return false;
+            }
+            
+            // Update user info
+            const nameDisplay = document.getElementById('userNameDisplay');
+            nameDisplay.textContent = user.full_name || user.username;
+            nameDisplay.style.display = 'inline';
+            
+            const initials = user.full_name ? 
+                user.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+                user.username?.slice(0, 2).toUpperCase() || 'U';
+            document.getElementById('userAvatar').textContent = initials;
+            
+            return true;
+        }
+
+        // ============================================================
+        // 4. LOGOUT
+        // ============================================================
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // ============================================================
+        // 5. LOAD COURSES
+        // ============================================================
+
+        let allCourses = [];
+        let enrollments = [];
+        let currentCategory = 'all';
+        let currentView = 'all';
+
+        async function loadCourses() {
+            try {
+                if (!checkAuth()) return;
+
+                // Load courses
+                const coursesResult = await apiRequest('/courses');
+                if (coursesResult) {
+                    allCourses = coursesResult.courses || [];
+                }
+
+                // Load enrollments
+                const enrollmentsResult = await apiRequest('/enrollments');
+                if (enrollmentsResult) {
+                    enrollments = enrollmentsResult.enrollments || [];
+                }
+
+                // Load notifications count
+                try {
+                    const notifResult = await apiRequest('/notifications/unread');
+                    if (notifResult) {
+                        const unread = notifResult.notifications?.length || 0;
+                        const badge = document.getElementById('notifBadge');
+                        badge.textContent = unread;
+                        badge.style.display = unread > 0 ? 'flex' : 'none';
+                    }
+                } catch (e) {
+                    console.log('Notifications not available');
+                }
+
+                // Update course count
+                document.getElementById('courseCount').textContent = `${allCourses.length} courses`;
+
+                // Render courses
+                renderCourses();
+
+            } catch (error) {
+                console.error('Error loading courses:', error);
+                document.getElementById('coursesGrid').innerHTML = `
+                    <div style="padding:40px;text-align:center;color:var(--danger);grid-column:1/-1;">
+                        <i class="fas fa-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:12px;"></i>
+                        Error loading courses. Please refresh.
+                    </div>
+                `;
+            }
+        }
+
+        // ============================================================
+        // 6. RENDER COURSES
+        // ============================================================
+
+        function renderCourses() {
+            const container = document.getElementById('coursesGrid');
+            const enrolledIds = new Set(enrollments.map(e => String(e.course_id)));
+
+            // Filter courses
+            let filtered = allCourses;
+
+            // Category filter
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(c => c.category === currentCategory);
+            }
+
+            // View filter
+            if (currentView === 'enrolled') {
+                filtered = filtered.filter(c => enrolledIds.has(String(c.course_id)));
+            } else if (currentView === 'new') {
+                filtered = filtered.filter(c => !enrolledIds.has(String(c.course_id)));
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No courses found</h3>
+                        <p>Try adjusting your filters or search terms.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort: Enrolled courses first
+            filtered.sort((a, b) => {
+                const aEnrolled = enrolledIds.has(String(a.course_id));
+                const bEnrolled = enrolledIds.has(String(b.course_id));
+                if (aEnrolled && !bEnrolled) return -1;
+                if (!aEnrolled && bEnrolled) return 1;
+                return 0;
+            });
+
+            container.innerHTML = filtered.map(course => {
+                const isEnrolled = enrolledIds.has(String(course.course_id));
+                const enrollment = enrollments.find(e => String(e.course_id) === String(course.course_id));
+                const progress = enrollment?.progress_percentage || 0;
+                const status = enrollment?.status || 'not_enrolled';
+
+                const colorClasses = {
+                    'beginner': 'green',
+                    'intermediate': 'gold',
+                    'advanced': 'red'
+                };
+                const color = colorClasses[course.level] || 'primary';
+
+                const actionText = status === 'completed' ? 'Review' : 
+                                   isEnrolled ? 'Continue' : 'Start';
+                const actionIcon = status === 'completed' ? 'fa-redo' : 
+                                   isEnrolled ? 'fa-play' : 'fa-plus';
+
+                const categoryMap = {
+                    'ai-ml': 'AI & Machine Learning',
+                    'web-dev': 'Web Development',
+                    'data-science': 'Data Science',
+                    'mobile': 'Mobile Development',
+                    'design': 'Design',
+                    'business': 'Business'
+                };
+
+                const categoryName = categoryMap[course.category] || course.category || 'Course';
+
+                return `
+                    <div class="course-card" data-category="${course.category || 'all'}" data-enrolled="${isEnrolled}">
+                        <div class="course-banner" style="background: var(--gradient-${color});">
+                            <div class="bg-pattern"></div>
+                            <div class="course-banner-content">
+                                <span class="course-category">${categoryName}</span>
+                                <div class="course-banner-bottom">
+                                    <span class="course-level">${course.level || 'Beginner'}</span>
+                                    <span class="course-progress-badge">${isEnrolled ? progress + '%' : 'New'}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-body">
+                            <h3>${course.title}</h3>
+                            <p>${course.short_description || course.description?.slice(0, 80) + '...' || 'Learn new skills'}</p>
+                            <div class="course-meta">
+                                <span><i class="fas fa-video"></i> ${course.total_lectures || 0} Lectures</span>
+                                <span><i class="fas fa-clock"></i> ${course.total_duration || 0} Hours</span>
+                                <span><i class="fas fa-users"></i> ${course.total_students || 0} students</span>
+                            </div>
+                            ${isEnrolled ? `
+                            <div class="course-progress-track">
+                                <div class="progress-label">
+                                    <span>Progress</span>
+                                    <span>${progress}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width:${progress}%;"></div>
+                                </div>
+                            </div>
+                            ` : ''}
+                            <div class="course-footer">
+                                <div class="course-instructor">
+                                    <div class="instructor-avatar" style="background:var(--gradient-accent);">${course.instructor_name?.slice(0, 2) || 'IN'}</div>
+                                    <div>
+                                        <div class="instructor-name">${course.instructor_name || 'Instructor'}</div>
+                                        <div class="instructor-title">${course.instructor_title || 'Expert'}</div>
+                                    </div>
+                                </div>
+                                <div class="course-actions">
+                                    <button class="btn-primary-sm" onclick="window.location.href='course-content.html?course=${course.course_id}'">
+                                        <i class="fas ${actionIcon}"></i> ${actionText}
+                                    </button>
+                                    <button class="btn-outline-sm" onclick="window.location.href='course-content.html?course=${course.course_id}'">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================
+        // 7. FILTERS
+        // ============================================================
+
+        // Category pills
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                currentCategory = pill.dataset.category;
+                renderCourses();
+            });
+        });
+
+        // View buttons
+        document.getElementById('viewAllBtn').addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentView = 'all';
+            renderCourses();
+        });
+
+        document.getElementById('viewEnrolledBtn').addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentView = 'enrolled';
+            renderCourses();
+        });
+
+        document.getElementById('viewNewBtn').addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentView = 'new';
+            renderCourses();
+        });
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.course-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const show = text.includes(searchTerm);
+                card.style.display = show ? 'block' : 'none';
+                if (show) visibleCount++;
+            });
+
+            // If no results, show empty state
+            const container = document.getElementById('coursesGrid');
+            if (visibleCount === 0 && allCourses.length > 0) {
+                const existingEmpty = container.querySelector('.empty-state');
+                if (!existingEmpty) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'empty-state';
+                    emptyDiv.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <h3>No courses found</h3>
+                        <p>Try adjusting your search terms.</p>
+                    `;
+                    container.appendChild(emptyDiv);
+                }
+            } else {
+                const empty = container.querySelector('.empty-state');
+                if (empty && visibleCount > 0) empty.remove();
+            }
+        });
+
+        // ============================================================
+        // 8. THEME TOGGLE
+        // ============================================================
+
         const themeBtn = document.getElementById('themeToggle');
         const themeIcon = themeBtn.querySelector('i');
         let darkMode = localStorage.getItem('theme') === 'dark';
@@ -1128,113 +1187,11 @@
             localStorage.setItem('theme', darkMode ? 'dark' : 'light');
         });
 
-        // ===== CATEGORY FILTER =====
-        const categoryPills = document.querySelectorAll('.category-pill');
-        const courseCards = document.querySelectorAll('.course-card');
-        const searchInput = document.getElementById('searchInput');
-        const emptyState = document.getElementById('emptyState');
+        // ============================================================
+        // 9. INITIALIZE
+        // ============================================================
 
-        let currentCategory = 'all';
-        let currentView = 'all'; // 'all', 'enrolled', 'new'
-
-        function filterCourses() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            let visibleCount = 0;
-
-            courseCards.forEach(card => {
-                const category = card.dataset.category;
-                const enrolled = card.dataset.enrolled === 'true';
-                const isNew = card.querySelector('.course-progress-badge')?.textContent.trim() === 'New';
-                const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-                const desc = card.querySelector('p')?.textContent.toLowerCase() || '';
-
-                // Category filter
-                let categoryMatch = currentCategory === 'all' || category === currentCategory;
-
-                // View filter
-                let viewMatch = true;
-                if (currentView === 'enrolled') viewMatch = enrolled;
-                if (currentView === 'new') viewMatch = isNew;
-
-                // Search filter
-                let searchMatch = true;
-                if (searchTerm) {
-                    searchMatch = title.includes(searchTerm) || desc.includes(searchTerm);
-                }
-
-                const show = categoryMatch && viewMatch && searchMatch;
-                card.style.display = show ? 'block' : 'none';
-                if (show) visibleCount++;
-            });
-
-            emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-        }
-
-        // Category pills
-        categoryPills.forEach(pill => {
-            pill.addEventListener('click', () => {
-                categoryPills.forEach(p => p.classList.remove('active'));
-                pill.classList.add('active');
-                currentCategory = pill.dataset.category;
-                filterCourses();
-            });
-        });
-
-        // View buttons
-        document.getElementById('viewAllBtn').addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentView = 'all';
-            filterCourses();
-        });
-
-        document.getElementById('viewEnrolledBtn').addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentView = 'enrolled';
-            filterCourses();
-        });
-
-        document.getElementById('viewNewBtn').addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentView = 'new';
-            filterCourses();
-        });
-
-        // Search
-        searchInput.addEventListener('input', filterCourses);
-
-        // ===== COURSE BUTTONS =====
-        document.querySelectorAll('.btn-primary-sm').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const card = this.closest('.course-card');
-                const title = card?.querySelector('h3')?.textContent || 'course';
-                const action = this.textContent.trim();
-                alert(`📖 ${action} "${title}"`);
-            });
-        });
-
-        document.querySelectorAll('.btn-outline-sm .fa-heart').forEach(heart => {
-            heart.closest('.btn-outline-sm').addEventListener('click', function(e) {
-                e.stopPropagation();
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    icon.style.color = '#EF4444';
-                    alert('❤️ Added to favorites!');
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    icon.style.color = '';
-                    alert('💔 Removed from favorites');
-                }
-            });
-        });
-
-        console.log('📚 Courses page loaded!');
+        document.addEventListener('DOMContentLoaded', loadCourses);
     </script>
 </body>
 </html>
