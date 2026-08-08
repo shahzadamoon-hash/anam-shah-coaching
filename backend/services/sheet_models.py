@@ -5,53 +5,43 @@ import json
 
 class SheetModel:
     """Base class for sheet-based models"""
-    
+
     def __init__(self, sheet_name, id_field='id'):
         self.sheet_name = sheet_name
         self.id_field = id_field
-    
+
     def get_all(self):
         return sheet_service.get_all_records(self.sheet_name)
-    
+
     def get_by_id(self, id_value):
         return sheet_service.get_record_by_id(self.sheet_name, self.id_field, id_value)
-    
+
     def create(self, data):
         if 'created_at' not in data:
             data['created_at'] = datetime.utcnow().isoformat()
+        # ✅ Pass to GoogleSheetsService for auto-ID generation
         return sheet_service.insert_record(self.sheet_name, data)
-    
-    def update(self, id_value, data):
-        if 'updated_at' not in data:
-            data['updated_at'] = datetime.utcnow().isoformat()
-        return sheet_service.update_record(self.sheet_name, self.id_field, id_value, data)
-    
-    def delete(self, id_value):
-        return sheet_service.delete_record(self.sheet_name, self.id_field, id_value)
-    
-    def query(self, **kwargs):
-        return sheet_service.query_by_fields(self.sheet_name, **kwargs)
 
 # ==================== USER MODELS ====================
 
 class User(SheetModel):
     def __init__(self):
-        super().__init__('users', 'user_id')
-    
+        super().__init__('users', 'user_id')  # ✅ user_id is the ID field
+
     def find_by_email(self, email):
         results = self.query(email=email)
         return results[0] if results else None
-    
+
     def find_by_username(self, username):
         results = self.query(username=username)
         return results[0] if results else None
-    
+
     def to_dict(self, data, include_sensitive=False):
         if not data:
             return None
-        
+
         user_data = {
-            'user_id': int(data.get('user_id', 0)),
+            'user_id': int(data.get('user_id', 0)) if data.get('user_id') else 0,
             'username': data.get('username', ''),
             'full_name': data.get('full_name', ''),
             'phone': data.get('phone', ''),

@@ -1,6 +1,7 @@
+# routes/auth_routes.py
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from flask_bcrypt import bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from services.sheet_models import User, StudentProfile
 
@@ -10,25 +11,25 @@ user_model = User()
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    
+
     # Validate
     if not data.get('email') or not data.get('password'):
         return jsonify({'error': 'Email and password required'}), 400
-    
+
     if not data.get('username') or not data.get('full_name'):
         return jsonify({'error': 'Username and full name required'}), 400
-    
+
     # Check if user exists
     if user_model.find_by_email(data['email']):
         return jsonify({'error': 'Email already registered'}), 400
-    
+
     if user_model.find_by_username(data['username']):
         return jsonify({'error': 'Username already taken'}), 400
-    
+
     # Hash password
-    password_hash = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-    
-    # Create user
+    password_hash = generate_password_hash(data['password'])
+
+    # ✅ Create user WITHOUT user_id - it will be auto-generated
     user = user_model.create({
         'username': data['username'],
         'email': data['email'],
@@ -38,8 +39,8 @@ def register():
         'role': data.get('role', 'student'),
         'status': 'active'
     })
-    
-    # Create student profile
+
+    # Create student profile if role is student
     if data.get('role', 'student') == 'student':
         StudentProfile().create({
             'user_id': user.get('user_id'),
