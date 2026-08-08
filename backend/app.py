@@ -22,12 +22,7 @@ jwt = JWTManager(app)
 # ============================================================
 # ✅ FIXED CORS - Simplified and Correct
 # ============================================================
-CORS(app,
-     resources={r"/api/*": {"origins": "*"}},
-     allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-     supports_credentials=False,
-     expose_headers=['Content-Type', 'Authorization'])
+CORS(app, origins="*")
 
 # ============================================================
 # Import Routes
