@@ -74,16 +74,16 @@
             background: #0F172A;
         }
 
-        /* ===== TOP HEADER (OLD STYLE) ===== */
+        /* ===== TOP HEADER ===== */
         #top-header {
             background: var(--light);
             border-bottom: 1px solid var(--gray-200);
-            padding: 16px 32px;
+            padding: 12px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -94,42 +94,37 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         .brand {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.4rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--dark);
             text-decoration: none;
         }
 
         .brand i {
-            color: var(--primary);
-            font-size: 1.6rem;
-        }
-
-        .brand span {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #d4af37;
+            font-size: 1.4rem;
         }
 
         .search-wrap {
             position: relative;
-            width: 360px;
+            width: 280px;
         }
 
         .search-wrap input {
             width: 100%;
-            padding: 10px 18px 10px 46px;
+            padding: 8px 14px 8px 40px;
             border: 2px solid var(--gray-200);
             border-radius: var(--radius-full);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             background: var(--gray-50);
             color: var(--dark);
             transition: all var(--transition);
@@ -145,7 +140,7 @@
 
         .search-wrap i {
             position: absolute;
-            left: 16px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray-400);
@@ -154,12 +149,12 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .icon-btn {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             border: 1px solid var(--gray-200);
             background: transparent;
@@ -168,7 +163,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             transition: all var(--transition);
             position: relative;
         }
@@ -187,10 +182,10 @@
             right: -4px;
             background: var(--danger);
             color: white;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 700;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -199,8 +194,8 @@
         }
 
         .user-avatar-sm {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: var(--gradient-primary);
             display: flex;
@@ -208,30 +203,71 @@
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             cursor: pointer;
             flex-shrink: 0;
         }
 
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #EF4444;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .logout-btn:hover {
+            background: #EF4444;
+            color: white;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+
+        #userNameDisplay {
+            font-weight: 600;
+            color: var(--dark);
+            display: none;
+        }
+
         /* ===== DASHBOARD CONTENT ===== */
         #dashboard-content {
-            max-width: 1440px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 28px 32px 40px;
+            padding: 24px 24px 40px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            margin-bottom: 24px;
+        }
+
+        .welcome-section h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .welcome-section p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
         }
 
         /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 28px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .stat-card {
             background: var(--light);
             border-radius: var(--radius);
-            padding: 20px 22px;
+            padding: 16px 18px;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
             transition: all var(--transition);
@@ -246,18 +282,18 @@
         .stat-header {
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
         .stat-icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: white;
             flex-shrink: 0;
         }
@@ -268,20 +304,20 @@
         .stat-icon.red { background: var(--gradient-danger); }
 
         .stat-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--gray-500);
             font-weight: 500;
         }
 
         .stat-value {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 800;
             line-height: 1.2;
             color: var(--dark);
         }
 
         .stat-change {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             margin-top: 4px;
         }
@@ -293,14 +329,14 @@
         .charts-row {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            margin-bottom: 28px;
+            gap: 20px;
+            margin-bottom: 24px;
         }
 
         .chart-card {
             background: var(--light);
             border-radius: var(--radius);
-            padding: 20px 24px;
+            padding: 18px 20px;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
         }
@@ -309,36 +345,36 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .chart-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--dark);
         }
 
         .chart-container {
-            height: 220px;
+            height: 200px;
             position: relative;
         }
 
         /* Courses Scroll */
         .courses-section {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .section-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--dark);
         }
@@ -347,7 +383,7 @@
             color: var(--primary);
             font-weight: 600;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: var(--transition);
         }
 
@@ -357,9 +393,9 @@
 
         .courses-scroll {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             overflow-x: auto;
-            padding: 8px 4px 16px;
+            padding: 8px 4px 12px;
             scrollbar-width: thin;
         }
 
@@ -376,8 +412,8 @@
         }
 
         .course-card {
-            min-width: 280px;
-            max-width: 320px;
+            min-width: 260px;
+            max-width: 300px;
             background: var(--light);
             border-radius: var(--radius);
             border: 1px solid var(--gray-200);
@@ -393,9 +429,8 @@
         }
 
         .course-banner {
-            height: 100px;
-            background: var(--gradient-primary);
-            padding: 12px 16px;
+            height: 80px;
+            padding: 10px 14px;
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
@@ -408,9 +443,9 @@
         .course-category {
             background: rgba(255, 255, 255, 0.9);
             color: var(--primary-dark);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: var(--radius-full);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -421,54 +456,54 @@
             backdrop-filter: blur(4px);
             color: white;
             font-weight: 700;
-            font-size: 0.8rem;
-            padding: 4px 12px;
+            font-size: 0.75rem;
+            padding: 3px 10px;
             border-radius: var(--radius-full);
         }
 
         .course-body {
-            padding: 16px 18px 18px;
+            padding: 14px 16px 16px;
         }
 
         .course-body h4 {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 700;
             margin-bottom: 4px;
             color: var(--dark);
         }
 
         .course-body p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--gray-500);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             line-height: 1.4;
         }
 
         .course-meta {
             display: flex;
-            gap: 16px;
-            font-size: 0.8rem;
+            gap: 14px;
+            font-size: 0.75rem;
             color: var(--gray-400);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .course-meta i { margin-right: 4px; }
 
         .course-progress-track {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .progress-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--gray-500);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .progress-bar {
-            height: 6px;
+            height: 5px;
             background: var(--gray-200);
             border-radius: var(--radius-full);
             overflow: hidden;
@@ -483,24 +518,25 @@
 
         .course-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-primary {
             flex: 1;
-            padding: 10px 16px;
+            padding: 8px 14px;
             background: var(--gradient-primary);
             color: white;
             border: none;
             border-radius: var(--radius-sm);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            font-family: 'Inter', sans-serif;
         }
 
         .btn-primary:hover {
@@ -509,15 +545,16 @@
         }
 
         .btn-outline {
-            padding: 10px 16px;
+            padding: 8px 12px;
             background: transparent;
             color: var(--gray-600);
             border: 1px solid var(--gray-300);
             border-radius: var(--radius-sm);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: var(--transition);
+            font-family: 'Inter', sans-serif;
         }
 
         .btn-outline:hover {
@@ -528,14 +565,14 @@
         .bottom-widgets {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 24px;
-            margin-top: 8px;
+            gap: 20px;
+            margin-top: 4px;
         }
 
         .widget-card {
             background: var(--light);
             border-radius: var(--radius);
-            padding: 20px 22px;
+            padding: 18px 20px;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
             transition: all var(--transition);
@@ -549,34 +586,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .widget-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--dark);
         }
 
         .widget-subtitle {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--gray-400);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
-        /* Tests List */
         .tests-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .test-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
+            gap: 10px;
+            padding: 8px 12px;
             background: var(--gray-50);
             border-radius: var(--radius-sm);
             transition: var(--transition);
@@ -587,15 +623,15 @@
         }
 
         .test-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: var(--radius-sm);
             background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             flex-shrink: 0;
         }
 
@@ -605,19 +641,19 @@
 
         .test-title {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--dark);
         }
 
         .test-details {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--gray-500);
         }
 
         .test-time {
             color: var(--danger);
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         /* Timer Widget */
@@ -632,35 +668,36 @@
 
         .timer-display {
             font-family: 'Poppins', monospace;
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             font-weight: 800;
             text-align: center;
-            padding: 16px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.06);
             border-radius: var(--radius);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             letter-spacing: 2px;
         }
 
         .timer-controls {
             display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .timer-btn {
             flex: 1;
-            padding: 10px;
+            padding: 8px;
             border: none;
             border-radius: var(--radius-sm);
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            font-family: 'Inter', sans-serif;
         }
 
         .timer-btn.start {
@@ -691,20 +728,21 @@
 
         .timer-presets {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
         }
 
         .timer-preset {
-            padding: 6px 14px;
+            padding: 4px 12px;
             background: rgba(255, 255, 255, 0.08);
             border: none;
             border-radius: var(--radius-full);
             color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
         }
 
         .timer-preset:hover {
@@ -716,119 +754,29 @@
             color: white;
         }
 
-        /* Leaderboard */
-        .leaderboard-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray-400);
         }
 
-        .lb-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            background: var(--gray-50);
-            border-radius: var(--radius-sm);
-            transition: var(--transition);
-        }
-
-        .lb-item:hover {
-            background: var(--gray-100);
-        }
-
-        .lb-item.you {
-            background: var(--primary);
-            color: white;
-        }
-
-        .lb-item.you .lb-name,
-        .lb-item.you .lb-score,
-        .lb-item.you .lb-detail {
-            color: white;
-        }
-
-        .lb-rank {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.8rem;
-            background: var(--gray-200);
-            color: var(--gray-600);
-            flex-shrink: 0;
-        }
-
-        .lb-item.you .lb-rank {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .lb-avatar {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: var(--gradient-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 0.8rem;
-            flex-shrink: 0;
-        }
-
-        .lb-item.you .lb-avatar {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .lb-info {
-            flex: 1;
-        }
-
-        .lb-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--dark);
-        }
-
-        .lb-detail {
-            font-size: 0.75rem;
-            color: var(--gray-500);
-        }
-
-        .lb-score {
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--primary);
-        }
-
-        .lb-item.you .lb-score {
-            color: white;
+        .loading i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 1200px) {
+        @media (max-width: 1024px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             .bottom-widgets {
                 grid-template-columns: 1fr 1fr;
             }
-        }
-
-        @media (max-width: 992px) {
-            .charts-row {
-                grid-template-columns: 1fr;
-            }
             .search-wrap {
-                width: 240px;
-            }
-            #top-header {
-                padding: 12px 20px;
+                width: 200px;
             }
         }
 
@@ -840,59 +788,48 @@
             .bottom-widgets {
                 grid-template-columns: 1fr;
             }
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
             #dashboard-content {
                 padding: 16px;
-            }
-            .search-wrap {
-                width: 180px;
-            }
-            .search-wrap input {
-                font-size: 0.85rem;
-                padding: 8px 14px 8px 38px;
-            }
-            .brand {
-                font-size: 1.1rem;
-            }
-            .course-card {
-                min-width: 240px;
-            }
-            .timer-display {
-                font-size: 2.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #top-header {
-                padding: 10px 14px;
-                gap: 10px;
-            }
-            .header-left {
-                gap: 10px;
-                flex-wrap: wrap;
             }
             .search-wrap {
                 width: 100%;
                 order: 3;
             }
+            .brand {
+                font-size: 1rem;
+            }
+            .course-card {
+                min-width: 220px;
+            }
+            .timer-display {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-            .stat-value {
-                font-size: 1.6rem;
+            #top-header {
+                padding: 8px 12px;
             }
-            .course-card {
-                min-width: 200px;
+            .stat-value {
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== TOP HEADER (OLD STYLE) ===== -->
+    <!-- ===== TOP HEADER ===== -->
     <header id="top-header">
         <div class="header-left">
             <a href="#" class="brand">
-                <div class="logo" style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: white; font-weight: 800; letter-spacing: 1px;"><i class="fas fa-book-open" style="color: #d4af37; margin-right: 0.4rem;"></i> Anam Shah Coaching</div>
+                <i class="fas fa-book-open"></i>
+                <span>Anam Shah Coaching</span>
             </a>
             <div class="search-wrap">
                 <i class="fas fa-search"></i>
@@ -900,64 +837,72 @@
             </div>
         </div>
         <div class="header-right">
+            <span id="userNameDisplay">User</span>
             <button class="icon-btn" id="themeToggle" title="Toggle theme">
                 <i class="fas fa-moon"></i>
             </button>
             <button class="icon-btn" id="notifBtn" title="Notifications">
                 <i class="fas fa-bell"></i>
-                <span class="notification-badge">5</span>
+                <span class="notification-badge" id="notifBadge">0</span>
             </button>
             <button class="icon-btn" id="fullscreenBtn" title="Fullscreen">
                 <i class="fas fa-expand"></i>
             </button>
-            <div class="user-avatar-sm">AK</div>
+            <div class="user-avatar-sm" id="userAvatar">U</div>
+            <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </header>
 
     <!-- ===== DASHBOARD CONTENT ===== -->
     <div id="dashboard-content">
 
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1 id="welcomeMessage">Welcome back! 👋</h1>
+            <p id="welcomeSubtitle">Track your learning progress and continue where you left off.</p>
+        </div>
+
         <!-- Stats Grid -->
-        <section class="stats-grid">
+        <section class="stats-grid" id="statsGrid">
             <div class="stat-card">
                 <div class="stat-header">
                     <div class="stat-icon purple"><i class="fas fa-fire"></i></div>
                     <div>
                         <div class="stat-title">Learning Streak</div>
-                        <div class="stat-value">42 Days</div>
+                        <div class="stat-value" id="streakValue">--</div>
                     </div>
                 </div>
-                <div class="stat-change up"><i class="fas fa-arrow-up"></i> All-time best!</div>
+                <div class="stat-change up"><i class="fas fa-arrow-up"></i> Keep going!</div>
             </div>
             <div class="stat-card">
                 <div class="stat-header">
                     <div class="stat-icon gold"><i class="fas fa-book-open"></i></div>
                     <div>
-                        <div class="stat-title">Active Courses</div>
-                        <div class="stat-value">18</div>
+                        <div class="stat-title">Enrolled Courses</div>
+                        <div class="stat-value" id="enrolledCourses">--</div>
                     </div>
                 </div>
-                <div class="stat-change up"><i class="fas fa-arrow-up"></i> 3 new this week</div>
+                <div class="stat-change up"><i class="fas fa-arrow-up"></i> <span id="newCourses">0</span> new</div>
             </div>
             <div class="stat-card">
                 <div class="stat-header">
                     <div class="stat-icon green"><i class="fas fa-clock"></i></div>
                     <div>
                         <div class="stat-title">Study Hours</div>
-                        <div class="stat-value">214</div>
+                        <div class="stat-value" id="studyHours">--</div>
                     </div>
                 </div>
-                <div class="stat-change up"><i class="fas fa-arrow-up"></i> 12h this week</div>
+                <div class="stat-change up"><i class="fas fa-arrow-up"></i> <span id="weeklyHours">0</span>h this week</div>
             </div>
             <div class="stat-card">
                 <div class="stat-header">
                     <div class="stat-icon red"><i class="fas fa-award"></i></div>
                     <div>
                         <div class="stat-title">Certificates</div>
-                        <div class="stat-value">7</div>
+                        <div class="stat-value" id="certificates">--</div>
                     </div>
                 </div>
-                <div class="stat-change up"><i class="fas fa-star"></i> 2 new earned</div>
+                <div class="stat-change up"><i class="fas fa-star"></i> <span id="newCertificates">0</span> earned</div>
             </div>
         </section>
 
@@ -966,10 +911,6 @@
             <div class="chart-card">
                 <div class="chart-header">
                     <h3 class="chart-title">📈 Learning Progress</h3>
-                    <div style="display:flex;gap:6px;">
-                        <button class="icon-btn" style="width:32px;height:32px;border-radius:8px;font-size:0.8rem;"><i class="fas fa-download"></i></button>
-                        <button class="icon-btn" style="width:32px;height:32px;border-radius:8px;font-size:0.8rem;"><i class="fas fa-filter"></i></button>
-                    </div>
                 </div>
                 <div class="chart-container">
                     <canvas id="progressChart"></canvas>
@@ -978,7 +919,6 @@
             <div class="chart-card">
                 <div class="chart-header">
                     <h3 class="chart-title">📊 Time Distribution</h3>
-                    <button class="icon-btn" style="width:32px;height:32px;border-radius:8px;font-size:0.8rem;"><i class="fas fa-ellipsis-h"></i></button>
                 </div>
                 <div class="chart-container">
                     <canvas id="timeChart"></canvas>
@@ -990,120 +930,10 @@
         <section class="courses-section">
             <div class="section-header">
                 <h2 class="section-title">📚 Continue Learning</h2>
-                <a href="./courses.html" class="section-link">View All Courses →</a>
+                <a href="courses.html" class="section-link">View All Courses →</a>
             </div>
-            <div class="courses-scroll">
-                <div class="course-card">
-                    <div class="course-banner">
-                        <span class="course-category">AI & ML</span>
-                        <span class="course-progress-badge">82%</span>
-                    </div>
-                    <div class="course-body">
-                        <h4>Machine Learning with Python</h4>
-                        <p>Neural networks, deep learning, computer vision with TensorFlow.</p>
-                        <div class="course-meta">
-                            <span><i class="fas fa-video"></i> 24 Lectures</span>
-                            <span><i class="fas fa-clock"></i> 36 Hours</span>
-                        </div>
-                        <div class="course-progress-track">
-                            <div class="progress-label">
-                                <span>Progress</span>
-                                <span>82%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:82%;"></div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary"><i class="fas fa-play"></i> Continue</button>
-                            <button class="btn-outline"><i class="fas fa-info-circle"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card">
-                    <div class="course-banner gold">
-                        <span class="course-category">Web Dev</span>
-                        <span class="course-progress-badge">76%</span>
-                    </div>
-                    <div class="course-body">
-                        <h4>Full Stack Web Development</h4>
-                        <p>React, Node.js, MongoDB — build modern web apps from scratch.</p>
-                        <div class="course-meta">
-                            <span><i class="fas fa-video"></i> 42 Lectures</span>
-                            <span><i class="fas fa-clock"></i> 58 Hours</span>
-                        </div>
-                        <div class="course-progress-track">
-                            <div class="progress-label">
-                                <span>Progress</span>
-                                <span>76%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:76%;"></div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary"><i class="fas fa-redo"></i> Review</button>
-                            <button class="btn-outline"><i class="fas fa-project-diagram"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card">
-                    <div class="course-banner green">
-                        <span class="course-category">Data Science</span>
-                        <span class="course-progress-badge">61%</span>
-                    </div>
-                    <div class="course-body">
-                        <h4>Data Science & Visualization</h4>
-                        <p>Data analysis, visualization, and ML with Python and R.</p>
-                        <div class="course-meta">
-                            <span><i class="fas fa-video"></i> 32 Lectures</span>
-                            <span><i class="fas fa-clock"></i> 45 Hours</span>
-                        </div>
-                        <div class="course-progress-track">
-                            <div class="progress-label">
-                                <span>Progress</span>
-                                <span>61%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:61%;"></div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary"><i class="fas fa-play"></i> Continue</button>
-                            <button class="btn-outline"><i class="fas fa-chart-bar"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card">
-                    <div class="course-banner red">
-                        <span class="course-category">Mobile Dev</span>
-                        <span class="course-progress-badge">43%</span>
-                    </div>
-                    <div class="course-body">
-                        <h4>Flutter Mobile Development</h4>
-                        <p>Build natively compiled apps for mobile, web, and desktop.</p>
-                        <div class="course-meta">
-                            <span><i class="fas fa-video"></i> 28 Lectures</span>
-                            <span><i class="fas fa-clock"></i> 40 Hours</span>
-                        </div>
-                        <div class="course-progress-track">
-                            <div class="progress-label">
-                                <span>Progress</span>
-                                <span>43%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:43%;"></div>
-                            </div>
-                        </div>
-                        <div class="course-actions">
-                            <button class="btn-primary"><i class="fas fa-play"></i> Continue</button>
-                            <button class="btn-outline"><i class="fas fa-mobile-alt"></i></button>
-                        </div>
-                    </div>
-                </div>
+            <div class="courses-scroll" id="coursesContainer">
+                <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading your courses...</div>
             </div>
         </section>
 
@@ -1113,31 +943,11 @@
             <div class="widget-card">
                 <div class="widget-header">
                     <h3 class="widget-title">📋 Upcoming Tests</h3>
-                    <a href="./upcoming-exams.html" class="section-link" style="font-size:0.8rem;">View All</a>
+                    <a href="upcoming-exams.html" class="section-link" style="font-size:0.8rem;">View All</a>
                 </div>
                 <p class="widget-subtitle">Prepare for your upcoming assessments</p>
-                <div class="tests-list">
-                    <div class="test-item">
-                        <div class="test-icon"><i class="fas fa-brain"></i></div>
-                        <div class="test-info">
-                            <div class="test-title">Machine Learning Midterm</div>
-                            <div class="test-details">Chapters 1-6 · <span class="test-time">Tomorrow, 10:00 AM</span></div>
-                        </div>
-                    </div>
-                    <div class="test-item">
-                        <div class="test-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);"><i class="fas fa-code"></i></div>
-                        <div class="test-info">
-                            <div class="test-title">React.js Assessment</div>
-                            <div class="test-details">Hooks & Context · <span class="test-time">In 3 Days</span></div>
-                        </div>
-                    </div>
-                    <div class="test-item">
-                        <div class="test-icon" style="background:linear-gradient(135deg,#10B981,#059669);"><i class="fas fa-database"></i></div>
-                        <div class="test-info">
-                            <div class="test-title">Database Systems Quiz</div>
-                            <div class="test-details">SQL & NoSQL · <span class="test-time">In 1 Week</span></div>
-                        </div>
-                    </div>
+                <div class="tests-list" id="testsList">
+                    <div class="loading" style="padding:10px;font-size:0.8rem;">Loading tests...</div>
                 </div>
             </div>
 
@@ -1148,54 +958,28 @@
                     <span style="font-size:0.8rem;color:rgba(255,255,255,0.6);" id="timerMode">Pomodoro</span>
                 </div>
                 <p class="widget-subtitle">Stay focused and productive</p>
-                <div class="timer-display" id="timerDisplay">25:00</div>
+                <div class="timer-display" id="timerDisplay">60:00</div>
                 <div class="timer-controls">
                     <button class="timer-btn start" id="startTimer"><i class="fas fa-play"></i> Start</button>
                     <button class="timer-btn stop" id="stopTimer" disabled><i class="fas fa-pause"></i> Pause</button>
                 </div>
                 <div class="timer-presets">
-                    <button class="timer-preset active" data-minutes="25">25 min</button>
-                    <button class="timer-preset" data-minutes="50">50 min</button>
+                    <button class="timer-preset active" data-minutes="60">60 min</button>
+                    <button class="timer-preset" data-minutes="30">30 min</button>
                     <button class="timer-preset" data-minutes="15">15 min</button>
                     <button class="timer-preset" data-minutes="10">10 min</button>
                 </div>
             </div>
 
-            <!-- Top Learners -->
+            <!-- Leaderboard -->
             <div class="widget-card">
                 <div class="widget-header">
                     <h3 class="widget-title">🏆 Top Learners</h3>
-                    <a href="./leaderboard.html" class="section-link" style="font-size:0.8rem;">Leaderboard</a>
+                    <a href="leaderboard.html" class="section-link" style="font-size:0.8rem;">Leaderboard</a>
                 </div>
                 <p class="widget-subtitle">This month's top performers</p>
-                <div class="leaderboard-list">
-                    <div class="lb-item you">
-                        <div class="lb-rank">1</div>
-                        <div class="lb-avatar"><i class="fas fa-crown"></i></div>
-                        <div class="lb-info">
-                            <div class="lb-name">Alex Johnson</div>
-                            <div class="lb-detail">You · 42 Day Streak</div>
-                        </div>
-                        <div class="lb-score">12,450</div>
-                    </div>
-                    <div class="lb-item">
-                        <div class="lb-rank">2</div>
-                        <div class="lb-avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706);">MJ</div>
-                        <div class="lb-info">
-                            <div class="lb-name">Maria Garcia</div>
-                            <div class="lb-detail">Data Science</div>
-                        </div>
-                        <div class="lb-score">11,890</div>
-                    </div>
-                    <div class="lb-item">
-                        <div class="lb-rank">3</div>
-                        <div class="lb-avatar" style="background:linear-gradient(135deg,#10B981,#059669);">RW</div>
-                        <div class="lb-info">
-                            <div class="lb-name">Ryan Wilson</div>
-                            <div class="lb-detail">Web Development</div>
-                        </div>
-                        <div class="lb-score">10,760</div>
-                    </div>
+                <div class="leaderboard-list" id="leaderboardList">
+                    <div class="loading" style="padding:10px;font-size:0.8rem;">Loading...</div>
                 </div>
             </div>
         </div>
@@ -1203,7 +987,359 @@
     </div>
 
     <script>
-        // ===== THEME TOGGLE =====
+        // ============================================================
+        // 1. API CONFIGURATION (Your Vercel Backend)
+        // ============================================================
+        
+        const API_BASE_URL = 'https://anam-shah-coaching.vercel.app/api';
+
+        // ============================================================
+        // 2. API HELPER FUNCTIONS
+        // ============================================================
+
+        function getAuthHeaders() {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                window.location.href = 'index.html';
+                return null;
+            }
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+
+        function getUser() {
+            try {
+                return JSON.parse(localStorage.getItem('user') || 'null');
+            } catch {
+                return null;
+            }
+        }
+
+        async function apiRequest(endpoint, method = 'GET', data = null) {
+            const headers = getAuthHeaders();
+            if (!headers) return null;
+            
+            const url = `${API_BASE_URL}${endpoint}`;
+            const options = { method, headers };
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        localStorage.removeItem('access_token');
+                        localStorage.removeItem('user');
+                        window.location.href = 'index.html';
+                    }
+                    throw new Error(result.error || 'Something went wrong');
+                }
+                return result;
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        // ============================================================
+        // 3. USER AUTHENTICATION CHECK
+        // ============================================================
+
+        let currentUser = null;
+
+        function checkAuth() {
+            const user = getUser();
+            const token = localStorage.getItem('access_token');
+            
+            if (!user || !token) {
+                window.location.href = 'index.html';
+                return false;
+            }
+            
+            currentUser = user;
+            return true;
+        }
+
+        // ============================================================
+        // 4. UPDATE UI WITH USER DETAILS
+        // ============================================================
+
+        function updateUserUI(user) {
+            // Update user name in header
+            const nameDisplay = document.getElementById('userNameDisplay');
+            nameDisplay.textContent = user.full_name || user.username;
+            nameDisplay.style.display = 'inline';
+
+            // Update avatar with initials
+            const initials = user.full_name ? 
+                user.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+                user.username?.slice(0, 2).toUpperCase() || 'U';
+            document.getElementById('userAvatar').textContent = initials;
+
+            // Update welcome message
+            const greeting = getGreeting();
+            document.getElementById('welcomeMessage').textContent = `${greeting}, ${user.full_name || user.username}! 👋`;
+            
+            // Update subtitle with exam target if available
+            const examTarget = user.exam_target || 'learning';
+            document.getElementById('welcomeSubtitle').textContent = 
+                `Track your ${examTarget} journey and continue where you left off.`;
+        }
+
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour < 12) return 'Good Morning';
+            if (hour < 17) return 'Good Afternoon';
+            return 'Good Evening';
+        }
+
+        // ============================================================
+        // 5. LOAD DASHBOARD DATA
+        // ============================================================
+
+        async function loadDashboard() {
+            try {
+                // Check authentication
+                if (!checkAuth()) return;
+
+                // Get user details
+                const user = getUser();
+                if (user) {
+                    updateUserUI(user);
+                }
+
+                // Load user profile (for additional details)
+                try {
+                    const profileResult = await apiRequest('/users/profile');
+                    if (profileResult && profileResult.user) {
+                        // Update user with profile data
+                        const updatedUser = { ...user, ...profileResult.user };
+                        localStorage.setItem('user', JSON.stringify(updatedUser));
+                        currentUser = updatedUser;
+                        updateUserUI(updatedUser);
+                    }
+                } catch (e) {
+                    console.log('Profile details not available');
+                }
+
+                // Load enrollments
+                const enrollmentsResult = await apiRequest('/enrollments');
+                if (enrollmentsResult) {
+                    const enrollments = enrollmentsResult.enrollments || [];
+                    updateStats(enrollments);
+                    
+                    // Load courses for display
+                    const coursesResult = await apiRequest('/courses');
+                    if (coursesResult) {
+                        const courses = coursesResult.courses || [];
+                        displayCourses(courses, enrollments);
+                    }
+                }
+
+                // Load notifications
+                try {
+                    const notifResult = await apiRequest('/notifications/unread');
+                    if (notifResult) {
+                        const unread = notifResult.notifications?.length || 0;
+                        const badge = document.getElementById('notifBadge');
+                        badge.textContent = unread;
+                        badge.style.display = unread > 0 ? 'flex' : 'none';
+                    }
+                } catch (e) {
+                    console.log('Notifications not available');
+                }
+
+                // Load tests
+                loadTests();
+
+                // Load leaderboard
+                loadLeaderboard();
+
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                document.getElementById('coursesContainer').innerHTML = 
+                    `<div style="padding:20px;text-align:center;color:var(--danger);">
+                        <i class="fas fa-exclamation-circle"></i> Error loading data. Please refresh.
+                    </div>`;
+            }
+        }
+
+        // ============================================================
+        // 6. UPDATE STATS
+        // ============================================================
+
+        function updateStats(enrollments) {
+            const total = enrollments.length;
+            const completed = enrollments.filter(e => e.status === 'completed').length;
+            const inProgress = enrollments.filter(e => e.status === 'in_progress' || e.status === 'enrolled').length;
+            
+            document.getElementById('enrolledCourses').textContent = total;
+            document.getElementById('streakValue').textContent = '7'; // Placeholder - fetch from API
+            document.getElementById('studyHours').textContent = '12'; // Placeholder - fetch from API
+            document.getElementById('certificates').textContent = completed > 0 ? '1' : '0';
+        }
+
+        // ============================================================
+        // 7. DISPLAY COURSES
+        // ============================================================
+
+        function displayCourses(courses, enrollments) {
+            const container = document.getElementById('coursesContainer');
+            
+            if (!courses || courses.length === 0) {
+                container.innerHTML = `
+                    <div style="min-width:250px;padding:20px;text-align:center;color:var(--gray-500);">
+                        <i class="fas fa-book-open" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>
+                        No courses available.
+                    </div>
+                `;
+                return;
+            }
+            
+            // Get enrolled course IDs
+            const enrolledIds = new Set(enrollments.map(e => String(e.course_id)));
+            
+            // Show enrolled courses first, then others
+            const enrolledCourses = courses.filter(c => enrolledIds.has(String(c.course_id)));
+            const otherCourses = courses.filter(c => !enrolledIds.has(String(c.course_id)));
+            const displayCourses = [...enrolledCourses, ...otherCourses].slice(0, 6);
+            
+            if (displayCourses.length === 0) {
+                container.innerHTML = `
+                    <div style="min-width:250px;padding:20px;text-align:center;color:var(--gray-500);">
+                        <i class="fas fa-book-open" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>
+                        No courses available.
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = displayCourses.map(course => {
+                const isEnrolled = enrolledIds.has(String(course.course_id));
+                const enrollment = enrollments.find(e => String(e.course_id) === String(course.course_id));
+                const progress = enrollment?.progress_percentage || 0;
+                const status = enrollment?.status || 'not_enrolled';
+                
+                const colorClasses = {
+                    'beginner': 'green',
+                    'intermediate': 'gold',
+                    'advanced': 'red'
+                };
+                const color = colorClasses[course.level] || 'primary';
+                
+                const actionText = status === 'completed' ? 'Review' : 
+                                   isEnrolled ? 'Continue' : 'Enroll';
+                const actionIcon = status === 'completed' ? 'fa-redo' : 
+                                   isEnrolled ? 'fa-play' : 'fa-plus';
+                
+                return `
+                    <div class="course-card">
+                        <div class="course-banner ${color}">
+                            <span class="course-category">${course.category_name || 'Course'}</span>
+                            <span class="course-progress-badge">${isEnrolled ? progress + '%' : 'New'}</span>
+                        </div>
+                        <div class="course-body">
+                            <h4>${course.title}</h4>
+                            <p>${course.short_description || course.description?.slice(0, 60) + '...' || 'Learn new skills'}</p>
+                            <div class="course-meta">
+                                <span><i class="fas fa-video"></i> ${course.total_lectures || 0}</span>
+                                <span><i class="fas fa-clock"></i> ${course.total_duration || 0}h</span>
+                            </div>
+                            ${isEnrolled ? `
+                            <div class="course-progress-track">
+                                <div class="progress-label">
+                                    <span>Progress</span>
+                                    <span>${progress}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width:${progress}%;"></div>
+                                </div>
+                            </div>
+                            ` : ''}
+                            <div class="course-actions">
+                                <button class="btn-primary" onclick="window.location.href='course-content.html?course=${course.course_id}'">
+                                    <i class="fas ${actionIcon}"></i> ${actionText}
+                                </button>
+                                <button class="btn-outline" onclick="window.location.href='course-content.html?course=${course.course_id}'"><i class="fas fa-info-circle"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================
+        // 8. LOAD TESTS
+        // ============================================================
+
+        function loadTests() {
+            const container = document.getElementById('testsList');
+            
+            // In production, fetch from API
+            const tests = [
+                { title: 'Machine Learning Midterm', details: 'Chapters 1-6', time: 'Tomorrow, 10:00 AM' },
+                { title: 'React.js Assessment', details: 'Hooks & Context', time: 'In 3 Days' },
+                { title: 'Database Systems Quiz', details: 'SQL & NoSQL', time: 'In 1 Week' }
+            ];
+            
+            container.innerHTML = tests.map(test => `
+                <div class="test-item">
+                    <div class="test-icon"><i class="fas fa-brain"></i></div>
+                    <div class="test-info">
+                        <div class="test-title">${test.title}</div>
+                        <div class="test-details">${test.details} · <span class="test-time">${test.time}</span></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================
+        // 9. LOAD LEADERBOARD
+        // ============================================================
+
+        function loadLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            
+            // In production, fetch from API
+            const leaders = [
+                { name: 'You', detail: '42 Day Streak', points: '12,450', isYou: true },
+                { name: 'Maria Garcia', detail: 'Data Science', points: '11,890', isYou: false },
+                { name: 'Ryan Wilson', detail: 'Web Development', points: '10,760', isYou: false }
+            ];
+            
+            container.innerHTML = leaders.map(leader => `
+                <div class="lb-item ${leader.isYou ? 'you' : ''}">
+                    <div class="lb-rank">${leader.isYou ? '1' : '2'}</div>
+                    <div class="lb-avatar">${leader.isYou ? '👑' : leader.name.slice(0, 2)}</div>
+                    <div class="lb-info">
+                        <div class="lb-name">${leader.name}</div>
+                        <div class="lb-detail">${leader.detail}</div>
+                    </div>
+                    <div class="lb-score">${leader.points}</div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================
+        // 10. LOGOUT
+        // ============================================================
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // ============================================================
+        // 11. THEME TOGGLE
+        // ============================================================
+
         const themeBtn = document.getElementById('themeToggle');
         const themeIcon = themeBtn.querySelector('i');
         let darkMode = localStorage.getItem('theme') === 'dark';
@@ -1221,14 +1357,17 @@
             updateChartColors();
         });
 
-        // ===== CHARTS =====
+        // ============================================================
+        // 12. CHARTS
+        // ============================================================
+
         const isDark = () => document.body.classList.contains('dark-theme');
         const getTextColor = () => isDark() ? '#D1D5DB' : '#6B7280';
         const getGridColor = () => isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
 
         // Progress Chart
         const ctx1 = document.getElementById('progressChart').getContext('2d');
-        const progressChart = new Chart(ctx1, {
+        window.progressChart = new Chart(ctx1, {
             type: 'line',
             data: {
                 labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'],
@@ -1241,8 +1380,8 @@
                     fill: true,
                     tension: 0.4,
                     pointBackgroundColor: '#8B5CF6',
-                    pointRadius: 5,
-                    pointHoverRadius: 8
+                    pointRadius: 4,
+                    pointHoverRadius: 7
                 }]
             },
             options: {
@@ -1267,7 +1406,7 @@
 
         // Time Chart (Doughnut)
         const ctx2 = document.getElementById('timeChart').getContext('2d');
-        const timeChart = new Chart(ctx2, {
+        window.timeChart = new Chart(ctx2, {
             type: 'doughnut',
             data: {
                 labels: ['AI & ML', 'Web Dev', 'Data Sci', 'Math', 'Languages'],
@@ -1285,11 +1424,11 @@
                     legend: {
                         position: 'right',
                         labels: {
-                            padding: 16,
+                            padding: 12,
                             usePointStyle: true,
                             pointStyle: 'circle',
                             color: getTextColor(),
-                            font: { size: 11 }
+                            font: { size: 10 }
                         }
                     }
                 },
@@ -1314,10 +1453,13 @@
             timeChart.update();
         }
 
-        // ===== TIMER =====
+        // ============================================================
+        // 13. TIMER
+        // ============================================================
+
         let timerRunning = false;
         let timerInterval = null;
-        let timerSeconds = 25 * 60;
+        let timerSeconds = 60 * 60;
         const timerDisplay = document.getElementById('timerDisplay');
         const startBtn = document.getElementById('startTimer');
         const stopBtn = document.getElementById('stopTimer');
@@ -1374,15 +1516,18 @@
             });
         });
 
-        // ===== NOTIFICATIONS =====
+        // ============================================================
+        // 14. NOTIFICATIONS
+        // ============================================================
+
         document.getElementById('notifBtn').addEventListener('click', function() {
-            const badge = this.querySelector('.notification-badge');
-            badge.textContent = '0';
-            badge.style.background = '#9CA3AF';
-            alert('📬 You have 5 new notifications');
+            window.location.href = 'notifications.html';
         });
 
-        // ===== FULLSCREEN =====
+        // ============================================================
+        // 15. FULLSCREEN
+        // ============================================================
+
         let fs = false;
         document.getElementById('fullscreenBtn').addEventListener('click', () => {
             if (!fs) {
@@ -1394,24 +1539,21 @@
             }
         });
 
-        // ===== SEARCH =====
+        // ============================================================
+        // 16. SEARCH
+        // ============================================================
+
         document.getElementById('searchInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 alert(`🔍 Searching for "${e.target.value}"...`);
             }
         });
 
-        // ===== COURSE BUTTONS =====
-        document.querySelectorAll('.btn-primary').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const card = this.closest('.course-card');
-                const title = card?.querySelector('h4')?.textContent || 'course';
-                alert(`📖 Continuing "${title}"`);
-            });
-        });
+        // ============================================================
+        // 17. INITIALIZE
+        // ============================================================
 
-        console.log('🚀 Anam Shah Coaching Dashboard loaded!');
+        document.addEventListener('DOMContentLoaded', loadDashboard);
     </script>
 </body>
 </html>
