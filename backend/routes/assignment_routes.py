@@ -53,19 +53,19 @@ def delete_assignment(assignment_id):
 def submit_assignment():
     data = request.get_json()
     user_id = get_jwt_identity()
-    
+
     # Verify enrollment exists
     enrollment = enrollment_model.get_by_user_and_course(user_id, data.get('course_id'))
     if not enrollment:
         return jsonify({'error': 'Not enrolled in this course'}), 403
-    
+
     submission = submission_model.create({
         'enrollment_id': enrollment.get('enrollment_id'),
         'assignment_id': data.get('assignment_id'),
         'answers': data.get('answers'),
         'time_taken': data.get('time_taken', 0)
     })
-    
+
     return jsonify({'submission': submission}), 201
 
 @assignment_bp.route('/submissions', methods=['GET'])
@@ -73,12 +73,12 @@ def submit_assignment():
 def get_submissions():
     user_id = get_jwt_identity()
     enrollments = enrollment_model.get_by_user(user_id)
-    
+
     all_submissions = []
     for enrollment in enrollments:
         submissions = submission_model.query(enrollment_id=str(enrollment.get('enrollment_id')))
         all_submissions.extend(submissions)
-    
+
     return jsonify({'submissions': all_submissions}), 200
 
 @assignment_bp.route('/submissions/<int:submission_id>/grade', methods=['PUT'])
@@ -95,3 +95,39 @@ def grade_submission(submission_id):
         'graded_at': datetime.utcnow().isoformat()
     })
     return jsonify({'submission': submission}), 200
+
+@assignment_bp.route('/upcoming', methods=['GET'])
+@jwt_required()
+def get_upcoming_assignments():
+    user_id = get_jwt_identity()
+
+    # Get user's enrollments
+    enrollments = enrollment_model.get_by_user(user_id)
+    enrollment_ids = [e.get('enrollment_id') for e in enrollments]
+
+    # Get assignments for enrolled courses
+    all_assignments = []
+    for enrollment in enrollments:
+        course_id = enrollment.get('course_id')
+        # Get assignments for this course's lessons
+        # This is a simplified version - you might want to add a lesson lookup
+        assignments = assignment_model.query(course_id=str(course_id))
+        all_assignments.extend(assignments)
+
+    # Sort by due date
+    all_assignments.sort(key=lambda x: x.get('due_date', ''), reverse=False)
+
+    # Return upcoming (not overdue)
+    from datetime import datetime
+    now = datetime.utcnow().isoformat()
+    upcoming = [a for a in all_assignments if a.get('due_date', '') >= now or not a.get('due_date')]
+
+    # Add course names
+    for assignment in upcoming[:5]:
+        course_id = assignment.get('course_id')
+        if course_id:
+            course = course_model.get_by_id(course_id)
+            assignment['course_name'] = course.get('title', 'Course') if course else 'Course'
+        assignment['icon'] = 'pencil-alt'
+
+    return jsonify({'assignments': upcoming[:5]}), 200

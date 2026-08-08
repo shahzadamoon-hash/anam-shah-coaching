@@ -135,3 +135,40 @@ def delete_comment(comment_id):
     
     comment_model.delete(comment_id)
     return jsonify({'message': 'Comment deleted'}), 200
+
+@community_bp.route('/leaderboard', methods=['GET'])
+def get_leaderboard():
+    # Get all users
+    user_model = User()
+    users = user_model.get_all()
+
+    # Get enrollments for each user
+    enrollment_model = Enrollment()
+
+    leaders = []
+    for user in users[:20]:  # Limit to 20 users
+        user_id = user.get('user_id')
+        enrollments = enrollment_model.get_by_user(user_id)
+
+        # Calculate XP (simplified: 10 XP per course + 5 XP per completed course)
+        total_courses = len(enrollments)
+        completed = len([e for e in enrollments if e.get('status') in ['completed', 'finished']])
+        total_xp = (total_courses * 10) + (completed * 5)
+
+        # Get streak (simulate)
+        streak_days = 3 if total_courses > 0 else 0
+
+        leaders.append({
+            'user_id': user_id,
+            'username': user.get('username'),
+            'full_name': user.get('full_name'),
+            'total_xp': total_xp,
+            'course_count': total_courses,
+            'streak_days': streak_days,
+            'is_you': False  # Will be set client-side
+        })
+
+    # Sort by XP descending
+    leaders.sort(key=lambda x: x['total_xp'], reverse=True)
+
+    return jsonify({'leaders': leaders[:10]}), 200

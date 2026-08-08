@@ -21,3 +21,24 @@ def get_course(course_id):
     if not course:
         return jsonify({'error': 'Course not found'}), 404
     return jsonify({'course': course}), 200
+
+@course_bp.route('/search', methods=['GET'])
+def search_courses():
+    query = request.args.get('q', '').lower()
+
+    if not query:
+        return jsonify({'courses': []}), 200
+
+    all_courses = course_model.get_all()
+
+    # Search in title, description, and category
+    results = []
+    for course in all_courses:
+        title = course.get('title', '').lower()
+        description = course.get('description', '').lower()
+        category = course.get('category_name', '').lower()
+
+        if query in title or query in description or query in category:
+            results.append(course)
+
+    return jsonify({'courses': results}), 200
