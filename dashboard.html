@@ -1014,7 +1014,7 @@
         // ============================================================
         // 1. API CONFIGURATION
         // ============================================================
-        
+
         const API_BASE_URL = 'https://anam-shah-coaching.vercel.app/api';
 
         // ============================================================
@@ -1044,7 +1044,7 @@
         async function apiRequest(endpoint, method = 'GET', data = null) {
             const headers = getAuthHeaders();
             if (!headers) return null;
-            
+
             const url = `${API_BASE_URL}${endpoint}`;
             const options = { method, headers };
             if (data) {
@@ -1078,12 +1078,12 @@
         function checkAuth() {
             const user = getUser();
             const token = localStorage.getItem('access_token');
-            
+
             if (!user || !token) {
                 window.location.href = 'index.html';
                 return false;
             }
-            
+
             currentUser = user;
             return true;
         }
@@ -1097,16 +1097,16 @@
             nameDisplay.textContent = user.full_name || user.username;
             nameDisplay.style.display = 'inline';
 
-            const initials = user.full_name ? 
-                user.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 
+            const initials = user.full_name ?
+                user.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) :
                 user.username?.slice(0, 2).toUpperCase() || 'U';
             document.getElementById('userAvatar').textContent = initials;
 
             const greeting = getGreeting();
             document.getElementById('welcomeMessage').textContent = `${greeting}, ${user.full_name || user.username}! 👋`;
-            
+
             const examTarget = user.exam_target || 'learning';
-            document.getElementById('welcomeSubtitle').textContent = 
+            document.getElementById('welcomeSubtitle').textContent =
                 `Track your ${examTarget} journey and continue where you left off.`;
         }
 
@@ -1118,7 +1118,7 @@
         }
 
         // ============================================================
-        // 5. LOAD DASHBOARD DATA
+        // 5. LOAD DASHBOARD DATA (LIVE FROM API)
         // ============================================================
 
         async function loadDashboard() {
@@ -1145,16 +1145,20 @@
 
                 // Load enrollments
                 const enrollmentsResult = await apiRequest('/enrollments');
+                let enrollments = [];
                 if (enrollmentsResult) {
-                    const enrollments = enrollmentsResult.enrollments || [];
-                    updateStats(enrollments);
-                    
+                    enrollments = enrollmentsResult.enrollments || [];
+
+                    // Load courses
                     const coursesResult = await apiRequest('/courses');
                     if (coursesResult) {
                         const courses = coursesResult.courses || [];
                         displayCourses(courses, enrollments);
                     }
                 }
+
+                // Load stats (LIVE from API)
+                await updateStats(enrollments);
 
                 // Load notifications
                 try {
@@ -1169,30 +1173,55 @@
                     console.log('Notifications not available');
                 }
 
-                loadTests();
-                loadLeaderboard();
+                // Load tests (LIVE from API)
+                await loadTests();
+
+                // Load leaderboard (LIVE from API)
+                await loadLeaderboard();
 
             } catch (error) {
                 console.error('Error loading dashboard:', error);
-                document.getElementById('coursesContainer').innerHTML = 
+                document.getElementById('coursesContainer').innerHTML =
                     `<div style="padding:20px;text-align:center;color:var(--danger);">
-                        <i class="fas fa-exclamation-circle"></i> Error loading data. Please refresh.
-                    </div>`;
+                    <i class="fas fa-exclamation-circle"></i> Error loading data. Please refresh.
+                </div>`;
             }
         }
 
         // ============================================================
-        // 6. UPDATE STATS
+        // 6. UPDATE STATS (LIVE FROM API)
         // ============================================================
 
-        function updateStats(enrollments) {
-            const total = enrollments.length;
-            const completed = enrollments.filter(e => e.status === 'completed').length;
-            
-            document.getElementById('enrolledCourses').textContent = total;
-            document.getElementById('streakValue').textContent = '7';
-            document.getElementById('studyHours').textContent = '12';
-            document.getElementById('certificates').textContent = completed > 0 ? '1' : '0';
+        async function updateStats(enrollments) {
+            try {
+                // Fetch stats from backend
+                const stats = await apiRequest('/users/stats');
+
+                if (stats) {
+                    document.getElementById('streakValue').textContent = stats.streak_days || 0;
+                    document.getElementById('studyHours').textContent = stats.total_hours || 0;
+                    document.getElementById('weeklyHours').textContent = stats.weekly_hours || 0;
+                    document.getElementById('certificates').textContent = stats.certificates || 0;
+                    document.getElementById('newCertificates').textContent = stats.new_certificates || 0;
+                    document.getElementById('enrolledCourses').textContent = stats.total_courses || enrollments.length;
+                } else {
+                    // Fallback: calculate from enrollments
+                    const total = enrollments.length;
+                    const completed = enrollments.filter(e => e.status === 'completed').length;
+                    document.getElementById('enrolledCourses').textContent = total;
+                    document.getElementById('streakValue').textContent = '7';
+                    document.getElementById('studyHours').textContent = '12';
+                    document.getElementById('certificates').textContent = completed > 0 ? '1' : '0';
+                }
+            } catch (error) {
+                console.log('Stats API not available, using fallback');
+                const total = enrollments.length;
+                const completed = enrollments.filter(e => e.status === 'completed').length;
+                document.getElementById('enrolledCourses').textContent = total;
+                document.getElementById('streakValue').textContent = '7';
+                document.getElementById('studyHours').textContent = '12';
+                document.getElementById('certificates').textContent = completed > 0 ? '1' : '0';
+            }
         }
 
         // ============================================================
@@ -1201,132 +1230,232 @@
 
         function displayCourses(courses, enrollments) {
             const container = document.getElementById('coursesContainer');
-            
+
             if (!courses || courses.length === 0) {
                 container.innerHTML = `
-                    <div style="min-width:250px;padding:20px;text-align:center;color:var(--gray-500);">
-                        <i class="fas fa-book-open" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>
-                        No courses available.
-                    </div>
-                `;
+                <div style="min-width:250px;padding:20px;text-align:center;color:var(--gray-500);">
+                    <i class="fas fa-book-open" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>
+                    No courses available.
+                </div>
+            `;
                 return;
             }
-            
+
             const enrolledIds = new Set(enrollments.map(e => String(e.course_id)));
             const enrolledCourses = courses.filter(c => enrolledIds.has(String(c.course_id)));
             const otherCourses = courses.filter(c => !enrolledIds.has(String(c.course_id)));
             const displayCourses = [...enrolledCourses, ...otherCourses].slice(0, 6);
-            
+
             if (displayCourses.length === 0) {
                 container.innerHTML = `
-                    <div style="min-width:250px;padding:20px;text-align:center;color:var(--gray-500);">
-                        <i class="fas fa-book-open" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>
-                        No courses available.
-                    </div>
-                `;
+                <div style="min-width:250px;padding:20px;text-align:center;color:var(--gray-500);">
+                    <i class="fas fa-book-open" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>
+                    No courses available.
+                </div>
+            `;
                 return;
             }
-            
+
             container.innerHTML = displayCourses.map(course => {
                 const isEnrolled = enrolledIds.has(String(course.course_id));
                 const enrollment = enrollments.find(e => String(e.course_id) === String(course.course_id));
                 const progress = enrollment?.progress_percentage || 0;
                 const status = enrollment?.status || 'not_enrolled';
-                
+
                 const colorClasses = {
                     'beginner': 'green',
                     'intermediate': 'gold',
                     'advanced': 'red'
                 };
                 const color = colorClasses[course.level] || 'primary';
-                
-                const actionText = status === 'completed' ? 'Review' : 
-                                   isEnrolled ? 'Continue' : 'Enroll';
-                const actionIcon = status === 'completed' ? 'fa-redo' : 
-                                   isEnrolled ? 'fa-play' : 'fa-plus';
-                
+
+                const actionText = status === 'completed' ? 'Review' :
+                    isEnrolled ? 'Continue' : 'Enroll';
+                const actionIcon = status === 'completed' ? 'fa-redo' :
+                    isEnrolled ? 'fa-play' : 'fa-plus';
+
                 return `
-                    <div class="course-card">
-                        <div class="course-banner ${color}">
-                            <span class="course-category">${course.category_name || 'Course'}</span>
-                            <span class="course-progress-badge">${isEnrolled ? progress + '%' : 'New'}</span>
+                <div class="course-card">
+                    <div class="course-banner ${color}">
+                        <span class="course-category">${course.category_name || 'Course'}</span>
+                        <span class="course-progress-badge">${isEnrolled ? progress + '%' : 'New'}</span>
+                    </div>
+                    <div class="course-body">
+                        <h4>${course.title}</h4>
+                        <p>${course.short_description || course.description?.slice(0, 60) + '...' || 'Learn new skills'}</p>
+                        <div class="course-meta">
+                            <span><i class="fas fa-video"></i> ${course.total_lectures || 0}</span>
+                            <span><i class="fas fa-clock"></i> ${course.total_duration || 0}h</span>
                         </div>
-                        <div class="course-body">
-                            <h4>${course.title}</h4>
-                            <p>${course.short_description || course.description?.slice(0, 60) + '...' || 'Learn new skills'}</p>
-                            <div class="course-meta">
-                                <span><i class="fas fa-video"></i> ${course.total_lectures || 0}</span>
-                                <span><i class="fas fa-clock"></i> ${course.total_duration || 0}h</span>
+                        ${isEnrolled ? `
+                        <div class="course-progress-track">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span>${progress}%</span>
                             </div>
-                            ${isEnrolled ? `
-                            <div class="course-progress-track">
-                                <div class="progress-label">
-                                    <span>Progress</span>
-                                    <span>${progress}%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width:${progress}%;"></div>
-                                </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width:${progress}%;"></div>
                             </div>
-                            ` : ''}
-                            <div class="course-actions">
-                                <button class="btn-primary" onclick="window.location.href='course-content.html?course=${course.course_id}'">
-                                    <i class="fas ${actionIcon}"></i> ${actionText}
-                                </button>
-                                <button class="btn-outline" onclick="window.location.href='course-content.html?course=${course.course_id}'"><i class="fas fa-info-circle"></i></button>
-                            </div>
+                        </div>
+                        ` : ''}
+                        <div class="course-actions">
+                            <button class="btn-primary" onclick="window.location.href='course-content.html?course=${course.course_id}'">
+                                <i class="fas ${actionIcon}"></i> ${actionText}
+                            </button>
+                            <button class="btn-outline" onclick="window.location.href='course-content.html?course=${course.course_id}'"><i class="fas fa-info-circle"></i></button>
                         </div>
                     </div>
-                `;
+                </div>
+            `;
             }).join('');
         }
 
         // ============================================================
-        // 8. LOAD TESTS & LEADERBOARD
+        // 8. LOAD TESTS (LIVE FROM API)
         // ============================================================
 
-        function loadTests() {
+        async function loadTests() {
             const container = document.getElementById('testsList');
-            const tests = [
-                { title: 'Machine Learning Midterm', details: 'Chapters 1-6', time: 'Tomorrow, 10:00 AM' },
-                { title: 'React.js Assessment', details: 'Hooks & Context', time: 'In 3 Days' },
-                { title: 'Database Systems Quiz', details: 'SQL & NoSQL', time: 'In 1 Week' }
-            ];
-            
-            container.innerHTML = tests.map(test => `
-                <div class="test-item">
-                    <div class="test-icon"><i class="fas fa-brain"></i></div>
-                    <div class="test-info">
-                        <div class="test-title">${test.title}</div>
-                        <div class="test-details">${test.details} · <span class="test-time">${test.time}</span></div>
-                    </div>
-                </div>
-            `).join('');
-        }
 
-        function loadLeaderboard() {
-            const container = document.getElementById('leaderboardList');
-            const leaders = [
-                { name: 'You', detail: '42 Day Streak', points: '12,450', isYou: true },
-                { name: 'Maria Garcia', detail: 'Data Science', points: '11,890', isYou: false },
-                { name: 'Ryan Wilson', detail: 'Web Development', points: '10,760', isYou: false }
-            ];
-            
-            container.innerHTML = leaders.map(leader => `
-                <div class="lb-item ${leader.isYou ? 'you' : ''}">
-                    <div class="lb-rank">${leader.isYou ? '1' : '2'}</div>
-                    <div class="lb-avatar">${leader.isYou ? '👑' : leader.name.slice(0, 2)}</div>
-                    <div class="lb-info">
-                        <div class="lb-name">${leader.name}</div>
-                        <div class="lb-detail">${leader.detail}</div>
+            try {
+                // Fetch upcoming assignments from backend
+                const result = await apiRequest('/assignments/upcoming');
+                const tests = result.assignments || [];
+
+                if (tests.length === 0) {
+                    container.innerHTML = `
+                    <div style="padding:12px;text-align:center;color:var(--gray-500);font-size:0.85rem;">
+                        <i class="fas fa-check-circle" style="color:var(--accent);"></i> No upcoming tests!
                     </div>
-                    <div class="lb-score">${leader.points}</div>
+                `;
+                    return;
+                }
+
+                container.innerHTML = tests.slice(0, 3).map(test => {
+                    // Format the due date
+                    const dueDate = new Date(test.due_date);
+                    const now = new Date();
+                    const diffDays = Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24));
+
+                    let timeLabel = '';
+                    if (diffDays <= 0) timeLabel = 'Today!';
+                    else if (diffDays === 1) timeLabel = 'Tomorrow';
+                    else if (diffDays <= 7) timeLabel = `In ${diffDays} Days`;
+                    else timeLabel = dueDate.toLocaleDateString();
+
+                    return `
+                    <div class="test-item">
+                        <div class="test-icon"><i class="fas fa-${test.icon || 'brain'}"></i></div>
+                        <div class="test-info">
+                            <div class="test-title">${test.title}</div>
+                            <div class="test-details">${test.course_name || 'General'} · <span class="test-time">${timeLabel}</span></div>
+                        </div>
+                    </div>
+                `;
+                }).join('');
+
+            } catch (error) {
+                console.log('Upcoming tests not available');
+                container.innerHTML = `
+                <div style="padding:12px;text-align:center;color:var(--gray-500);font-size:0.85rem;">
+                    <i class="fas fa-calendar"></i> No tests scheduled.
                 </div>
-            `).join('');
+            `;
+            }
         }
 
         // ============================================================
-        // 9. LOGOUT
+        // 9. LOAD LEADERBOARD (LIVE FROM API)
+        // ============================================================
+
+        async function loadLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+
+            try {
+                // Fetch leaderboard from backend
+                const result = await apiRequest('/community/leaderboard');
+                const leaders = result.leaders || [];
+
+                if (leaders.length === 0) {
+                    container.innerHTML = `
+                    <div style="padding:12px;text-align:center;color:var(--gray-500);font-size:0.85rem;">
+                        <i class="fas fa-users"></i> No leaders yet.
+                    </div>
+                `;
+                    return;
+                }
+
+                const rankEmojis = ['🥇', '🥈', '🥉'];
+                const rankClasses = ['gold', 'silver', 'bronze'];
+
+                container.innerHTML = leaders.slice(0, 5).map((leader, index) => {
+                    const isYou = leader.is_you || (currentUser && String(leader.user_id) === String(currentUser.user_id));
+
+                    return `
+                    <div class="lb-item ${isYou ? 'you' : ''}" style="
+                        display:flex;
+                        align-items:center;
+                        gap:12px;
+                        padding:8px 0;
+                        border-bottom:1px solid var(--gray-200);
+                        ${isYou ? 'background:rgba(139,92,246,0.08);border-radius:8px;padding:8px 12px;' : ''}
+                    ">
+                        <div class="lb-rank ${index < 3 ? rankClasses[index] : ''}" style="
+                            width:32px;
+                            height:32px;
+                            border-radius:50%;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-weight:700;
+                            font-size:0.9rem;
+                            background: ${index < 3 ? 'rgba(139,92,246,0.15)' : 'transparent'};
+                            color: ${index < 3 ? '#8B5CF6' : 'var(--gray-500)'};
+                        ">
+                            ${index < 3 ? rankEmojis[index] : `#${index + 1}`}
+                        </div>
+                        <div class="lb-avatar" style="
+                            width:32px;
+                            height:32px;
+                            border-radius:50%;
+                            background: ${isYou ? 'var(--gradient-primary)' : 'var(--gray-200)'};
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-weight:700;
+                            font-size:0.7rem;
+                            color: ${isYou ? 'white' : 'var(--gray-500)'};
+                            flex-shrink:0;
+                        ">
+                            ${isYou ? '👑' : (leader.full_name || leader.username || 'U').slice(0, 2).toUpperCase()}
+                        </div>
+                        <div class="lb-info" style="flex:1;">
+                            <div class="lb-name" style="font-weight:600;font-size:0.85rem;color:var(--dark);">
+                                ${isYou ? 'You' : (leader.full_name || leader.username)}
+                            </div>
+                            <div class="lb-detail" style="font-size:0.7rem;color:var(--gray-500);">
+                                ${leader.course_count || 0} courses · ${leader.streak_days || 0} day streak
+                            </div>
+                        </div>
+                        <div class="lb-score" style="font-weight:700;font-size:0.9rem;color:var(--primary);">
+                            ${leader.total_xp || 0} XP
+                        </div>
+                    </div>
+                `;
+                }).join('');
+
+            } catch (error) {
+                console.log('Leaderboard not available');
+                container.innerHTML = `
+                <div style="padding:12px;text-align:center;color:var(--gray-500);font-size:0.85rem;">
+                    <i class="fas fa-trophy"></i> Leaderboard coming soon.
+                </div>
+            `;
+            }
+        }
+
+        // ============================================================
+        // 10. LOGOUT
         // ============================================================
 
         function handleLogout() {
@@ -1338,7 +1467,7 @@
         }
 
         // ============================================================
-        // 10. THEME TOGGLE
+        // 11. THEME TOGGLE
         // ============================================================
 
         const themeBtn = document.getElementById('themeToggle');
@@ -1359,7 +1488,7 @@
         });
 
         // ============================================================
-        // 11. CHARTS
+        // 12. CHARTS
         // ============================================================
 
         const isDark = () => document.body.classList.contains('dark-theme');
@@ -1455,7 +1584,7 @@
         }
 
         // ============================================================
-        // 12. TIMER
+        // 13. TIMER
         // ============================================================
 
         let timerRunning = false;
@@ -1519,7 +1648,7 @@
         });
 
         // ============================================================
-        // 13. NOTIFICATIONS
+        // 14. NOTIFICATIONS
         // ============================================================
 
         document.getElementById('notifBtn').addEventListener('click', function() {
@@ -1527,7 +1656,7 @@
         });
 
         // ============================================================
-        // 14. FULLSCREEN
+        // 15. FULLSCREEN
         // ============================================================
 
         let fs = false;
@@ -1542,17 +1671,29 @@
         });
 
         // ============================================================
-        // 15. SEARCH
+        // 16. SEARCH (LIVE)
         // ============================================================
 
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+        document.getElementById('searchInput').addEventListener('keypress', async (e) => {
             if (e.key === 'Enter') {
-                alert(`🔍 Searching for "${e.target.value}"...`);
+                const query = e.target.value.trim();
+                if (query) {
+                    try {
+                        const results = await apiRequest(`/courses/search?q=${encodeURIComponent(query)}`);
+                        if (results && results.courses && results.courses.length > 0) {
+                            alert(`🔍 Found ${results.courses.length} courses matching "${query}"`);
+                        } else {
+                            alert(`🔍 No courses found matching "${query}"`);
+                        }
+                    } catch (error) {
+                        alert(`🔍 Search for "${query}" - feature coming soon!`);
+                    }
+                }
             }
         });
 
         // ============================================================
-        // 16. INITIALIZE
+        // 17. INITIALIZE
         // ============================================================
 
         document.addEventListener('DOMContentLoaded', loadDashboard);
