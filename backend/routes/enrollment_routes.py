@@ -8,7 +8,7 @@ enrollment_model = Enrollment()
 course_model = Course()
 notification_model = Notification()
 
-@enrollment_bp.route('/', methods=['GET'])
+@enrollment_bp.route('', methods=['GET'])
 @jwt_required()
 def get_enrollments():
     user_id = get_jwt_identity()

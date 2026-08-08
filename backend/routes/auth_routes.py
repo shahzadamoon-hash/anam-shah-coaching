@@ -26,9 +26,9 @@ def register():
     if user_model.find_by_username(data['username']):
         return jsonify({'error': 'Username already taken'}), 400
     
-    # ✅ Hash password using Werkzeug
+    # Hash password using Werkzeug
     password_hash = generate_password_hash(data['password'])
-    
+
     # Create user
     user = user_model.create({
         'username': data['username'],
@@ -39,7 +39,7 @@ def register():
         'role': data.get('role', 'student'),
         'status': 'active'
     })
-    
+
     # Create student profile if role is student
     if data.get('role', 'student') == 'student':
         StudentProfile().create({
@@ -47,7 +47,7 @@ def register():
             'country': 'India',
             'preferred_language': 'English'
         })
-    
+
     return jsonify({
         'message': 'User registered successfully',
         'user': user_model.to_dict(user)
@@ -56,31 +56,33 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    
+
     if not data.get('email') or not data.get('password'):
         return jsonify({'error': 'Email and password required'}), 400
-    
+
     user = user_model.find_by_email(data['email'])
     if not user:
         return jsonify({'error': 'Invalid credentials'}), 401
-    
-    # ✅ Verify password using Werkzeug
+
+    # Verify password using Werkzeug
     if not check_password_hash(user.get('password_hash', ''), data['password']):
         return jsonify({'error': 'Invalid credentials'}), 401
-    
+
     if user.get('status') == 'inactive':
         return jsonify({'error': 'Account is inactive'}), 401
-    
+
     if user.get('status') == 'suspended':
         return jsonify({'error': 'Account is suspended'}), 401
-    
+
     # Update last login
     user_model.update(user['user_id'], {
         'last_login': datetime.utcnow().isoformat()
     })
-    
-    access_token = create_access_token(identity=user['user_id'])
-    
+
+    # ✅ FIX: Convert user_id to string before creating token
+    user_id = str(user['user_id'])  # ← This fixes "Subject must be a string"
+    access_token = create_access_token(identity=user_id)
+
     return jsonify({
         'message': 'Login successful',
         'access_token': access_token,
@@ -90,8 +92,14 @@ def login():
 @auth_bp.route('/me', methods=['GET'])
 @jwt_required()
 def get_current_user():
+    # ✅ FIX: Convert identity to integer for database lookup
     user_id = get_jwt_identity()
-    user = user_model.get_by_id(user_id)
+    try:
+        user_id_int = int(str(user_id))
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Invalid user identity'}), 400
+
+    user = user_model.get_by_id(user_id_int)
     if not user:
         return jsonify({'error': 'User not found'}), 404
     
