@@ -12,7 +12,7 @@ user_model = User()
 def register():
     data = request.get_json()
 
-    # Validate
+    # Validate required fields
     if not data.get('email') or not data.get('password'):
         return jsonify({'error': 'Email and password required'}), 400
 
@@ -26,10 +26,10 @@ def register():
     if user_model.find_by_username(data['username']):
         return jsonify({'error': 'Username already taken'}), 400
 
-    # Hash password
+    # Hash password using Werkzeug
     password_hash = generate_password_hash(data['password'])
 
-    # ✅ Create user WITHOUT user_id - it will be auto-generated
+    # Create user
     user = user_model.create({
         'username': data['username'],
         'email': data['email'],
@@ -64,8 +64,8 @@ def login():
     if not user:
         return jsonify({'error': 'Invalid credentials'}), 401
 
-    # ✅ Verify password using Flask-Bcrypt
-    if not bcrypt.check_password_hash(user.get('password_hash', ''), data['password']):
+    # Verify password using Werkzeug
+    if not check_password_hash(user.get('password_hash', ''), data['password']):
         return jsonify({'error': 'Invalid credentials'}), 401
     
     if user.get('status') == 'inactive':
