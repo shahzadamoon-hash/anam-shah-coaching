@@ -1,3 +1,4 @@
+# app.py
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -17,11 +18,17 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 86400  # 24 hours
 # Initialize extensions
 jwt = JWTManager(app)
 
-# CORS - Allow all origins for development
-CORS(app, origins='*')
+# ============================================================
+# ✅ FIX CORS - Allow all origins, methods, and headers
+# ============================================================
+CORS(app,
+     origins='*',
+     allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
+     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+     supports_credentials=False)
 
 # ============================================================
-# Import Routes (with error handling)
+# Import Routes
 # ============================================================
 
 try:
@@ -108,6 +115,14 @@ def health():
         'database': 'Google Sheets',
         'sheets_connected': sheet_service.connected if hasattr(sheet_service, 'connected') else False
     })
+
+# ✅ Optional: Handle OPTIONS requests explicitly
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+    return response
 
 # ============================================================
 # Run the app
