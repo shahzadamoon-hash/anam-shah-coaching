@@ -51,7 +51,7 @@ class LearnSyncAPI {
         try {
             const response = await fetch(url, options);
             const result = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(result.error || 'Something went wrong');
             }
